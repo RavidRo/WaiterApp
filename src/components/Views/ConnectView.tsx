@@ -24,7 +24,6 @@ export default function LoginView(props: LoginViewProps) {
 					</Text>
 				)}
 				<MapScreenController />
-				{/* <Text>MAP SCREEN CONTROLLER</Text> */}
 			</>
 		);
 	}

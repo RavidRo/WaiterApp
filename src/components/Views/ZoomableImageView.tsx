@@ -7,14 +7,14 @@ import {
 	StyleSheet,
 	GestureResponderHandlers,
 } from 'react-native';
-import {PointMarker} from '../../map';
+import {PointMarker as PointMarkerType} from '../../map';
 
 type MyZoomableImageProps = {
 	imageWidth: number;
 	imageHeight: number;
 	imageURL: string;
 	style?: StyleProp<ViewStyle>;
-	pointsOfInterest: PointMarker[];
+	pointsOfInterest: PointMarkerType[];
 	zoom: number;
 	top: number;
 	left: number;
