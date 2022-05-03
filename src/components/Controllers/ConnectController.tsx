@@ -11,21 +11,21 @@ type ConnectControllerProps = {};
 const ConnectController = (_props: ConnectControllerProps) => {
 	const connectionViewModel = useContext(ConnectionContext);
 
-	// const token = connectionViewModel.connection.token;
-	// const isLoggedIn = token !== undefined;
+	const token = connectionViewModel.connection.token;
+	const isLoggedIn = token !== undefined;
 
 	const [isConnected, setIsConnected] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [password, setPassword] = useState('');
 
-	// const establishConnection = () => {
-	// 	setIsLoading(true);
-	// 	connectionViewModel
-	// 		.connect()
-	// 		.then(() => setIsConnected(true))
-	// 		.catch(() => Alert.alert("Can't establish connection to server"))
-	// 		.finally(() => setIsLoading(false));
-	// };
+	const establishConnection = () => {
+		setIsLoading(true);
+		// connectionViewModel
+		// 	.connect()
+		// 	.then(() => setIsConnected(true))
+		// 	.catch(() => Alert.alert("Can't establish connection to server"))
+		// 	.finally(() => setIsLoading(false));
+	};
 
 	const logIn = () => {
 		setIsLoading(true);
@@ -36,7 +36,7 @@ const ConnectController = (_props: ConnectControllerProps) => {
 
 	const onSubmit = () => {
 		logIn()
-			// .then(establishConnection)
+			.then(establishConnection)
 			.catch(e => {
 				const msg = e?.response?.data ?? "Can't login to server";
 				Alert.alert(msg);
@@ -44,25 +44,15 @@ const ConnectController = (_props: ConnectControllerProps) => {
 	};
 
 	return (
-		// <ConnectView
-		// 	loggedIn={isLoggedIn}
-		// 	isLoading={isLoading}
-		// 	isConnected={isConnected}
-		// 	password={password}
-		// 	onPasswordChange={setPassword}
-		// 	onSubmit={onSubmit}
-		// 	establishConnection={establishConnection}
-		// 	isReconnecting={connectionViewModel.connection.isReconnecting}
-		// />
 		<ConnectView
-			loggedIn={false}
+			loggedIn={isLoggedIn}
 			isLoading={isLoading}
 			isConnected={isConnected}
 			password={password}
 			onPasswordChange={setPassword}
 			onSubmit={onSubmit}
-			establishConnection={() => {}}
-			isReconnecting={false}
+			establishConnection={establishConnection}
+			isReconnecting={connectionViewModel.connection.isReconnecting}
 		/>
 	);
 	// });

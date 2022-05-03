@@ -1,5 +1,5 @@
 // import ConnectionHandler from '../communication/ConnectionHandler';
-// import ConnectionModel from '../Models/ConnectionModel';
+import ConnectionModel from '../Models/ConnectionModel';
 import Requests from '../networking/Requests';
 // import {ItemViewModel} from './ItemViewModel';
 // import MyLocationViewModel from './MyLocationViewModel';
@@ -7,7 +7,7 @@ import Requests from '../networking/Requests';
 
 export default class ConnectionViewModel {
 	private requests: Requests;
-	// private model: ConnectionModel;
+	private model: ConnectionModel;
 	// private connectionHandler: ConnectionHandler;
 	// private orders: OrderViewModel;
 	// private items: ItemViewModel;
@@ -19,7 +19,7 @@ export default class ConnectionViewModel {
 		// itemViewModel: ItemViewModel,
 		// myLocationViewModel: MyLocationViewModel
 	) {
-		// this.model = ConnectionModel.getInstance();
+		this.model = ConnectionModel.getInstance();
 		// this.connectionHandler = new ConnectionHandler(requests, itemViewModel);
 		this.requests = requests;
 		// this.orders = orderViewModel;
@@ -30,14 +30,14 @@ export default class ConnectionViewModel {
 	login(password: string): Promise<string> {
 		return this.requests.login(password).then(token => {
 			console.info('Logged in with token:', token);
-			// this.model.token = token;
+			this.model.token = token;
 			return token;
 		});
 	}
 
-	// get connection(): ConnectionModel {
-	// 	return this.model;
-	// }
+	get connection(): ConnectionModel {
+		return this.model;
+	}
 
 	// public connect() {
 	// 	const promises = [

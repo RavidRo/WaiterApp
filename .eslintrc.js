@@ -23,7 +23,7 @@ module.exports = {
 				// 		semi: ['warn', 'always', {omitLastInOneLineBlock: true}],
 				// 		indent: ['warn', 'tab', {SwitchCase: 1}],
 				// 		quotes: ['warn', 'single', {avoidEscape: true}],
-				// 		'jsx-quotes': ['warn', 'prefer-single'],
+				'jsx-quotes': ['warn', 'prefer-single'],
 			},
 			//
 			// global: {
