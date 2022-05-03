@@ -9,19 +9,10 @@
  */
 
 import React from 'react';
-import {Button, SafeAreaView} from 'react-native';
+import ConnectController from './src/components/Controllers/ConnectController';
 
 const App = () => {
-	return (
-		<SafeAreaView>
-			<Button
-				title='Press Me!'
-				onPress={() => {
-					console.log('HEY AVIV!');
-				}}
-			/>
-		</SafeAreaView>
-	);
+	return <ConnectController />;
 };
 
 export default App;
