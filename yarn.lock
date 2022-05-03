@@ -5468,6 +5468,11 @@
   dependencies:
     "minimist" "^1.2.6"
 
+"mobx@^6.5.0":
+  "integrity" "sha512-pHZ/cySF00FVENDWIDzJyoObFahK6Eg4d0papqm6d7yMkxWTZ/S/csqJX1A3PsYy4t5k3z2QnlwuCfMW5lSEwA=="
+  "resolved" "https://registry.npmjs.org/mobx/-/mobx-6.5.0.tgz"
+  "version" "6.5.0"
+
 "ms@2.0.0":
   "integrity" "sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g="
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz"
