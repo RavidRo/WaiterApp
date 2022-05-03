@@ -4,15 +4,15 @@ import ConnectionViewModel from './ViewModel/ConnectionViewModel';
 import {ItemViewModel} from './ViewModel/ItemViewModel';
 // import MapViewModel from './ViewModel/MapViewModel';
 // import MyLocationViewModel from './ViewModel/MyLocationViewModel';
-// import OrderViewModel from './ViewModel/OrderViewModel';
+import OrderViewModel from './ViewModel/OrderViewModel';
 
 const requests = new Requests();
 const items = new ItemViewModel(requests);
-// const orders = new OrderViewModel(requests, items);
+const orders = new OrderViewModel(requests, items);
 // const myLocation = new MyLocationViewModel(requests, items);
 const connection = new ConnectionViewModel(
 	requests,
-	// orders,
+	orders,
 	items
 	// myLocation
 );

@@ -34,11 +34,11 @@ const ConnectController = observer((_props: ConnectControllerProps) => {
 
 	const onSubmit = () => {
 		logIn()
-			.then(establishConnection)
 			.catch(e => {
 				const msg = e?.response?.data ?? "Can't login to server";
 				Alert.alert(msg);
-			});
+			})
+			.then(establishConnection);
 	};
 
 	return (

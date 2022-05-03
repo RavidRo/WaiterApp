@@ -35,7 +35,7 @@ class RequestsHandler {
 		)
 			.then(response => this.handleResponse<T>(response, endPoint))
 			.catch(e => {
-				console.warn(e);
+				console.warn(`Request<${endPoint}>`, e?.response?.data ?? e);
 				return Promise.reject(e);
 			});
 	}
