@@ -1,4 +1,4 @@
-// import {makeAutoObservable} from 'mobx';
+import {makeAutoObservable} from 'mobx';
 
 export default class ConnectionModel {
 	private _token: string | undefined;
@@ -6,7 +6,7 @@ export default class ConnectionModel {
 
 	private constructor() {
 		this._isReconnecting = false;
-		// makeAutoObservable(this);
+		makeAutoObservable(this);
 	}
 
 	static instance?: ConnectionModel;

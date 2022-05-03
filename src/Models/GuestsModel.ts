@@ -1,11 +1,11 @@
-// import {makeAutoObservable} from 'mobx';
+import {makeAutoObservable} from 'mobx';
 import {Location} from '../ido';
 
 export default class GuestsModel {
 	private _guests: Map<string, Guest>; //<ID, Object>
 	constructor() {
 		this._guests = new Map();
-		// makeAutoObservable(this);
+		makeAutoObservable(this);
 	}
 
 	get guests(): Guest[] {
