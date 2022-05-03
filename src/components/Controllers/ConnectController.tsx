@@ -1,5 +1,4 @@
-// import {observer} from 'mobx-react-lite';
-// import {Alert} from 'react-native';
+import {observer} from 'mobx-react-lite';
 import {ConnectionContext} from '../../contexts';
 import React, {useContext, useState} from 'react';
 import {Alert} from 'react-native';
@@ -7,8 +6,7 @@ import ConnectView from '../Views/ConnectView';
 
 type ConnectControllerProps = {};
 
-// const ConnectController = observer((_props: ConnectControllerProps) => {
-const ConnectController = (_props: ConnectControllerProps) => {
+const ConnectController = observer((_props: ConnectControllerProps) => {
 	const connectionViewModel = useContext(ConnectionContext);
 
 	const token = connectionViewModel.connection.token;
@@ -55,6 +53,5 @@ const ConnectController = (_props: ConnectControllerProps) => {
 			isReconnecting={connectionViewModel.connection.isReconnecting}
 		/>
 	);
-	// });
-};
+});
 export default ConnectController;
