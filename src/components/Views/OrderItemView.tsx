@@ -1,7 +1,7 @@
 import {observer} from 'mobx-react-lite';
 import React from 'react';
 import {View, StyleSheet, Button, Text, TouchableOpacity} from 'react-native';
-import Order from 'waiters_app/src/Models/Order';
+import Order from '../../Models/Order';
 
 type OrderItemViewProps = {
 	order: Order;

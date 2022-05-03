@@ -1,8 +1,8 @@
 import {observer} from 'mobx-react-lite';
 import React, {useContext, useState} from 'react';
 import {Alert} from 'react-native';
-import {OrdersContext} from 'waiters_app/src/contexts';
-import Order from 'waiters_app/src/Models/Order';
+import {OrdersContext} from '../../contexts';
+import Order from '../../Models/Order';
 import OrderItemView from '../Views/OrderItemView';
 
 type OrderItemControllerProps = {

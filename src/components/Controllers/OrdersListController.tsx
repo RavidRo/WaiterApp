@@ -1,6 +1,6 @@
 import {observer} from 'mobx-react-lite';
 import React, {useContext, useState} from 'react';
-import {OrdersContext} from 'waiters_app/src/contexts';
+import {OrdersContext} from '../../contexts';
 
 import OrdersListView from '../Views/OrdersListView';
 

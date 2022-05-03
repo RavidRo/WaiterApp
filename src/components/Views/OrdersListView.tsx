@@ -1,7 +1,7 @@
 import {observer} from 'mobx-react-lite';
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import Order from 'waiters_app/src/Models/Order';
+import Order from '../../Models/Order';
 import OrderItemController from '../Controllers/OrderItemController';
 
 type OrdersViewProps = {
