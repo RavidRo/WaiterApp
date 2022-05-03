@@ -1,14 +1,10 @@
-import {Location} from '../ido';
-import Requests from '../networking/Requests';
-import Singleton from '../Singleton';
-import {ItemViewModel} from '../ViewModel/ItemViewModel';
+import {Location} from '../types/ido';
 import ConnectionHandler from './ConnectionHandler';
 
-export default class Communicate extends Singleton {
+export default class Communicate {
 	private connectionHandler: ConnectionHandler;
-	constructor(requests: Requests, itemViewModel: ItemViewModel) {
-		super();
-		this.connectionHandler = new ConnectionHandler(requests, itemViewModel);
+	constructor(connectionHandler: ConnectionHandler) {
+		this.connectionHandler = connectionHandler;
 	}
 
 	updateWaiterLocation(...params: [waiterLocation: Location]): void {

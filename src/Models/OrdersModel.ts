@@ -1,5 +1,5 @@
 import {makeAutoObservable} from 'mobx';
-import {OrderStatus} from '../ido';
+import {OrderStatus} from '../types/ido';
 import Order from './Order';
 
 export default class OrdersModel {

@@ -1,19 +1,17 @@
-import {Location, OrderStatus} from '../ido';
+import {Location, OrderStatus} from '../types/ido';
 import GuestsModel, {Guest} from '../Models/GuestsModel';
 import Order from '../Models/Order';
 import OrdersModel from '../Models/OrdersModel';
 import Requests from '../networking/Requests';
-import Singleton from '../Singleton';
 import {ItemViewModel} from './ItemViewModel';
 
-export default class OrderViewModel extends Singleton {
+export default class OrderViewModel {
 	private requests: Requests;
 	private ordersModel: OrdersModel;
 	private guestsModel: GuestsModel;
 	private itemViewModel: ItemViewModel;
 
 	constructor(requests: Requests, itemViewModel: ItemViewModel) {
-		super();
 		this.requests = requests;
 		this.ordersModel = new OrdersModel();
 		this.guestsModel = new GuestsModel();

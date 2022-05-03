@@ -2,13 +2,13 @@ import React, {useContext} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 
 import {observer} from 'mobx-react-lite';
-import {Location} from '../../ido';
+import {Location} from '../../types/ido';
 
 import WaiterMarker from '../Views/markers/WaiterMarker';
 import GuestMarker from '../Views/markers/ClientMarker';
 
 import MapLayoutController from './MapLayoutController';
-import {PointMarker} from '../../map';
+import {PointMarker} from '../../types/map';
 import {MyLocationContext, OrdersContext} from '../../contexts';
 
 type MapMarkerControllerProps = {

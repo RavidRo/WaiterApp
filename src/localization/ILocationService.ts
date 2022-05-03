@@ -1,4 +1,4 @@
-import {Location} from '../ido';
+import {Location} from '../types/ido';
 
 export interface ILocationService {
 	getLocation(

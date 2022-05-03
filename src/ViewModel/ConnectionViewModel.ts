@@ -17,10 +17,11 @@ export default class ConnectionViewModel {
 		requests: Requests,
 		orderViewModel: OrderViewModel,
 		itemViewModel: ItemViewModel,
-		myLocationViewModel: MyLocationViewModel
+		myLocationViewModel: MyLocationViewModel,
+		connectionHandler: ConnectionHandler
 	) {
 		this.model = ConnectionModel.getInstance();
-		this.connectionHandler = new ConnectionHandler(requests, itemViewModel);
+		this.connectionHandler = connectionHandler;
 		this.requests = requests;
 		this.orders = orderViewModel;
 		this.items = itemViewModel;

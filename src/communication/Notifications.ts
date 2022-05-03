@@ -1,6 +1,4 @@
-import Requests from '../networking/Requests';
 import {isLocation, isOrderStatus, isString} from '../typeGuards';
-import {ItemViewModel} from '../ViewModel/ItemViewModel';
 import OrderViewModel from '../ViewModel/OrderViewModel';
 
 type Params = {[param: string]: unknown};
@@ -11,8 +9,8 @@ export default class Notifications {
 		changeOrderStatus: params => this.updateOrderStatus(params),
 	};
 
-	constructor(requests: Requests, itemViewModel: ItemViewModel) {
-		this.orders = new OrderViewModel(requests, itemViewModel);
+	constructor(orderViewModel: OrderViewModel) {
+		this.orders = orderViewModel;
 	}
 
 	private updateGuestLocation(params: Params): void {

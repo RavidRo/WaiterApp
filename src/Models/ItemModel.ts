@@ -1,5 +1,5 @@
 import {makeAutoObservable} from 'mobx';
-import {ItemIdo} from '../ido';
+import {ItemIdo} from '../types/ido';
 
 export default class OrderModel {
 	private _items: ItemIdo[];

@@ -1,20 +1,16 @@
 import {DefaultEventsMap} from '@socket.io/component-emitter';
 import {io, Socket} from 'socket.io-client';
 import ConnectionModel from '../Models/ConnectionModel';
-import Singleton from '../Singleton';
 import Notifications from './Notifications';
 import configuration from '../../configuration.json';
-import {ItemViewModel} from '../ViewModel/ItemViewModel';
-import Requests from '../networking/Requests';
 
-export default class ConnectionHandler extends Singleton {
+export default class ConnectionHandler {
 	private socket: Socket;
 	private connectionModel: ConnectionModel;
 	private notifications: Notifications;
 
-	constructor(requests: Requests, itemViewModel: ItemViewModel) {
-		super();
-		this.notifications = new Notifications(requests, itemViewModel);
+	constructor(notifications: Notifications) {
+		this.notifications = notifications;
 		this.connectionModel = ConnectionModel.getInstance();
 		this.socket = io(configuration['server-url'], {autoConnect: false});
 	}

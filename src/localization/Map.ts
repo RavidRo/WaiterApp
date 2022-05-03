@@ -1,5 +1,5 @@
-import {Corners} from '../ido';
-import {GPS} from '../map';
+import {Corners} from '../types/ido';
+import {GPS} from '../types/map';
 
 export default class LocationMap {
 	private corners: Corners;

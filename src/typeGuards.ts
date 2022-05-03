@@ -1,4 +1,4 @@
-import {Location, OrderStatus} from './ido';
+import {Location, OrderStatus} from './types/ido';
 
 export function isLocation(location: any): location is Location {
 	return (

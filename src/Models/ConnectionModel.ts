@@ -9,8 +9,8 @@ export default class ConnectionModel {
 		makeAutoObservable(this);
 	}
 
-	static instance?: ConnectionModel;
-	static getInstance(): ConnectionModel {
+	private static instance?: ConnectionModel;
+	public static getInstance(): ConnectionModel {
 		if (!this.instance) {
 			this.instance = new ConnectionModel();
 		}

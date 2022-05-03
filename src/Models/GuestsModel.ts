@@ -1,5 +1,5 @@
 import {makeAutoObservable} from 'mobx';
-import {Location} from '../ido';
+import {Location} from '../types/ido';
 
 export default class GuestsModel {
 	private _guests: Map<string, Guest>; //<ID, Object>

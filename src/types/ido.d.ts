@@ -1,4 +1,4 @@
-import {GPS} from './map';
+import {GPS} from '../types/map';
 
 export type OrderStatus = 'unassigned' | 'inprogress' | 'completed';
 export type OrderIdo = {

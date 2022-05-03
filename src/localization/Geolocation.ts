@@ -1,5 +1,5 @@
-import {Corners, Location} from '../ido';
-import {GPS} from '../map';
+import {Corners, Location} from '../types/ido';
+import {GPS} from '../types/map';
 import GeolocationAdapter from './GeolocationAdapter';
 
 import {ILocationService} from './ILocationService';

@@ -1,11 +1,9 @@
 import RequestsHandler from './RequestsHandler';
-import Singleton from '../Singleton';
-import {ItemIdo, OrderIdo} from '../ido';
+import {ItemIdo, OrderIdo} from '../types/ido';
 
-export default class Requests extends Singleton {
+export default class Requests {
 	private handler: RequestsHandler;
 	constructor() {
-		super();
 		this.handler = new RequestsHandler();
 	}
 

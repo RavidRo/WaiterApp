@@ -1,4 +1,4 @@
-import {OrderIdo, OrderStatus} from '../ido';
+import {OrderIdo, OrderStatus} from '../types/ido';
 
 export default class Order {
 	public readonly id: string;
