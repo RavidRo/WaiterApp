@@ -1,5 +1,5 @@
 import {PermissionsAndroid, Platform} from 'react-native';
-// import Geolocation from 'react-native-geolocation-service';
+import Geolocation from 'react-native-geolocation-service';
 import {GPS} from '../map';
 
 export default class GeolocationAdapter {
@@ -17,25 +17,25 @@ export default class GeolocationAdapter {
 		errorCallback: (error: string) => void
 	) {
 		this.stopWatching();
-		// this.watchID = Geolocation.watchPosition(
-		// 	position => {
-		// 		successCallback(position.coords);
-		// 	},
-		// 	error => {
-		// 		errorCallback(error.message);
-		// 	},
-		// 	{
-		// 		accuracy: {
-		// 			android: 'high',
-		// 			ios: 'bestForNavigation',
-		// 		},
-		// 		enableHighAccuracy: true,
-		// 		interval: 500,
-		// 		fastestInterval: 500,
-		// 		showLocationDialog: true,
-		// 		distanceFilter: 1,
-		// 	}
-		// );
+		this.watchID = Geolocation.watchPosition(
+			position => {
+				successCallback(position.coords);
+			},
+			error => {
+				errorCallback(error.message);
+			},
+			{
+				accuracy: {
+					android: 'high',
+					ios: 'bestForNavigation',
+				},
+				enableHighAccuracy: true,
+				interval: 500,
+				fastestInterval: 500,
+				showLocationDialog: true,
+				distanceFilter: 1,
+			}
+		);
 	}
 	stopWatching(): void {
 		if (this.watchID) {
@@ -46,19 +46,19 @@ export default class GeolocationAdapter {
 		successCallback: (location: GPS) => void,
 		errorCallback: (error: string) => void
 	): void {
-		// Geolocation.getCurrentPosition(
-		// 	position => {
-		// 		successCallback(position.coords);
-		// 	},
-		// 	error => {
-		// 		errorCallback(error.message);
-		// 	},
-		// 	{
-		// 		enableHighAccuracy: true,
-		// 		timeout: 15000,
-		// 		maximumAge: 5000,
-		// 		showLocationDialog: true,
-		// 	}
-		// );
+		Geolocation.getCurrentPosition(
+			position => {
+				successCallback(position.coords);
+			},
+			error => {
+				errorCallback(error.message);
+			},
+			{
+				enableHighAccuracy: true,
+				timeout: 15000,
+				maximumAge: 5000,
+				showLocationDialog: true,
+			}
+		);
 	}
 }
