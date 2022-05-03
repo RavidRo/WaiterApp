@@ -2,24 +2,24 @@ import {createContext} from 'react';
 import Requests from './networking/Requests';
 import ConnectionViewModel from './ViewModel/ConnectionViewModel';
 import {ItemViewModel} from './ViewModel/ItemViewModel';
-// import MapViewModel from './ViewModel/MapViewModel';
-// import MyLocationViewModel from './ViewModel/MyLocationViewModel';
+import MapViewModel from './ViewModel/MapViewModel';
+import MyLocationViewModel from './ViewModel/MyLocationViewModel';
 import OrderViewModel from './ViewModel/OrderViewModel';
 
 const requests = new Requests();
 const items = new ItemViewModel(requests);
 const orders = new OrderViewModel(requests, items);
-// const myLocation = new MyLocationViewModel(requests, items);
+const myLocation = new MyLocationViewModel(requests, items);
 const connection = new ConnectionViewModel(
 	requests,
 	orders,
 	items
 	// myLocation
 );
-// const maps = new MapViewModel();
+const maps = new MapViewModel();
 
 export const ConnectionContext = createContext<ConnectionViewModel>(connection);
-// export const OrdersContext = createContext<OrderViewModel>(orders);
+export const OrdersContext = createContext<OrderViewModel>(orders);
 // export const itemsContext = createContext<ItemViewModel>(items);
-// export const MapsContext = createContext<MapViewModel>(maps);
-// export const MyLocationContext = createContext<MyLocationViewModel>(myLocation);
+export const MapsContext = createContext<MapViewModel>(maps);
+export const MyLocationContext = createContext<MyLocationViewModel>(myLocation);

@@ -2,8 +2,8 @@ import React, {useContext, useState} from 'react';
 import {Image, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 
 import MapView from '../Views/MapView';
-import {PointMarker} from 'waiters_app/src/map';
-import {MapsContext} from 'waiters_app/src/contexts';
+import {PointMarker} from '../../map';
+import {MapsContext} from '../../contexts';
 
 type MapLayoutProps = {
 	style?: StyleProp<ViewStyle>;
@@ -19,15 +19,15 @@ export default function MapLayoutController({style, markers}: MapLayoutProps) {
 	const [width, setWidth] = useState<number | undefined>();
 	const [height, setHeight] = useState<number | undefined>();
 
-	Image.getSize(imageURL, (width, height) => {
-		setImageWidth(width);
-		setImageHeight(height);
+	Image.getSize(imageURL, (newImageWidth, newImageHeight) => {
+		setImageWidth(newImageWidth);
+		setImageHeight(newImageHeight);
 	});
 
 	const onLayout = (event: LayoutChangeEvent) => {
-		const {height, width} = event.nativeEvent.layout;
-		setHeight(height);
-		setWidth(width);
+		const {height: newHeight, width: newWidth} = event.nativeEvent.layout;
+		setHeight(newHeight);
+		setWidth(newWidth);
 	};
 
 	const props = {

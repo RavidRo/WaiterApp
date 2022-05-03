@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import RBSheet from 'react-native-raw-bottom-sheet';
+// import RBSheet from 'react-native-raw-bottom-sheet';
 
 import OrdersListController from '../Controllers/OrdersListController';
 import MapMarkersController from '../Controllers/MapMarkersController';
@@ -19,7 +19,7 @@ export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 					onPress={props.openBottomSheet}>
 					<Text style={styles.openDrawerButtonText}>Your Orders</Text>
 				</TouchableOpacity>
-				<RBSheet
+				{/* <RBSheet
 					ref={props.refBottomSheet}
 					closeOnDragDown={true}
 					closeOnPressMask={false}
@@ -35,7 +35,7 @@ export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 						},
 					}}>
 					<OrdersListController />
-				</RBSheet>
+				</RBSheet> */}
 			</View>
 		</>
 	);

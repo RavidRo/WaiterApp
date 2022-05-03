@@ -55,8 +55,8 @@ export default function MyZoomableImage({
 
 	const safeSetTop = useCallback(
 		(set: (top: number) => number) => {
-			setTop(top => {
-				let newTop = set(top);
+			setTop(oldTop => {
+				let newTop = set(oldTop);
 				newTop = Math.min(0, newTop);
 				newTop = Math.max(parentHeight - imageHeight * zoom, newTop);
 				return newTop;
@@ -67,8 +67,8 @@ export default function MyZoomableImage({
 
 	const safeSetLeft = useCallback(
 		(set: (left: number) => number) => {
-			setLeft(left => {
-				let newLeft = set(left);
+			setLeft(oldLeft => {
+				let newLeft = set(oldLeft);
 				newLeft = Math.min(0, newLeft);
 				newLeft = Math.max(parentWidth - imageWidth * zoom, newLeft);
 				return newLeft;
@@ -82,9 +82,9 @@ export default function MyZoomableImage({
 		// imageWidth * zoom >= dimension.width -> zoom >= dimensions.width/imageWidth
 		const minZoomHeight = parentHeight / imageHeight;
 		const minZoomWidth = parentWidth / imageWidth;
-		const minZoom = Math.max(minZoomHeight, minZoomWidth);
-		setMinZoom(minZoom);
-		setZoom(minZoom);
+		const newMinZoom = Math.max(minZoomHeight, minZoomWidth);
+		setMinZoom(newMinZoom);
+		setZoom(newMinZoom);
 	}, [imageHeight, imageWidth, parentHeight, parentWidth]);
 
 	function processPinch(touch1: NativeTouchEvent, touch2: NativeTouchEvent) {
@@ -100,15 +100,17 @@ export default function MyZoomableImage({
 				minZoom
 			);
 			setZoom(newZoom);
-			safeSetLeft(left => left + (imageWidth * (zoom - newZoom)) / 2);
-			safeSetTop(top => top + (imageHeight * (zoom - newZoom)) / 2);
+			safeSetLeft(
+				oldLeft => oldLeft + (imageWidth * (zoom - newZoom)) / 2
+			);
+			safeSetTop(oldTop => oldTop + (imageHeight * (zoom - newZoom)) / 2);
 		}
 		setLastDistance(distance);
 	}
 	function processTouch(moveX: number, moveY: number) {
 		if (lastX && lastY) {
-			safeSetTop(top => top + moveY - lastY);
-			safeSetLeft(left => left + moveX - lastX);
+			safeSetTop(oldTop => oldTop + moveY - lastY);
+			safeSetLeft(oldLeft => oldLeft + moveX - lastX);
 		}
 		setLastX(moveX);
 		setLastY(moveY);

@@ -2,14 +2,14 @@ import React, {useContext} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 
 import {observer} from 'mobx-react-lite';
-import {Location} from 'waiters_app/src/ido';
+import {Location} from '../../ido';
 
 import WaiterMarker from '../Views/markers/WaiterMarker';
 import GuestMarker from '../Views/markers/ClientMarker';
 
 import MapLayoutController from './MapLayoutController';
-import {PointMarker} from 'waiters_app/src/map';
-import {MyLocationContext, OrdersContext} from 'waiters_app/src/contexts';
+import {PointMarker} from '../../map';
+import {MyLocationContext, OrdersContext} from '../../contexts';
 
 type MapMarkerControllerProps = {
 	style?: StyleProp<ViewStyle>;
