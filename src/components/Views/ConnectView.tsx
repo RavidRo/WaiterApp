@@ -8,7 +8,7 @@ type LoginViewProps = {
 	isLoading: boolean;
 	password: string;
 	onPasswordChange: (newPassword: string) => void;
-	onSubmit: (password: string) => void;
+	onSubmit: () => void;
 	establishConnection: () => void;
 
 	isReconnecting: boolean;
@@ -57,7 +57,7 @@ export default function LoginView(props: LoginViewProps) {
 				/>
 				<Button
 					title='Log in'
-					onPress={() => props.onSubmit(props.password)}
+					onPress={() => props.onSubmit()}
 					disabled={props.isLoading}
 					testID='submit'
 				/>

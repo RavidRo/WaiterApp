@@ -27,15 +27,15 @@ const ConnectController = (_props: ConnectControllerProps) => {
 	// 		.finally(() => setIsLoading(false));
 	// };
 
-	const logIn = (password: string) => {
+	const logIn = () => {
 		setIsLoading(true);
 		return connectionViewModel
 			.login(password)
 			.finally(() => setIsLoading(false));
 	};
 
-	const onSubmit = (password: string) => {
-		logIn(password)
+	const onSubmit = () => {
+		logIn()
 			// .then(establishConnection)
 			.catch(e => {
 				const msg = e?.response?.data ?? "Can't login to server";

@@ -8,9 +8,9 @@ module.exports = {
 		{
 			files: ['*.ts', '*.tsx'],
 			rules: {
-				'@typescript-eslint/no-shadow': ['error'],
 				'no-shadow': 'off',
-				'no-undef': 'off',
+				'@typescript-eslint/no-shadow': ['warn'],
+				'no-unused-vars': 'off',
 				'@typescript-eslint/no-unused-vars': [
 					'warn',
 					{
@@ -19,7 +19,7 @@ module.exports = {
 						caughtErrorsIgnorePattern: '^_',
 					},
 				],
-				// 		'no-unused-vars': 'off',
+				'no-undef': 'off',
 				// 		semi: ['warn', 'always', {omitLastInOneLineBlock: true}],
 				// 		indent: ['warn', 'tab', {SwitchCase: 1}],
 				// 		quotes: ['warn', 'single', {avoidEscape: true}],
