@@ -2,7 +2,7 @@ import ConnectionHandler from '../communication/ConnectionHandler';
 import ConnectionModel from '../Models/ConnectionModel';
 import Requests from '../networking/Requests';
 import {ItemViewModel} from './ItemViewModel';
-// import MyLocationViewModel from './MyLocationViewModel';
+import MyLocationViewModel from './MyLocationViewModel';
 import OrderViewModel from './OrderViewModel';
 
 export default class ConnectionViewModel {
@@ -11,20 +11,20 @@ export default class ConnectionViewModel {
 	private connectionHandler: ConnectionHandler;
 	private orders: OrderViewModel;
 	private items: ItemViewModel;
-	// private myLocation: MyLocationViewModel;
+	private myLocation: MyLocationViewModel;
 
 	constructor(
 		requests: Requests,
 		orderViewModel: OrderViewModel,
-		itemViewModel: ItemViewModel
-		// myLocationViewModel: MyLocationViewModel
+		itemViewModel: ItemViewModel,
+		myLocationViewModel: MyLocationViewModel
 	) {
 		this.model = ConnectionModel.getInstance();
 		this.connectionHandler = new ConnectionHandler(requests, itemViewModel);
 		this.requests = requests;
 		this.orders = orderViewModel;
 		this.items = itemViewModel;
-		// this.myLocation = myLocationViewModel;
+		this.myLocation = myLocationViewModel;
 	}
 
 	login(password: string): Promise<string> {
@@ -62,7 +62,7 @@ export default class ConnectionViewModel {
 		];
 
 		return Promise.all(promises).then(() => {
-			// this.myLocation.startTrackingLocation();
+			this.myLocation.startTrackingLocation();
 		});
 	}
 }
