@@ -1,19 +1,19 @@
 import {createContext} from 'react';
 import Requests from './networking/Requests';
 import ConnectionViewModel from './ViewModel/ConnectionViewModel';
-// import {ItemViewModel} from './ViewModel/ItemViewModel';
+import {ItemViewModel} from './ViewModel/ItemViewModel';
 // import MapViewModel from './ViewModel/MapViewModel';
 // import MyLocationViewModel from './ViewModel/MyLocationViewModel';
 // import OrderViewModel from './ViewModel/OrderViewModel';
 
 const requests = new Requests();
-// const items = new ItemViewModel(requests);
+const items = new ItemViewModel(requests);
 // const orders = new OrderViewModel(requests, items);
 // const myLocation = new MyLocationViewModel(requests, items);
 const connection = new ConnectionViewModel(
-	requests
+	requests,
 	// orders,
-	// items,
+	items
 	// myLocation
 );
 // const maps = new MapViewModel();

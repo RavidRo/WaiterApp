@@ -18,11 +18,11 @@ const ConnectController = observer((_props: ConnectControllerProps) => {
 
 	const establishConnection = () => {
 		setIsLoading(true);
-		// connectionViewModel
-		// 	.connect()
-		// 	.then(() => setIsConnected(true))
-		// 	.catch(() => Alert.alert("Can't establish connection to server"))
-		// 	.finally(() => setIsLoading(false));
+		connectionViewModel
+			.connect()
+			.then(() => setIsConnected(true))
+			.catch(() => Alert.alert("Can't establish connection to server"))
+			.finally(() => setIsLoading(false));
 	};
 
 	const logIn = () => {

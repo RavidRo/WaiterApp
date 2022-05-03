@@ -1,29 +1,29 @@
-// import ConnectionHandler from '../communication/ConnectionHandler';
+import ConnectionHandler from '../communication/ConnectionHandler';
 import ConnectionModel from '../Models/ConnectionModel';
 import Requests from '../networking/Requests';
-// import {ItemViewModel} from './ItemViewModel';
+import {ItemViewModel} from './ItemViewModel';
 // import MyLocationViewModel from './MyLocationViewModel';
 // import OrderViewModel from './OrderViewModel';
 
 export default class ConnectionViewModel {
 	private requests: Requests;
 	private model: ConnectionModel;
-	// private connectionHandler: ConnectionHandler;
+	private connectionHandler: ConnectionHandler;
 	// private orders: OrderViewModel;
-	// private items: ItemViewModel;
+	private items: ItemViewModel;
 	// private myLocation: MyLocationViewModel;
 
 	constructor(
-		requests: Requests
+		requests: Requests,
 		// orderViewModel: OrderViewModel,
-		// itemViewModel: ItemViewModel,
+		itemViewModel: ItemViewModel
 		// myLocationViewModel: MyLocationViewModel
 	) {
 		this.model = ConnectionModel.getInstance();
-		// this.connectionHandler = new ConnectionHandler(requests, itemViewModel);
+		this.connectionHandler = new ConnectionHandler(requests, itemViewModel);
 		this.requests = requests;
 		// this.orders = orderViewModel;
-		// this.items = itemViewModel;
+		this.items = itemViewModel;
 		// this.myLocation = myLocationViewModel;
 	}
 
@@ -39,30 +39,30 @@ export default class ConnectionViewModel {
 		return this.model;
 	}
 
-	// public connect() {
-	// 	const promises = [
-	// 		this.orders.synchronizeOrders(),
-	// 		this.items.syncItems(),
-	// 		new Promise<void>((resolve, reject) => {
-	// 			if (this.model.token) {
-	// 				this.connectionHandler.connect(
-	// 					this.model.token,
-	// 					() => resolve(),
-	// 					() =>
-	// 						reject(
-	// 							'Could not connect to server, please try again later'
-	// 						)
-	// 				);
-	// 			} else {
-	// 				reject(
-	// 					'Tried to connect but an authorization token could not be found'
-	// 				);
-	// 			}
-	// 		}),
-	// 	];
+	public connect() {
+		const promises = [
+			// this.orders.synchronizeOrders(),
+			// this.items.syncItems(),
+			new Promise<void>((resolve, reject) => {
+				if (this.model.token) {
+					this.connectionHandler.connect(
+						this.model.token,
+						() => resolve(),
+						() =>
+							reject(
+								'Could not connect to server, please try again later'
+							)
+					);
+				} else {
+					reject(
+						'Tried to connect but an authorization token could not be found'
+					);
+				}
+			}),
+		];
 
-	// 	return Promise.all(promises).then(() => {
-	// 		this.myLocation.startTrackingLocation();
-	// 	});
-	// }
+		return Promise.all(promises).then(() => {
+			// this.myLocation.startTrackingLocation();
+		});
+	}
 }
