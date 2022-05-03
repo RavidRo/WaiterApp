@@ -1,13 +1,13 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 import configuration from '../../configuration.json';
-// import ConnectionModel from '../Models/ConnectionModel';
+import ConnectionModel from '../Models/ConnectionModel';
 
 class RequestsHandler {
 	private axiosInstance: AxiosInstance;
-	// private connection: ConnectionModel;
+	private connection: ConnectionModel;
 
 	constructor() {
-		// this.connection = ConnectionModel.getInstance();
+		this.connection = ConnectionModel.getInstance();
 		this.axiosInstance = axios.create({
 			baseURL: configuration['server-url'],
 		});
@@ -20,9 +20,9 @@ class RequestsHandler {
 	) {
 		const config: AxiosRequestConfig = {
 			headers: {
-				// ...(this.connection.token && {
-				// Authorization: this.connection.token,
-				// }),
+				...(this.connection.token && {
+					Authorization: this.connection.token,
+				}),
 			},
 		};
 		console.info(`Request<${endPoint}>`, params);
