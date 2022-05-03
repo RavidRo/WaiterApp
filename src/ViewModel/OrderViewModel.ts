@@ -37,6 +37,9 @@ export default class OrderViewModel {
 					quantity,
 				]
 			);
+			if (allNamedItems.length !== rawItems.length) {
+				console.warn('Could not find a name of an item id');
+			}
 			const namedItems = allNamedItems.filter(
 				([name, _]) => name !== undefined
 			) as [string, number][];
