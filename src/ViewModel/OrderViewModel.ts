@@ -28,23 +28,27 @@ export default class OrderViewModel {
 		});
 	}
 
+	private nameItems(items: Record<string, number>) {
+		const rawItems = Object.entries(items);
+		const allNamedItems: [string | undefined, number][] = rawItems.map(
+			([id, quantity]) => [
+				this.itemViewModel.getItemByID(id)?.name,
+				quantity,
+			]
+		);
+		if (allNamedItems.length !== rawItems.length) {
+			console.warn('Could not find a name of an item id');
+		}
+		const namedItems = allNamedItems.filter(
+			([name, _]) => name !== undefined
+		) as [string, number][];
+		return Object.fromEntries(namedItems);
+	}
+
 	get orders(): Order[] {
 		return this.ordersModel.orders.map(order => {
-			const rawItems = Object.entries(order.items);
-			const allNamedItems: [string | undefined, number][] = rawItems.map(
-				([id, quantity]) => [
-					this.itemViewModel.getItemByID(id)?.name,
-					quantity,
-				]
-			);
-			if (allNamedItems.length !== rawItems.length) {
-				console.warn('Could not find a name of an item id');
-			}
-			const namedItems = allNamedItems.filter(
-				([name, _]) => name !== undefined
-			) as [string, number][];
-			const items = Object.fromEntries(namedItems);
-			return {...order, items};
+			const namedItems = this.nameItems(order.items);
+			return {...order, items: namedItems};
 		});
 	}
 	get guests(): Guest[] {
@@ -55,8 +59,10 @@ export default class OrderViewModel {
 		const guests = this.guestsModel.guests;
 		return this.orders
 			.map(order => {
-				const guest = guests.find(guest => guest.id === order.guestID);
-				return {order, location: guest?.location};
+				const foundGuest = guests.find(
+					guest => guest.id === order.guestID
+				);
+				return {order, location: foundGuest?.location};
 			})
 			.filter(orderLocation => orderLocation.location) as {
 			order: Order;

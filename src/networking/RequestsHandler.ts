@@ -1,6 +1,7 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 import configuration from '../../configuration.json';
 import ConnectionModel from '../Models/ConnectionModel';
+import {isString} from '../typeGuards';
 
 class RequestsHandler {
 	private axiosInstance: AxiosInstance;
@@ -35,8 +36,12 @@ class RequestsHandler {
 		)
 			.then(response => this.handleResponse<T>(response, endPoint))
 			.catch(e => {
-				console.warn(`Request<${endPoint}>`, e?.response?.data ?? e);
-				return Promise.reject(e);
+				const rawMsg = e?.response?.data;
+				console.warn(`Request<${endPoint}>`, rawMsg ?? e);
+				const msg = isString(rawMsg)
+					? rawMsg
+					: 'An unknown error has been received from the server';
+				return Promise.reject(msg);
 			});
 	}
 

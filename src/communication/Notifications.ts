@@ -27,7 +27,6 @@ export default class Notifications {
 	}
 
 	private changeOrderStatus(params: Params): void {
-		console.log('REDSADSADASD');
 		const orderID = params.orderID;
 		const status = params.orderStatus;
 		if (isString(orderID) && isOrderStatus(status)) {

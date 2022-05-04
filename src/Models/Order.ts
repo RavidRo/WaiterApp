@@ -1,3 +1,4 @@
+import {makeAutoObservable} from 'mobx';
 import {OrderIdo, OrderStatus} from '../types/ido';
 
 export default class Order {
@@ -7,6 +8,8 @@ export default class Order {
 	public orderStatus: OrderStatus;
 
 	constructor(order: OrderIdo) {
+		makeAutoObservable(this);
+
 		this.id = order.id;
 		this.items = order.items;
 		this.orderStatus = order.status;

@@ -24,7 +24,10 @@ const ConnectController = observer((props: ConnectControllerProps) => {
 		connectionViewModel
 			.connect()
 			.then(() => setIsConnected(true))
-			.catch(() => Alert.alert("Can't establish connection to server"))
+			.catch(e => {
+				Alert.alert("Can't establish connection to server");
+				console.warn(e);
+			})
 			.finally(() => setIsLoading(false));
 	};
 
@@ -38,14 +41,7 @@ const ConnectController = observer((props: ConnectControllerProps) => {
 	const onSubmit = () => {
 		logIn()
 			.then(establishConnection)
-			.catch(e => {
-				const rawMsg = e?.response?.data;
-				const msg =
-					rawMsg !== undefined && isString(rawMsg)
-						? rawMsg
-						: "Can't login to server";
-				Alert.alert(msg);
-			});
+			.catch(e => Alert.alert(e));
 	};
 
 	return (
