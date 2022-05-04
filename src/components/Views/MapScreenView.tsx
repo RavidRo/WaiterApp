@@ -23,6 +23,8 @@ export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 					ref={props.refBottomSheet}
 					closeOnDragDown={true}
 					closeOnPressMask={false}
+					dragFromTopOnly={false}
+					height={550}
 					customStyles={{
 						wrapper: {
 							backgroundColor: 'transparent',

@@ -35,13 +35,31 @@ class RequestsHandler {
 			config
 		)
 			.then(response => this.handleResponse<T>(response, endPoint))
-			.catch(e => {
-				const rawMsg = e?.response?.data;
-				console.warn(`Request<${endPoint}>`, rawMsg ?? e);
-				const msg = isString(rawMsg)
-					? rawMsg
-					: 'An unknown error has been received from the server';
-				return Promise.reject(msg);
+			.catch(error => {
+				if (error.response) {
+					// The request was made and the server responded with a status code
+					// that falls out of the range of 2xx
+					const rawMsg = error?.response?.data;
+					console.warn(`Request<${endPoint}>`, rawMsg ?? error);
+					const msg = isString(rawMsg)
+						? rawMsg
+						: 'An unknown error has been received from the server';
+					return Promise.reject(msg);
+				} else if (error.request) {
+					// The request was made but no response was received
+					// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+					// http.ClientRequest in node.js
+					console.warn(`Request<${endPoint}>`, error.request);
+					return Promise.reject(
+						'Could not receive a response from the server'
+					);
+				} else {
+					// Something happened in setting up the request that triggered an Error
+					console.warn(`Request<${endPoint}>`, error.message);
+					return Promise.reject(
+						'There was a problem in sending the request'
+					);
+				}
 			});
 	}
 
