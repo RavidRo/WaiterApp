@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Image, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 
 import MapView from '../Views/MapView';
-import {PointMarker} from '../../map';
+import {PointMarker} from '../../types/map';
 import {MapsContext} from '../../contexts';
 
 type MapLayoutProps = {

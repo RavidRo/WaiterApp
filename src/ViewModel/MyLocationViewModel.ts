@@ -8,8 +8,8 @@ import Communicate from '../communication/Communicate';
 const corners: Corners = {
 	bottomRightGPS: configuration.corners['bottom-right-gps'],
 	bottomLeftGPS: configuration.corners['bottom-left-gps'],
-	topRightGPS: configuration.corners['bottom-right-gps'],
-	topLeftGPS: configuration.corners['bottom-left-gps'],
+	topRightGPS: configuration.corners['top-right-gps'],
+	topLeftGPS: configuration.corners['top-left-gps'],
 };
 export default class MyLocationViewModel {
 	private locationService: ILocationService;
@@ -24,11 +24,23 @@ export default class MyLocationViewModel {
 		this.tracking = false;
 	}
 
+	private isValidLocation(location: Location) {
+		const isValidNumber = (n: number) => !isNaN(n) && isFinite(n);
+		return isValidNumber(location.x) && isValidNumber(location.y);
+	}
+
 	private startTrackingLocation() {
 		this.locationService.watchLocation(
 			location => {
-				this.communicate.updateWaiterLocation(location);
-				this.locationModel.location = location;
+				if (this.isValidLocation(location)) {
+					this.communicate.updateWaiterLocation(location);
+					this.locationModel.location = location;
+				} else {
+					console.warn(
+						'An invalid location has been received from the location service',
+						location
+					);
+				}
 			},
 			error => {
 				console.warn('Could not get the user location', error);

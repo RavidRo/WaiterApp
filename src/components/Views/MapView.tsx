@@ -6,7 +6,7 @@ import {
 	View,
 	ViewStyle,
 } from 'react-native';
-import {PointMarker} from '../../map';
+import {PointMarker} from '../../types/map';
 import ZoomableImageController from '../Controllers/ZoomableImageController';
 
 type MapViewProps = {
