@@ -24,6 +24,21 @@ export default class OrdersModel {
 		const order = this._orders.get(orderID);
 		if (order) {
 			order.orderStatus = status;
+		} else {
+			console.warn(
+				'updateOrderStatus - Could not find requested order',
+				orderID
+			);
+		}
+	}
+
+	removeOrder(orderID: string) {
+		const existed = this._orders.delete(orderID);
+		if (!existed) {
+			console.warn(
+				'removeOrder - Could not find requested order',
+				orderID
+			);
 		}
 	}
 }

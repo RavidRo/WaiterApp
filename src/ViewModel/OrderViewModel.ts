@@ -79,6 +79,8 @@ export default class OrderViewModel {
 	}
 
 	public deliver(orderID: string) {
-		return this.requests.delivered(orderID);
+		return this.requests.delivered(orderID).then(() => {
+			this.ordersModel.removeOrder(orderID);
+		});
 	}
 }
