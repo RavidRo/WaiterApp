@@ -6,7 +6,7 @@ export default class Notifications {
 	private orders: OrderViewModel;
 	public eventToCallback: Record<string, (params: Params) => void> = {
 		updateGuestLocation: params => this.updateGuestLocation(params),
-		changeOrderStatus: params => this.updateOrderStatus(params),
+		changeOrderStatus: params => this.changeOrderStatus(params),
 	};
 
 	constructor(orderViewModel: OrderViewModel) {
@@ -26,7 +26,8 @@ export default class Notifications {
 		);
 	}
 
-	private updateOrderStatus(params: Params): void {
+	private changeOrderStatus(params: Params): void {
+		console.log('REDSADSADASD');
 		const orderID = params.orderID;
 		const status = params.orderStatus;
 		if (isString(orderID) && isOrderStatus(status)) {

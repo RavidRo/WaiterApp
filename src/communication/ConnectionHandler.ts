@@ -27,8 +27,8 @@ export default class ConnectionHandler {
 
 		this.socket.on('connect', () => {
 			// Connected successfully to the server
+			this.connectionModel.isReconnecting = false;
 			if (!returnedResult) {
-				this.connectionModel.isReconnecting = false;
 				onSuccess?.();
 			}
 			returnedResult = true;

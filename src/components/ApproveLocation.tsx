@@ -1,3 +1,4 @@
+import {observer} from 'mobx-react-lite';
 import React, {useCallback, useContext, useEffect} from 'react';
 import {PermissionsAndroid, Platform, Alert, Button} from 'react-native';
 import {MyLocationContext} from '../contexts';
@@ -6,8 +7,9 @@ type ApproveLocationProps = {
 	children: React.ReactNode;
 };
 
-export default function ApproveLocation(props: ApproveLocationProps) {
+const ApproveLocation = observer((props: ApproveLocationProps) => {
 	const myLocationViewModel = useContext(MyLocationContext);
+	const approved = myLocationViewModel.locationApproved;
 
 	const askApproval = useCallback(() => {
 		const approvingLocationRequest =
@@ -35,11 +37,15 @@ export default function ApproveLocation(props: ApproveLocationProps) {
 
 	return (
 		<>
-			<Button
-				onPress={() => askApproval()}
-				title='Approve Location Services'
-			/>
+			{approved || (
+				<Button
+					onPress={() => askApproval()}
+					title='Approve Location Services'
+				/>
+			)}
 			{props.children}
 		</>
 	);
-}
+});
+
+export default ApproveLocation;
