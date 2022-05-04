@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
-import MapScreenController from '../Controllers/MapScreenController';
 
 type LoginViewProps = {
 	isConnected: boolean;
@@ -10,8 +9,9 @@ type LoginViewProps = {
 	onPasswordChange: (newPassword: string) => void;
 	onSubmit: () => void;
 	establishConnection: () => void;
-
 	isReconnecting: boolean;
+
+	children: React.ReactNode;
 };
 
 export default function LoginView(props: LoginViewProps) {
@@ -23,7 +23,7 @@ export default function LoginView(props: LoginViewProps) {
 						Connection lost, trying to reconnect...
 					</Text>
 				)}
-				<MapScreenController />
+				{props.children}
 			</>
 		);
 	}

@@ -1,17 +1,9 @@
-import {PermissionsAndroid, Platform} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import {GPS} from '../map';
+import {GPS} from '../types/map';
 
 export default class GeolocationAdapter {
 	private watchID?: number;
 
-	constructor() {
-		if (Platform.OS === 'android') {
-			PermissionsAndroid.request(
-				PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-			);
-		}
-	}
 	watchLocation(
 		successCallback: (location: GPS) => void,
 		errorCallback: (error: string) => void
@@ -39,7 +31,7 @@ export default class GeolocationAdapter {
 	}
 	stopWatching(): void {
 		if (this.watchID) {
-			// Geolocation.clearWatch(this.watchID);
+			Geolocation.clearWatch(this.watchID);
 		}
 	}
 	getLocation(

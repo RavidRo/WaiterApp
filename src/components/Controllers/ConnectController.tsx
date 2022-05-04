@@ -3,10 +3,13 @@ import {ConnectionContext} from '../../contexts';
 import React, {useContext, useState} from 'react';
 import {Alert} from 'react-native';
 import ConnectView from '../Views/ConnectView';
+import {isString} from '../../typeGuards';
 
-type ConnectControllerProps = {};
+type ConnectControllerProps = {
+	children: React.ReactNode;
+};
 
-const ConnectController = observer((_props: ConnectControllerProps) => {
+const ConnectController = observer((props: ConnectControllerProps) => {
 	const connectionViewModel = useContext(ConnectionContext);
 
 	const token = connectionViewModel.connection.token;
@@ -34,11 +37,15 @@ const ConnectController = observer((_props: ConnectControllerProps) => {
 
 	const onSubmit = () => {
 		logIn()
+			.then(establishConnection)
 			.catch(e => {
-				const msg = e?.response?.data ?? "Can't login to server";
+				const rawMsg = e?.response?.data;
+				const msg =
+					rawMsg !== undefined && isString(rawMsg)
+						? rawMsg
+						: "Can't login to server";
 				Alert.alert(msg);
-			})
-			.then(establishConnection);
+			});
 	};
 
 	return (
@@ -50,8 +57,9 @@ const ConnectController = observer((_props: ConnectControllerProps) => {
 			onPasswordChange={setPassword}
 			onSubmit={onSubmit}
 			establishConnection={establishConnection}
-			isReconnecting={connectionViewModel.connection.isReconnecting}
-		/>
+			isReconnecting={connectionViewModel.connection.isReconnecting}>
+			{props.children}
+		</ConnectView>
 	);
 });
 export default ConnectController;

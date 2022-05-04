@@ -63,7 +63,7 @@ export default class ConnectionViewModel {
 		];
 
 		return Promise.all(promises).then(() => {
-			this.myLocation.startTrackingLocation();
+			this.myLocation.startTrackingLocationWhenApproved();
 		});
 	}
 }
