@@ -3,7 +3,6 @@ import {ConnectionContext} from '../../contexts';
 import React, {useContext, useState} from 'react';
 import {Alert} from 'react-native';
 import ConnectView from '../Views/ConnectView';
-import {isString} from '../../typeGuards';
 
 type ConnectControllerProps = {
 	children: React.ReactNode;

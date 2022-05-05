@@ -2,14 +2,26 @@ import {observer} from 'mobx-react-lite';
 import React from 'react';
 import {View, StyleSheet, Button, Text, TouchableOpacity} from 'react-native';
 import Order from '../../Models/Order';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {
+	faSortDown,
+	faSortUp,
+	faChevronDown,
+	faChevronUp,
+	faAngleDown,
+	faAngleUp,
+	faSquareCaretDown,
+	faCircle,
+} from '@fortawesome/free-solid-svg-icons';
 
 type OrderItemViewProps = {
 	order: Order;
-	selectedOrderID: string | undefined;
+	selected: boolean;
 	evenItem: boolean;
 	deliver: (orderID: string) => void;
+	onTheWay: (orderID: string) => void;
 	selectOrder: (string: string) => void;
-	delivering: boolean;
+	loading: boolean;
 };
 
 export default observer(function OrderItemView(props: OrderItemViewProps) {
@@ -18,35 +30,76 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 			<View
 				style={[
 					styles.orderContainer,
-					props.evenItem ? styles.background1 : styles.background2,
+					// props.evenItem ? styles.background1 : styles.background2,
 				]}>
-				<View>
-					<Text
-						style={
-							styles.orderText
-						}>{`Order - ${props.order.id.slice(0, 5)} <${
-						props.order.orderStatus
-					}>`}</Text>
-					<Button
-						title='delivered'
-						onPress={() => props.deliver(props.order.id)}
-						disabled={props.delivering}
+				<View style={styles.titleContainer}>
+					<FontAwesomeIcon
+						icon={props.selected ? faAngleDown : faAngleUp}
+						size={15}
+						style={styles.iconStyle}
 					/>
+
+					<Text style={styles.orderText}>
+						{/* TODO: Instead of 'Order' write the name of the guest */}
+						{`Order - ${props.order.id.slice(0, 5)}  < `}
+						<Text style={styles.orderStatus}>
+							{props.order.orderStatus}
+						</Text>
+						{' >'}
+					</Text>
 				</View>
-				{props.selectedOrderID === props.order.id &&
-					Object.entries(props.order.items).map(
-						([name, quantity], index) => (
-							<Text key={index} style={styles.itemsText}>
-								{name} - {quantity}
-							</Text>
-						)
-					)}
+				{props.selected && (
+					<View style={styles.items}>
+						{Object.entries(props.order.items).map(
+							([name, quantity], index) => (
+								<View key={index} style={styles.titleContainer}>
+									{/* <FontAwesomeIcon
+										icon={faCircle}
+										size={5}
+										style={styles.iconStyle}
+									/> */}
+									<Text style={styles.itemsText}>
+										{quantity} - {name}
+									</Text>
+								</View>
+							)
+						)}
+						<View style={styles.statusButton}>
+							{props.order.orderStatus === 'on the way' && (
+								<Button
+									title='delivered'
+									onPress={() =>
+										props.deliver(props.order.id)
+									}
+									disabled={props.loading}
+								/>
+							)}
+							{props.order.orderStatus === 'assigned' && (
+								<Button
+									title='on the way'
+									onPress={() =>
+										props.onTheWay(props.order.id)
+									}
+									disabled={props.loading}
+									color={'green'}
+								/>
+							)}
+						</View>
+					</View>
+				)}
 			</View>
 		</TouchableOpacity>
 	);
 });
 
 const styles = StyleSheet.create({
+	iconStyle: {
+		marginRight: 5,
+	},
+	titleContainer: {
+		flexDirection: 'row',
+		alignItems: 'center',
+	},
 	background1: {
 		backgroundColor: '#f5dabc',
 	},
@@ -54,14 +107,26 @@ const styles = StyleSheet.create({
 		backgroundColor: '#bcd8f5',
 	},
 	orderContainer: {
-		paddingHorizontal: 20,
 		paddingVertical: 7,
 	},
 	itemsText: {
-		paddingLeft: 10,
+		fontFamily: 'Montserrat-Medium',
 		fontSize: 18,
 	},
 	orderText: {
+		fontFamily: 'Montserrat-Medium',
 		fontSize: 18,
+	},
+	orderStatus: {
+		fontFamily: 'Montserrat-Bold',
+		fontSize: 18,
+		textTransform: 'uppercase',
+	},
+	items: {
+		marginTop: 5,
+		paddingHorizontal: 30,
+	},
+	statusButton: {
+		marginTop: 15,
 	},
 });

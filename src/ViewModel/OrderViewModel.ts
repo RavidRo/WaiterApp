@@ -83,4 +83,10 @@ export default class OrderViewModel {
 			this.ordersModel.removeOrder(orderID);
 		});
 	}
+
+	public onTheWay(orderID: string) {
+		return this.requests.onTheWay(orderID).then(() => {
+			this.ordersModel.updateOrderStatus(orderID, 'on the way');
+		});
+	}
 }

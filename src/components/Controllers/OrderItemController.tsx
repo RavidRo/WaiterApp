@@ -16,19 +16,38 @@ export default observer(function OrderItemController(
 	props: OrderItemControllerProps
 ) {
 	const ordersViewModel = useContext(OrdersContext);
-	const [delivering, setDelivering] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const deliver = (orderID: string) => {
-		setDelivering(true);
+		setLoading(true);
 		ordersViewModel
 			.deliver(orderID)
 			.finally(() => {
-				setDelivering(false);
+				setLoading(false);
+			})
+			.catch(e => {
+				Alert.alert(e);
+			});
+	};
+	const onTheWay = (orderID: string) => {
+		setLoading(true);
+		ordersViewModel
+			.onTheWay(orderID)
+			.finally(() => {
+				setLoading(false);
 			})
 			.catch(e => {
 				Alert.alert(e);
 			});
 	};
 	return (
-		<OrderItemView deliver={deliver} delivering={delivering} {...props} />
+		<OrderItemView
+			deliver={deliver}
+			onTheWay={onTheWay}
+			loading={loading}
+			evenItem={props.evenItem}
+			order={props.order}
+			selectOrder={props.selectOrder}
+			selected={props.selectedOrderID === props.order.id}
+		/>
 	);
 });

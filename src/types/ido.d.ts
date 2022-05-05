@@ -1,6 +1,14 @@
 import {GPS} from '../types/map';
 
-export type OrderStatus = 'unassigned' | 'inprogress' | 'completed';
+export type OrderStatus =
+	| 'received'
+	| 'in preparation'
+	| 'ready to deliver'
+	| 'assigned'
+	| 'on the way'
+	| 'delivered'
+	| 'canceled';
+
 export type OrderIdo = {
 	id: OrderID;
 	guestID: string;

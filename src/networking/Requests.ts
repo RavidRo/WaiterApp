@@ -19,7 +19,11 @@ export default class Requests {
 		return this.handler.get('getItems');
 	}
 
-	delivered(orderId: string): Promise<void> {
-		return this.handler.post('orderArrived', {orderId});
+	delivered(orderID: string): Promise<void> {
+		return this.handler.post('orderArrived', {orderId: orderID});
+	}
+
+	onTheWay(orderID: string) {
+		return this.handler.post('orderOnTheWay', {orderId: orderID});
 	}
 }

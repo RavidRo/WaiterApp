@@ -12,12 +12,16 @@ type OrdersViewProps = {
 
 const OrdersListView = observer((props: OrdersViewProps) => {
 	return (
-		<>
-			{props.orders.length === 0 && (
+		<View style={styles.container}>
+			{props.orders.length === 0 ? (
 				<View style={styles.noOrders}>
 					<Text style={styles.noOrdersText}>
 						You are not assigned to any orders
 					</Text>
+				</View>
+			) : (
+				<View style={styles.titleContainer}>
+					<Text style={styles.title}>Your assigned orders</Text>
 				</View>
 			)}
 			{props.orders.map((order, index) => (
@@ -29,18 +33,29 @@ const OrdersListView = observer((props: OrdersViewProps) => {
 					selectedOrderID={props.selectedOrderID}
 				/>
 			))}
-		</>
+		</View>
 	);
 });
 export default OrdersListView;
 
 const styles = StyleSheet.create({
+	container: {
+		paddingHorizontal: 20,
+		paddingTop: 10,
+	},
 	noOrders: {
 		paddingTop: 20,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
 	noOrdersText: {
-		fontSize: 18,
+		fontSize: 20,
+	},
+	titleContainer: {
+		marginBottom: 5,
+	},
+	title: {
+		fontSize: 20,
+		fontFamily: 'Montserrat-Medium',
 	},
 });

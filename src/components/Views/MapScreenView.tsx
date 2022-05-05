@@ -33,7 +33,7 @@ export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 							backgroundColor: '#000',
 						},
 						container: {
-							backgroundColor: '#addaed',
+							backgroundColor: '#dfeef5',
 						},
 					}}>
 					<OrdersListController />
@@ -54,9 +54,11 @@ const styles = StyleSheet.create({
 		flexGrow: 1,
 	},
 	openDrawerButton: {
+		borderTopColor: '#9fb7c9',
+		borderTopWidth: 1,
 		padding: 10,
 		paddingBottom: 20,
-		backgroundColor: '#55b7e0',
+		backgroundColor: '#99cbf2',
 		textAlign: 'center',
 		justifyContent: 'center',
 		alignItems: 'center',

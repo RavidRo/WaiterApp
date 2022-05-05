@@ -35,7 +35,8 @@ export default class Notifications {
 		}
 
 		console.warn(
-			`In the event, "updateOrderStatus", parameters ${params} are not in the right format`
+			'In the event, "changeOrderStatus", parameters are not in the right format',
+			params
 		);
 	}
 }

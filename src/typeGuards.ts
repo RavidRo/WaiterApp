@@ -12,8 +12,14 @@ export function isString(someString: any): someString is string {
 }
 
 export function isOrderStatus(status: any): status is OrderStatus {
-	const result = ['unassigned', 'inprogress', 'completed', 'delivered'].find(
-		availableStatus => availableStatus === status
-	);
+	const result = [
+		'received',
+		'in preparation',
+		'ready to deliver',
+		'assigned',
+		'on the way',
+		'canceled',
+		'delivered',
+	].find(availableStatus => availableStatus === status);
 	return result !== undefined;
 }
