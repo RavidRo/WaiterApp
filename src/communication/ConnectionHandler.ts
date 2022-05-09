@@ -20,6 +20,11 @@ export default class ConnectionHandler {
 		onSuccess?: () => void,
 		onError?: () => void
 	): void {
+		if (this.socket.connected) {
+			onSuccess?.();
+			return;
+		}
+
 		this.socket.auth = {token};
 		this.socket.connect();
 
