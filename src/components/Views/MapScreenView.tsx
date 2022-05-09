@@ -8,11 +8,19 @@ import MapMarkersController from '../Controllers/MapMarkersController';
 type MapScreenViewProps = {
 	openBottomSheet: () => void;
 	refBottomSheet: LegacyRef<RBSheet> | undefined;
+	myName: string;
+	mapName: string;
 };
 export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 	return (
 		<>
 			<View style={styles.screen} testID='homeScreen'>
+				<View style={styles.titleContainer}>
+					<Text style={styles.title}>
+						Hey {props.myName}, you're in{' '}
+						<Text style={styles.location}>{props.mapName}</Text>
+					</Text>
+				</View>
 				<MapMarkersController style={styles.map} />
 				<TouchableOpacity
 					style={styles.openDrawerButton}
@@ -44,6 +52,19 @@ export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 }
 
 const styles = StyleSheet.create({
+	titleContainer: {
+		backgroundColor: '#99cbf2',
+		borderBottomColor: '#9fb7c9',
+		borderTopWidth: 1,
+		padding: 10,
+	},
+	title: {
+		fontSize: 16,
+		fontFamily: 'Montserrat-Medium',
+	},
+	location: {
+		fontFamily: 'Montserrat-SemiBold',
+	},
 	screen: {
 		display: 'flex',
 		flexDirection: 'column',
@@ -65,5 +86,6 @@ const styles = StyleSheet.create({
 	},
 	openDrawerButtonText: {
 		fontSize: 18,
+		fontFamily: 'Montserrat-Medium',
 	},
 });
