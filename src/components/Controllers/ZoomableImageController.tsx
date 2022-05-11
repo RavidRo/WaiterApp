@@ -5,7 +5,7 @@ import {
 	ViewStyle,
 	NativeTouchEvent,
 } from 'react-native';
-import {PointMarker} from '../../map';
+import {PointMarker} from '../../types/map';
 import ZoomableImageView from '../Views/ZoomableImageView';
 
 function calcDistance(x1: number, y1: number, x2: number, y2: number) {

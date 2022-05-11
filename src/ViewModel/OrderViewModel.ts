@@ -1,9 +1,15 @@
-import {Location, OrderStatus} from '../types/ido';
+import {Location, OrderIdo, OrderStatus} from '../types/ido';
 import GuestsModel, {Guest} from '../Models/GuestsModel';
 import Order from '../Models/Order';
 import OrdersModel from '../Models/OrdersModel';
 import Requests from '../networking/Requests';
 import {ItemViewModel} from './ItemViewModel';
+
+export type UIOrder = Order & {
+	guestName?: string;
+	guestPhoneNumber?: string;
+	guestLocation?: Location;
+};
 
 export default class OrderViewModel {
 	private requests: Requests;
@@ -22,9 +28,13 @@ export default class OrderViewModel {
 		return this.requests.getWaiterOrders().then(newOrders => {
 			const orders = newOrders.map(order => new Order(order));
 			this.ordersModel.orders = orders;
-			this.guestsModel.guests = orders.map(
-				order => new Guest(order.guestID)
-			);
+
+			// Updating the guests
+			const guestsIDs = orders.map(order => order.guestID);
+			this.guestsModel.guests = guestsIDs.map(id => new Guest(id));
+			this.fetchGuestsDetails(guestsIDs).catch(e => {
+				console.warn("Could not fetch a gust's details", e);
+			});
 		});
 	}
 
@@ -45,10 +55,14 @@ export default class OrderViewModel {
 		return Object.fromEntries(namedItems);
 	}
 
-	get orders(): Order[] {
+	get orders(): UIOrder[] {
 		return this.ordersModel.orders.map(order => {
 			const namedItems = this.nameItems(order.items);
-			return {...order, items: namedItems};
+			const guest = this.guestsModel.getGuest(order.guestID);
+			if (guest === undefined) {
+				console.warn('Could not find a requested guest');
+			}
+			return {...order, items: namedItems, ...guest};
 		});
 	}
 	get guests(): Guest[] {
@@ -70,6 +84,12 @@ export default class OrderViewModel {
 		}[];
 	}
 
+	public fetchGuestsDetails(guestsIDs: string[]) {
+		return this.requests.getGuestsDetails(guestsIDs).then(guestsDetails => {
+			this.guestsModel.updateGuestsDetails(guestsDetails);
+		});
+	}
+
 	public updateGuestLocation(guestID: string, guestLocation: Location): void {
 		this.guestsModel.updateGuestLocation(guestID, guestLocation);
 	}
@@ -79,14 +99,20 @@ export default class OrderViewModel {
 	}
 
 	public deliver(orderID: string) {
-		return this.requests.delivered(orderID).then(() => {
-			this.ordersModel.removeOrder(orderID);
-		});
+		return this.requests.delivered(orderID);
 	}
 
 	public onTheWay(orderID: string) {
 		return this.requests.onTheWay(orderID).then(() => {
 			this.ordersModel.updateOrderStatus(orderID, 'on the way');
 		});
+	}
+
+	public dismissOrder(orderID: string) {
+		this.ordersModel.removeOrder(orderID);
+	}
+
+	public assignedToOrder(order: OrderIdo) {
+		this.ordersModel.addOrder(new Order(order));
 	}
 }

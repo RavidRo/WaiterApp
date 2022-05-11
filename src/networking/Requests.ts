@@ -1,5 +1,5 @@
 import RequestsHandler from './RequestsHandler';
-import {ItemIdo, OrderIdo} from '../types/ido';
+import {GuestIDO, ItemIdo, OrderIdo} from '../types/ido';
 
 export default class Requests {
 	private handler: RequestsHandler;
@@ -23,7 +23,15 @@ export default class Requests {
 		return this.handler.post('orderArrived', {orderId: orderID});
 	}
 
-	onTheWay(orderID: string) {
+	onTheWay(orderID: string): Promise<void> {
 		return this.handler.post('orderOnTheWay', {orderId: orderID});
+	}
+
+	getWaiterName(): Promise<string> {
+		return this.handler.get('getWaiterName');
+	}
+
+	getGuestsDetails(ids: string[]): Promise<GuestIDO[]> {
+		return this.handler.get('getGuestsDetails', {ids});
 	}
 }

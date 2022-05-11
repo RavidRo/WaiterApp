@@ -40,10 +40,21 @@ export default class ConnectionViewModel {
 		return this.model;
 	}
 
+	get myName(): string | undefined {
+		return this.model.name;
+	}
+
+	private getMyName() {
+		return this.requests.getWaiterName().then(name => {
+			this.model.name = name;
+		});
+	}
+
 	public connect() {
 		const promises = [
 			this.orders.synchronizeOrders(),
 			this.items.syncItems(),
+			this.getMyName(),
 			new Promise<void>((resolve, reject) => {
 				if (this.model.token) {
 					this.connectionHandler.connect(

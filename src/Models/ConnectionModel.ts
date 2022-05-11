@@ -3,6 +3,7 @@ import {makeAutoObservable} from 'mobx';
 export default class ConnectionModel {
 	private _token: string | undefined;
 	private _isReconnecting: boolean;
+	private _name: string | undefined;
 
 	private constructor() {
 		this._isReconnecting = false;
@@ -23,6 +24,14 @@ export default class ConnectionModel {
 
 	get token(): string | undefined {
 		return this._token;
+	}
+
+	set name(newName: string | undefined) {
+		this._name = newName;
+	}
+
+	get name(): string | undefined {
+		return this._name;
 	}
 
 	set isReconnecting(value: boolean) {

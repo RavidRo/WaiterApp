@@ -3,25 +3,22 @@ import React from 'react';
 import {View, StyleSheet, Button, Text, TouchableOpacity} from 'react-native';
 import Order from '../../Models/Order';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-	faSortDown,
-	faSortUp,
-	faChevronDown,
-	faChevronUp,
-	faAngleDown,
-	faAngleUp,
-	faSquareCaretDown,
-	faCircle,
-} from '@fortawesome/free-solid-svg-icons';
+import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
+import {UIOrder} from '../../ViewModel/OrderViewModel';
 
 type OrderItemViewProps = {
-	order: Order;
+	order: UIOrder;
 	selected: boolean;
 	evenItem: boolean;
 	deliver: (orderID: string) => void;
 	onTheWay: (orderID: string) => void;
+	dismissOrder: (orderID: string) => void;
 	selectOrder: (string: string) => void;
 	loading: boolean;
+	unknownLocation: boolean;
+	fetchGuestDetails: (guestID: string) => void;
+	loadingGuest: boolean;
+	guestsDetailsAvailable: boolean;
 };
 
 export default observer(function OrderItemView(props: OrderItemViewProps) {
@@ -40,59 +37,97 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 					/>
 
 					<Text style={styles.orderText}>
-						{/* TODO: Instead of 'Order' write the name of the guest */}
-						{`Order - ${props.order.id.slice(0, 5)}  < `}
+						{props.order.guestName
+							? `${props.order.guestName} < `
+							: `Order - ${props.order.id.slice(0, 5)}  < `}
 						<Text style={styles.orderStatus}>
 							{props.order.orderStatus}
 						</Text>
 						{' >'}
 					</Text>
 				</View>
-				{props.selected && (
-					<View style={styles.items}>
-						{Object.entries(props.order.items).map(
-							([name, quantity], index) => (
-								<View key={index} style={styles.titleContainer}>
-									{/* <FontAwesomeIcon
-										icon={faCircle}
-										size={5}
-										style={styles.iconStyle}
-									/> */}
-									<Text style={styles.itemsText}>
-										{quantity} - {name}
-									</Text>
-								</View>
-							)
-						)}
-						<View style={styles.statusButton}>
-							{props.order.orderStatus === 'on the way' && (
-								<Button
-									title='delivered'
-									onPress={() =>
-										props.deliver(props.order.id)
-									}
-									disabled={props.loading}
-								/>
+				<View style={styles.items}>
+					{props.unknownLocation && (
+						<>
+							<Text style={styles.dismiss}>
+								Guess'ts location is unknown
+							</Text>
+							{props.guestsDetailsAvailable && (
+								<Text style={styles.dismiss}>
+									Guess'ts phone number -{' '}
+									{props.order.guestPhoneNumber}
+								</Text>
 							)}
-							{props.order.orderStatus === 'assigned' && (
-								<Button
-									title='on the way'
-									onPress={() =>
-										props.onTheWay(props.order.id)
-									}
-									disabled={props.loading}
-									color={'green'}
-								/>
+						</>
+					)}
+					{props.selected && (
+						<>
+							{Object.entries(props.order.items).map(
+								([name, quantity], index) => (
+									<View
+										key={index}
+										style={styles.titleContainer}>
+										<Text style={styles.itemsText}>
+											{quantity} - {name}
+										</Text>
+									</View>
+								)
 							)}
-						</View>
-					</View>
-				)}
+							<View style={styles.statusButton}>
+								{props.order.orderStatus === 'on the way' ? (
+									<Button
+										title='delivered'
+										onPress={() =>
+											props.deliver(props.order.id)
+										}
+										disabled={props.loading}
+									/>
+								) : props.order.orderStatus === 'assigned' ? (
+									<Button
+										title='on the way'
+										onPress={() =>
+											props.onTheWay(props.order.id)
+										}
+										disabled={props.loading}
+										color={'green'}
+									/>
+								) : (
+									<Button
+										title='dismiss'
+										onPress={() =>
+											props.dismissOrder(props.order.id)
+										}
+										disabled={props.loading}
+										color={'#d68383'}
+									/>
+								)}
+								{!props.guestsDetailsAvailable && (
+									<Button
+										title="fetch guest's details"
+										onPress={() =>
+											props.fetchGuestDetails(
+												props.order.guestID
+											)
+										}
+										disabled={props.loadingGuest}
+										color={'#d68383'}
+									/>
+								)}
+							</View>
+						</>
+					)}
+				</View>
 			</View>
 		</TouchableOpacity>
 	);
 });
 
 const styles = StyleSheet.create({
+	dismiss: {
+		marginBottom: 7,
+		color: '#ad9d11',
+		fontFamily: 'Montserrat-Bold',
+	},
 	iconStyle: {
 		marginRight: 5,
 	},

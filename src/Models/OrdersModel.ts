@@ -41,4 +41,11 @@ export default class OrdersModel {
 			);
 		}
 	}
+
+	addOrder(order: Order) {
+		if (this._orders.has(order.id)) {
+			console.warn('Assigned to a order that was already added');
+		}
+		this._orders.set(order.id, order);
+	}
 }

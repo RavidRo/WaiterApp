@@ -1,11 +1,11 @@
 import {observer} from 'mobx-react-lite';
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import Order from '../../Models/Order';
+import {UIOrder} from '../../ViewModel/OrderViewModel';
 import OrderItemController from '../Controllers/OrderItemController';
 
 type OrdersViewProps = {
-	orders: Order[];
+	orders: UIOrder[];
 	selectOrder: (string: string) => void;
 	selectedOrderID: string | undefined;
 };

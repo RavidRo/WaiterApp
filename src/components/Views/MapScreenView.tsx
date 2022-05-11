@@ -8,46 +8,44 @@ import MapMarkersController from '../Controllers/MapMarkersController';
 type MapScreenViewProps = {
 	openBottomSheet: () => void;
 	refBottomSheet: LegacyRef<RBSheet> | undefined;
-	myName: string;
+	myName: string | undefined;
 	mapName: string;
 };
 export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 	return (
-		<>
-			<View style={styles.screen} testID='homeScreen'>
-				<View style={styles.titleContainer}>
-					<Text style={styles.title}>
-						Hey {props.myName}, you're in{' '}
-						<Text style={styles.location}>{props.mapName}</Text>
-					</Text>
-				</View>
-				<MapMarkersController style={styles.map} />
-				<TouchableOpacity
-					style={styles.openDrawerButton}
-					onPress={props.openBottomSheet}>
-					<Text style={styles.openDrawerButtonText}>Your Orders</Text>
-				</TouchableOpacity>
-				<RBSheet
-					ref={props.refBottomSheet}
-					closeOnDragDown={true}
-					closeOnPressMask={false}
-					dragFromTopOnly={false}
-					height={550}
-					customStyles={{
-						wrapper: {
-							backgroundColor: 'transparent',
-						},
-						draggableIcon: {
-							backgroundColor: '#000',
-						},
-						container: {
-							backgroundColor: '#dfeef5',
-						},
-					}}>
-					<OrdersListController />
-				</RBSheet>
+		<View style={styles.screen} testID='homeScreen'>
+			<View style={styles.titleContainer}>
+				<Text style={styles.title}>
+					{props.myName ? `Hey ${props.myName}, y` : 'Y'}ou're in{' '}
+					<Text style={styles.location}>{props.mapName}</Text>
+				</Text>
 			</View>
-		</>
+			<MapMarkersController style={styles.map} />
+			<TouchableOpacity
+				style={styles.openDrawerButton}
+				onPress={props.openBottomSheet}>
+				<Text style={styles.openDrawerButtonText}>Your Orders</Text>
+			</TouchableOpacity>
+			<RBSheet
+				ref={props.refBottomSheet}
+				closeOnDragDown={true}
+				closeOnPressMask={false}
+				dragFromTopOnly={false}
+				height={550}
+				customStyles={{
+					wrapper: {
+						backgroundColor: 'transparent',
+					},
+					draggableIcon: {
+						backgroundColor: '#000',
+					},
+					container: {
+						backgroundColor: '#dfeef5',
+					},
+				}}>
+				<OrdersListController />
+			</RBSheet>
+		</View>
 	);
 }
 

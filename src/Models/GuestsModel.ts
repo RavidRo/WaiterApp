@@ -1,5 +1,5 @@
 import {makeAutoObservable} from 'mobx';
-import {Location} from '../types/ido';
+import {GuestIDO, Location} from '../types/ido';
 
 export default class GuestsModel {
 	private _guests: Map<string, Guest>; //<ID, Object>
@@ -19,23 +19,36 @@ export default class GuestsModel {
 		});
 	}
 
+	getGuest(guestID: string): Guest | undefined {
+		return this._guests.get(guestID);
+	}
+
 	updateGuestLocation(guestID: string, location: Location): void {
 		const guest = this._guests.get(guestID);
 		if (guest) {
 			guest.location = location;
 		}
 	}
+
+	updateGuestsDetails(guestsDetails: GuestIDO[]) {
+		guestsDetails.forEach(guest => {
+			if (!this._guests.has(guest.id)) {
+				this._guests.set(guest.id, new Guest(guest.id));
+			}
+			this._guests.get(guest.id)!.name = guest.name;
+			this._guests.get(guest.id)!.phoneNumber = guest.phoneNumber;
+		});
+	}
 }
 
 export class Guest {
 	public readonly id: string;
-	public readonly name: string;
-	public readonly phoneNumber: string;
+	public name?: string;
+	public phoneNumber?: string;
 	public location?: Location;
 
 	constructor(id: string) {
 		this.id = id;
-		this.name = '';
-		this.phoneNumber = '';
+		makeAutoObservable(this);
 	}
 }
