@@ -58,6 +58,12 @@ export default observer(function OrderItemController(
 		ordersViewModel.dismissOrder(orderID);
 	};
 
+	const guestLocation = props.order.guestLocation;
+	const isInBound = (n: Number) => n >= 0 && n <= 1;
+	const locationOutOfBounds =
+		guestLocation !== undefined &&
+		(!isInBound(guestLocation.x) || !isInBound(guestLocation.y));
+
 	return (
 		<OrderItemView
 			deliver={deliver}
@@ -68,7 +74,8 @@ export default observer(function OrderItemController(
 			selectOrder={props.selectOrder}
 			selected={props.selectedOrderID === props.order.id}
 			dismissOrder={dismissOrder}
-			unknownLocation={props.order.guestLocation === undefined}
+			unknownLocation={guestLocation === undefined}
+			locationOutOfBounds={locationOutOfBounds}
 			fetchGuestDetails={fetchGuestDetails}
 			loadingGuest={loadingGuest}
 			guestsDetailsAvailable={props.order.guestPhoneNumber !== undefined}

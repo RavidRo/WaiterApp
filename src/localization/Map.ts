@@ -1,16 +1,20 @@
 import {Corners} from '../types/ido';
 import {GPS} from '../types/map';
-
+import configuration from '../../configuration.json';
 export default class LocationMap {
+	private mapID: string;
 	private corners: Corners;
+
 	private width: number;
 	private height: number;
+
 	constructor(corners: Corners) {
 		this.corners = corners;
 		this.width =
 			corners.bottomRightGPS.longitude - corners.bottomLeftGPS.longitude;
 		this.height =
 			corners.topRightGPS.latitude - corners.bottomRightGPS.latitude;
+		this.mapID = configuration['map-id'];
 	}
 
 	private distanceFromLine(end1: GPS, end2: GPS, p: GPS) {
@@ -38,6 +42,6 @@ export default class LocationMap {
 				location
 			) / this.height;
 
-		return {x: localX, y: localY};
+		return {x: localX, y: localY, mapId: this.mapID};
 	}
 }

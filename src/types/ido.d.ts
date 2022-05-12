@@ -20,6 +20,7 @@ export type OrderIdo = {
 export type Location = {
 	x: number;
 	y: number;
+	mapId: string;
 };
 export type Corners = {
 	topRightGPS: GPS;

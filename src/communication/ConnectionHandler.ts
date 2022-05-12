@@ -80,7 +80,7 @@ export default class ConnectionHandler {
 		}
 	}
 
-	public send(event: string, ...params: any[]): void {
+	public send(event: string, params: Record<string, unknown>): void {
 		if (this.socket === undefined) {
 			const errorMessage =
 				'A message is sent to the server before a connection is being initialized';

@@ -1,6 +1,6 @@
 import {observer} from 'mobx-react-lite';
 import React, {useCallback, useContext, useEffect} from 'react';
-import {PermissionsAndroid, Platform, Alert, Button} from 'react-native';
+import {Alert, Button} from 'react-native';
 import {MyLocationContext} from '../contexts';
 
 type ApproveLocationProps = {
@@ -11,25 +11,13 @@ const ApproveLocation = observer((props: ApproveLocationProps) => {
 	const myLocationViewModel = useContext(MyLocationContext);
 	const approved = myLocationViewModel.locationApproved;
 
-	const askApproval = useCallback(() => {
-		const approvingLocationRequest =
-			Platform.OS === 'android'
-				? PermissionsAndroid.request(
-						PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-				  )
-				: Promise.reject('IOS is not supported');
-		approvingLocationRequest
-			.then(value => {
-				if (value === 'granted') {
-					myLocationViewModel.approve();
-				} else {
-					Alert.alert('Location needs to be approved');
-				}
-			})
-			.catch(() => {
-				Alert.alert('Location needs to be approved');
-			});
-	}, [myLocationViewModel]);
+	const askApproval = useCallback(
+		() =>
+			myLocationViewModel
+				.askLocationApproval()
+				.catch(e => Alert.alert(e)),
+		[myLocationViewModel]
+	);
 
 	useEffect(() => {
 		askApproval();

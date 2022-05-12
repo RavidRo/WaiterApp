@@ -1,5 +1,5 @@
 {
-	"server-url": "https://6e32-93-173-128-180.eu.ngrok.io",
+	"server-url": "https://4bda-128-139-251-9.eu.ngrok.io/",
 	"corners": {
 		"bottom-right-gps": {"longitude": 34.802516, "latitude": 31.261649},
 		"bottom-left-gps": {"longitude": 34.800838, "latitude": 31.261649},
@@ -7,5 +7,6 @@
 		"top-left-gps": {"longitude": 34.800838, "latitude": 31.26355}
 	},
 	"map-image-url": "https://res.cloudinary.com/noa-health/image/upload/v1640287601/bengurion-map_q32yck.png",
-	"map-name": "Beit Ha Student"
+	"map-name": "Beit Ha Student",
+	"map-id": "Random Map ID"
 }

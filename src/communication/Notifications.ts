@@ -28,7 +28,7 @@ export default class Notifications {
 	}
 
 	private updateGuestLocation(params: Params): void {
-		const guestID = params.guestId;
+		const guestID = params.guestID;
 		const guestLocation = params.location;
 		if (isString(guestID) && isLocation(guestLocation)) {
 			this.orders.updateGuestLocation(guestID, guestLocation);

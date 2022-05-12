@@ -1,7 +1,6 @@
 import {observer} from 'mobx-react-lite';
 import React from 'react';
 import {View, StyleSheet, Button, Text, TouchableOpacity} from 'react-native';
-import Order from '../../Models/Order';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 import {UIOrder} from '../../ViewModel/OrderViewModel';
@@ -19,6 +18,7 @@ type OrderItemViewProps = {
 	fetchGuestDetails: (guestID: string) => void;
 	loadingGuest: boolean;
 	guestsDetailsAvailable: boolean;
+	locationOutOfBounds: boolean;
 };
 
 export default observer(function OrderItemView(props: OrderItemViewProps) {
@@ -47,15 +47,21 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 					</Text>
 				</View>
 				<View style={styles.items}>
-					{props.unknownLocation && (
+					{(props.unknownLocation || props.locationOutOfBounds) && (
 						<>
-							<Text style={styles.dismiss}>
-								Guess'ts location is unknown
-							</Text>
+							{props.unknownLocation && (
+								<Text style={styles.dismiss}>
+									Guest's location is unknown
+								</Text>
+							)}
+							{props.locationOutOfBounds && (
+								<Text style={styles.dismiss}>
+									Guest's location is out of the serving area
+								</Text>
+							)}
 							{props.guestsDetailsAvailable && (
 								<Text style={styles.dismiss}>
-									Guess'ts phone number -{' '}
-									{props.order.guestPhoneNumber}
+									Phone number: {props.order.guestPhoneNumber}
 								</Text>
 							)}
 						</>

@@ -14,9 +14,11 @@ const OrdersList = observer((_: OrdersProps) => {
 		setSelectedOrder(selectedOrder === orderId ? undefined : orderId);
 	};
 
+	const orders = ordersViewModel.orders;
+
 	return (
 		<OrdersListView
-			orders={ordersViewModel.orders}
+			orders={orders}
 			selectOrder={selectOrder}
 			selectedOrderID={selectedOrder}
 		/>

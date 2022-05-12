@@ -7,7 +7,9 @@ export default class Communicate {
 		this.connectionHandler = connectionHandler;
 	}
 
-	updateWaiterLocation(...params: [waiterLocation: Location]): void {
-		this.connectionHandler.send('updateWaiterLocation', ...params);
+	updateWaiterLocation(waiterLocation: Location): void {
+		this.connectionHandler.send('updateWaiterLocation', {
+			location: waiterLocation,
+		});
 	}
 }

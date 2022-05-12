@@ -59,10 +59,13 @@ export default class OrderViewModel {
 		return this.ordersModel.orders.map(order => {
 			const namedItems = this.nameItems(order.items);
 			const guest = this.guestsModel.getGuest(order.guestID);
-			if (guest === undefined) {
-				console.warn('Could not find a requested guest');
-			}
-			return {...order, items: namedItems, ...guest};
+			return {
+				...order,
+				items: namedItems,
+				guestLocation: guest?.location,
+				guestName: guest?.name,
+				guestPhoneNumber: guest?.phoneNumber,
+			};
 		});
 	}
 	get guests(): Guest[] {
@@ -114,5 +117,8 @@ export default class OrderViewModel {
 
 	public assignedToOrder(order: OrderIdo) {
 		this.ordersModel.addOrder(new Order(order));
+		this.fetchGuestsDetails([order.guestId]).catch(e => {
+			console.warn("Could not fetch a gust's details", e);
+		});
 	}
 }

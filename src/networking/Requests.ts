@@ -32,6 +32,13 @@ export default class Requests {
 	}
 
 	getGuestsDetails(ids: string[]): Promise<GuestIDO[]> {
+		if (ids.length === 0) {
+			return Promise.resolve([]);
+		}
 		return this.handler.get('getGuestsDetails', {ids});
+		// return this.handler.get(
+		// 	'getGuestsDetails?' +
+		// 		ids.map((n, index) => `ids[${index}]=${n}`).join('&')
+		// );
 	}
 }

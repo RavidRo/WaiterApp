@@ -4,6 +4,7 @@ import {ILocationService} from '../localization/ILocationService';
 import MyLocationModel from '../Models/MyLocationModel';
 import configuration from '../../configuration.json';
 import Communicate from '../communication/Communicate';
+import {PermissionsAndroid, Platform} from 'react-native';
 
 const corners: Corners = {
 	bottomRightGPS: configuration.corners['bottom-right-gps'],
@@ -69,4 +70,33 @@ export default class MyLocationViewModel {
 			this.startTrackingLocation();
 		}
 	}
+
+	public askLocationApproval = () => {
+		const approvingLocationRequest =
+			Platform.OS === 'android'
+				? PermissionsAndroid.request(
+						PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+				  )
+				: Promise.reject('IOS is not supported');
+
+		return approvingLocationRequest
+			.catch(() => {
+				return Promise.reject(
+					'Location needs to be approved for the user to watch your location'
+				);
+			})
+			.then(value => {
+				if (value === 'granted') {
+					return this.approve();
+				} else if (value === 'never_ask_again') {
+					return Promise.reject(
+						'Pls enable location permission in the Settings -> Apps -> service_everywhere'
+					);
+				} else {
+					return Promise.reject(
+						'Location needs to be approved for the user to watch your location'
+					);
+				}
+			});
+	};
 }

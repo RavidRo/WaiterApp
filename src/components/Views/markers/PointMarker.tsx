@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {Marker} from 'waiters_app/src/map';
+import {Marker} from '../../../types/map';
 
 const SIZE = 40;
 
