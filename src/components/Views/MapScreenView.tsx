@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
 	},
 	map: {
 		flexGrow: 1,
+		zIndex: -1,
 	},
 	openDrawerButton: {
 		borderTopColor: '#9fb7c9',

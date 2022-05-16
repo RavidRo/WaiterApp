@@ -7,7 +7,7 @@ import {
 	StyleSheet,
 	GestureResponderHandlers,
 } from 'react-native';
-import {PointMarker as PointMarkerType} from '../../map';
+import {PointMarker as PointMarkerType} from '../../types/map';
 
 type MyZoomableImageProps = {
 	imageWidth: number;
