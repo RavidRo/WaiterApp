@@ -1,20 +1,18 @@
-import {Corners} from '../types/ido';
+import {MapIDO} from '../types/ido';
 import {GPS} from '../types/map';
-import configuration from '../../configuration.json';
 export default class LocationMap {
-	private mapID: string;
-	private corners: Corners;
+	private readonly map: MapIDO;
 
-	private width: number;
-	private height: number;
+	private readonly width: number;
+	private readonly height: number;
 
-	constructor(corners: Corners) {
-		this.corners = corners;
+	constructor(map: MapIDO) {
+		this.map = map;
+		const corners = map.corners;
 		this.width =
 			corners.bottomRightGPS.longitude - corners.bottomLeftGPS.longitude;
 		this.height =
 			corners.topRightGPS.latitude - corners.bottomRightGPS.latitude;
-		this.mapID = configuration['map-id'];
 	}
 
 	private distanceFromLine(end1: GPS, end2: GPS, p: GPS) {
@@ -28,20 +26,28 @@ export default class LocationMap {
 	}
 
 	translateGps(location: GPS) {
+		const corners = this.map.corners;
+
 		const localX =
 			this.distanceFromLine(
-				this.corners.topLeftGPS,
-				this.corners.bottomLeftGPS,
+				corners.topLeftGPS,
+				corners.bottomLeftGPS,
 				location
 			) / this.width;
 
 		const localY =
 			this.distanceFromLine(
-				this.corners.topLeftGPS,
-				this.corners.topRightGPS,
+				corners.topLeftGPS,
+				corners.topRightGPS,
 				location
 			) / this.height;
 
-		return {x: localX, y: localY, mapId: this.mapID};
+		return {x: localX, y: localY, mapID: this.map.id};
+	}
+
+	hasInside(location: GPS) {
+		const localLocation = this.translateGps(location);
+		const inRange = (value: number) => value >= 0 && value <= 1;
+		return inRange(localLocation.x) && inRange(localLocation.y);
 	}
 }

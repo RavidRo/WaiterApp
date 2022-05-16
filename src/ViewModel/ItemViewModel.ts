@@ -1,4 +1,4 @@
-import {ItemIdo} from '../types/ido';
+import {ItemIDO} from '../types/ido';
 import ItemModel from '../Models/ItemModel';
 import Requests from '../networking/Requests';
 
@@ -11,11 +11,11 @@ export class ItemViewModel {
 		this.requests = requests;
 	}
 
-	get items(): ItemIdo[] {
+	get items(): ItemIDO[] {
 		return this.itemsModel.items;
 	}
 
-	getItemByID(id: string): ItemIdo | undefined {
+	getItemByID(id: string): ItemIDO | undefined {
 		return this.itemsModel.items.find(item => item.id === id);
 	}
 

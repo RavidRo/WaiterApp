@@ -1,28 +1,38 @@
-import {Corners, Location} from '../types/ido';
+import {autorun} from 'mobx';
+
+import {Location} from '../types/ido';
 import {GPS} from '../types/map';
+import MapViewModel from '../ViewModel/MapsViewModel';
 import GeolocationAdapter from './GeolocationAdapter';
 
 import {ILocationService} from './ILocationService';
 import LocationMap from './Map';
 
 export default class Geolocation implements ILocationService {
-	private geolocationAdapter: GeolocationAdapter;
-	private map: LocationMap;
+	private readonly geolocationAdapter: GeolocationAdapter;
+	private maps: LocationMap[] = [];
 
-	constructor(corners: Corners) {
-		this.map = new LocationMap(corners);
+	constructor(mapsViewModel: MapViewModel) {
+		autorun(() => {
+			this.maps = mapsViewModel.maps.map(map => new LocationMap(map));
+		});
 		this.geolocationAdapter = new GeolocationAdapter();
 	}
 
-	private translateFunction(successCallback: (location: Location) => void) {
+	private translateFunction(successCallback: (location?: Location) => void) {
 		return (location: GPS) => {
-			const newLocation = this.map.translateGps(location);
-			successCallback(newLocation);
+			this.maps.forEach(map => {
+				if (map.hasInside(location)) {
+					const newLocation = map.translateGps(location);
+					return successCallback(newLocation);
+				}
+			});
+			return successCallback(undefined);
 		};
 	}
 
 	watchLocation(
-		successCallback: (location: Location) => void,
+		successCallback: (location?: Location) => void,
 		errorCallback: (error: string) => void
 	) {
 		this.geolocationAdapter.watchLocation(
@@ -32,7 +42,7 @@ export default class Geolocation implements ILocationService {
 	}
 
 	getLocation(
-		successCallback: (location: Location) => void,
+		successCallback: (location?: Location) => void,
 		errorCallback: (error: string) => void
 	): void {
 		this.geolocationAdapter.getLocation(

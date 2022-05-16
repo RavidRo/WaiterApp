@@ -1,4 +1,4 @@
-import {Location, OrderIdo, OrderStatus} from './types/ido';
+import {Location, OrderIDO, OrderStatus} from './types/ido';
 
 export function isLocation(location: any): location is Location {
 	return (
@@ -11,7 +11,7 @@ export function isString(someString: any): someString is string {
 	return typeof someString === 'string';
 }
 
-export function isOrder(o: any): o is OrderIdo {
+export function isOrder(o: any): o is OrderIDO {
 	return (
 		isString(o.id) &&
 		isString(o.guestId) &&

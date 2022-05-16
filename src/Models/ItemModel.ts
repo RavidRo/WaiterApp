@@ -1,8 +1,8 @@
 import {makeAutoObservable} from 'mobx';
-import {ItemIdo} from '../types/ido';
+import {ItemIDO} from '../types/ido';
 
-export default class OrderModel {
-	private _items: ItemIdo[];
+export default class ItemsModel {
+	private _items: ItemIDO[];
 	constructor() {
 		this._items = [];
 		makeAutoObservable(this);
@@ -12,7 +12,7 @@ export default class OrderModel {
 		return this._items;
 	}
 
-	set items(newItems: ItemIdo[]) {
+	set items(newItems: ItemIDO[]) {
 		this._items = newItems;
 	}
 }

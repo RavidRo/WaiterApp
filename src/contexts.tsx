@@ -5,7 +5,7 @@ import Notifications from './communication/Notifications';
 import Requests from './networking/Requests';
 import ConnectionViewModel from './ViewModel/ConnectionViewModel';
 import {ItemViewModel} from './ViewModel/ItemViewModel';
-import MapViewModel from './ViewModel/MapViewModel';
+import MapViewModel from './ViewModel/MapsViewModel';
 import MyLocationViewModel from './ViewModel/MyLocationViewModel';
 import OrderViewModel from './ViewModel/OrderViewModel';
 
@@ -18,15 +18,16 @@ const notifications = new Notifications(orders);
 const connectionHandler = new ConnectionHandler(notifications);
 const communicate = new Communicate(connectionHandler);
 
-const myLocation = new MyLocationViewModel(communicate);
+const maps = new MapViewModel(requests);
+const myLocation = new MyLocationViewModel(communicate, maps);
 const connection = new ConnectionViewModel(
 	requests,
 	orders,
 	items,
 	myLocation,
-	connectionHandler
+	connectionHandler,
+	maps
 );
-const maps = new MapViewModel();
 
 export const ConnectionContext = createContext<ConnectionViewModel>(connection);
 export const OrdersContext = createContext<OrderViewModel>(orders);

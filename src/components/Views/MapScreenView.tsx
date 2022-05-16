@@ -9,15 +9,17 @@ type MapScreenViewProps = {
 	openBottomSheet: () => void;
 	refBottomSheet: LegacyRef<RBSheet> | undefined;
 	myName: string | undefined;
-	mapName: string;
+	mapName: string | undefined;
 };
 export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 	return (
 		<View style={styles.screen} testID='homeScreen'>
 			<View style={styles.titleContainer}>
 				<Text style={styles.title}>
-					{props.myName ? `Hey ${props.myName}, y` : 'Y'}ou're in{' '}
-					<Text style={styles.location}>{props.mapName}</Text>
+					{`Hey ${props.myName ?? ''}, You're in `}
+					<Text style={styles.location}>
+						{props.mapName ?? 'Loading Map...'}
+					</Text>
 				</Text>
 			</View>
 			<MapMarkersController style={styles.map} />

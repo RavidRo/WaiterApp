@@ -7,6 +7,8 @@ type LoginViewProps = {
 	isLoading: boolean;
 	password: string;
 	onPasswordChange: (newPassword: string) => void;
+	username: string;
+	onUsernameChange: (newPassword: string) => void;
 	onSubmit: () => void;
 	establishConnection: () => void;
 	isReconnecting: boolean;
@@ -47,6 +49,14 @@ export default function LoginView(props: LoginViewProps) {
 	return (
 		<>
 			<View style={styles.buttonContainer}>
+				<TextInput
+					style={styles.input}
+					onChangeText={props.onUsernameChange}
+					value={props.username}
+					placeholder='Your Username'
+					secureTextEntry
+					testID='usernameInput'
+				/>
 				<TextInput
 					style={styles.input}
 					onChangeText={props.onPasswordChange}

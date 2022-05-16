@@ -2,6 +2,7 @@ import ConnectionHandler from '../communication/ConnectionHandler';
 import ConnectionModel from '../Models/ConnectionModel';
 import Requests from '../networking/Requests';
 import {ItemViewModel} from './ItemViewModel';
+import MapsViewModel from './MapsViewModel';
 import MyLocationViewModel from './MyLocationViewModel';
 import OrderViewModel from './OrderViewModel';
 
@@ -12,13 +13,15 @@ export default class ConnectionViewModel {
 	private orders: OrderViewModel;
 	private items: ItemViewModel;
 	private myLocation: MyLocationViewModel;
+	private maps: MapsViewModel;
 
 	constructor(
 		requests: Requests,
 		orderViewModel: OrderViewModel,
 		itemViewModel: ItemViewModel,
 		myLocationViewModel: MyLocationViewModel,
-		connectionHandler: ConnectionHandler
+		connectionHandler: ConnectionHandler,
+		mapsViewModel: MapsViewModel
 	) {
 		this.model = ConnectionModel.getInstance();
 		this.connectionHandler = connectionHandler;
@@ -26,10 +29,11 @@ export default class ConnectionViewModel {
 		this.orders = orderViewModel;
 		this.items = itemViewModel;
 		this.myLocation = myLocationViewModel;
+		this.maps = mapsViewModel;
 	}
 
-	login(password: string): Promise<string> {
-		return this.requests.login(password).then(token => {
+	login(username: string, password: string): Promise<string> {
+		return this.requests.login(username, password).then(token => {
 			console.info('Logged in with token:', token);
 			this.model.token = token;
 			return token;
@@ -52,6 +56,7 @@ export default class ConnectionViewModel {
 
 	public connect() {
 		const promises = [
+			this.maps.syncMaps(),
 			this.orders.synchronizeOrders(),
 			this.items.syncItems(),
 			this.getMyName(),

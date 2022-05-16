@@ -1,5 +1,5 @@
 import RequestsHandler from './RequestsHandler';
-import {GuestIDO, ItemIdo, OrderIdo} from '../types/ido';
+import {GuestIDO, ItemIDO, MapIDO, OrderIDO} from '../types/ido';
 
 export default class Requests {
 	private handler: RequestsHandler;
@@ -7,15 +7,15 @@ export default class Requests {
 		this.handler = new RequestsHandler();
 	}
 
-	getWaiterOrders(): Promise<OrderIdo[]> {
+	getWaiterOrders(): Promise<OrderIDO[]> {
 		return this.handler.get('getWaiterOrders');
 	}
 
-	login(password: string): Promise<string> {
-		return this.handler.post('login', {password});
+	login(username: string, password: string): Promise<string> {
+		return this.handler.post('login', {password, username});
 	}
 
-	getItems(): Promise<ItemIdo[]> {
+	getItems(): Promise<ItemIDO[]> {
 		return this.handler.get('getItems');
 	}
 
@@ -36,9 +36,22 @@ export default class Requests {
 			return Promise.resolve([]);
 		}
 		return this.handler.get('getGuestsDetails', {ids});
-		// return this.handler.get(
-		// 	'getGuestsDetails?' +
-		// 		ids.map((n, index) => `ids[${index}]=${n}`).join('&')
-		// );
+	}
+
+	getMaps(): Promise<MapIDO[]> {
+		return Promise.resolve([
+			{
+				corners: {
+					bottomRightGPS: {longitude: 34.802516, latitude: 31.261649},
+					bottomLeftGPS: {longitude: 34.800838, latitude: 31.261649},
+					topRightGPS: {longitude: 34.802516, latitude: 31.26355},
+					topLeftGPS: {longitude: 34.800838, latitude: 31.26355},
+				},
+				id: 'Random Map ID',
+				imageURL:
+					'https://res.cloudinary.com/noa-health/image/upload/v1640287601/bengurion-map_q32yck.png',
+				name: 'Beit Ha Student',
+			},
+		]);
 	}
 }

@@ -1,28 +1,24 @@
-import {Corners, Location} from '../types/ido';
+import {Location, MapIDO} from '../types/ido';
 import Geolocation from '../localization/Geolocation';
 import {ILocationService} from '../localization/ILocationService';
 import MyLocationModel from '../Models/MyLocationModel';
-import configuration from '../../configuration.json';
 import Communicate from '../communication/Communicate';
 import {PermissionsAndroid, Platform} from 'react-native';
+import MapViewModel from './MapsViewModel';
 
-const corners: Corners = {
-	bottomRightGPS: configuration.corners['bottom-right-gps'],
-	bottomLeftGPS: configuration.corners['bottom-left-gps'],
-	topRightGPS: configuration.corners['top-right-gps'],
-	topLeftGPS: configuration.corners['top-left-gps'],
-};
 export default class MyLocationViewModel {
 	private locationService: ILocationService;
 	private locationModel: MyLocationModel;
 	private communicate: Communicate;
 	private tracking: boolean;
+	private mapViewModel: MapViewModel;
 
-	constructor(communicate: Communicate) {
+	constructor(communicate: Communicate, mapViewModel: MapViewModel) {
 		this.locationModel = new MyLocationModel();
-		this.locationService = new Geolocation(corners);
+		this.locationService = new Geolocation(mapViewModel);
 		this.communicate = communicate;
 		this.tracking = false;
+		this.mapViewModel = mapViewModel;
 	}
 
 	private isValidLocation(location: Location) {
@@ -33,7 +29,10 @@ export default class MyLocationViewModel {
 	private startTrackingLocation() {
 		this.locationService.watchLocation(
 			location => {
-				if (this.isValidLocation(location)) {
+				if (!location) {
+					console.warn('Location out of bounds', location);
+					this.locationModel.location = undefined;
+				} else if (this.isValidLocation(location)) {
 					this.communicate.updateWaiterLocation(location);
 					this.locationModel.location = location;
 				} else {
@@ -41,10 +40,12 @@ export default class MyLocationViewModel {
 						'An invalid location has been received from the location service',
 						location
 					);
+					this.locationModel.location = undefined;
 				}
 			},
 			error => {
 				console.warn('Could not get the user location', error);
+				this.locationModel.location = undefined;
 			}
 		);
 	}
@@ -64,6 +65,12 @@ export default class MyLocationViewModel {
 		return this.locationModel.locationApproved;
 	}
 
+	get currentMap(): MapIDO | undefined {
+		return this.location
+			? this.mapViewModel.getMapByID(this.location.mapID)
+			: this.mapViewModel.defaultMap;
+	}
+
 	approve() {
 		this.locationModel.approve();
 		if (this.tracking) {
@@ -76,6 +83,7 @@ export default class MyLocationViewModel {
 			Platform.OS === 'android'
 				? PermissionsAndroid.request(
 						PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+						// eslint-disable-next-line no-mixed-spaces-and-tabs
 				  )
 				: Promise.reject('IOS is not supported');
 

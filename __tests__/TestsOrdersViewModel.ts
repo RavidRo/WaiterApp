@@ -1,9 +1,9 @@
 import {flushPromises, makePromise as mockMakePromise} from './PromiseUtils';
 import OrderViewModel from '../src/ViewModel/OrderViewModel';
-import {ItemIdo, OrderIdo} from '../src/types/ido';
+import {ItemIDO, OrderIDO} from '../src/types/ido';
 import Order from '../src/Models/Order';
 
-const mockListOfOrders: OrderIdo[] = [
+const mockListOfOrders: OrderIDO[] = [
 	{
 		id: '1',
 		items: {a: 2, b: 3},

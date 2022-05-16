@@ -9,7 +9,7 @@ export type OrderStatus =
 	| 'delivered'
 	| 'canceled';
 
-export type OrderIdo = {
+export type OrderIDO = {
 	id: OrderID;
 	guestId: string;
 	items: Record<string, int>;
@@ -20,7 +20,7 @@ export type OrderIdo = {
 export type Location = {
 	x: number;
 	y: number;
-	mapId: string;
+	mapID: string;
 };
 export type Corners = {
 	topRightGPS: GPS;
@@ -28,7 +28,7 @@ export type Corners = {
 	bottomRightGPS: GPS;
 	bottomLeftGPS: GPS;
 };
-export type ItemIdo = {
+export type ItemIDO = {
 	id: string;
 	name: string;
 	price: double;
@@ -38,4 +38,11 @@ export type GuestIDO = {
 	id: string;
 	name: string;
 	phoneNumber: string;
+};
+
+export type MapIDO = {
+	id: string;
+	name: string;
+	corners: Corners;
+	imageURL: string;
 };

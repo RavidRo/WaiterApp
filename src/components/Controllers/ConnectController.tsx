@@ -17,6 +17,7 @@ const ConnectController = observer((props: ConnectControllerProps) => {
 	const [isConnected, setIsConnected] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [password, setPassword] = useState('');
+	const [username, setUsername] = useState('');
 
 	const establishConnection = () => {
 		setIsLoading(true);
@@ -33,7 +34,7 @@ const ConnectController = observer((props: ConnectControllerProps) => {
 	const logIn = () => {
 		setIsLoading(true);
 		return connectionViewModel
-			.login(password)
+			.login(username, password)
 			.finally(() => setIsLoading(false));
 	};
 
@@ -50,6 +51,8 @@ const ConnectController = observer((props: ConnectControllerProps) => {
 			isConnected={isConnected}
 			password={password}
 			onPasswordChange={setPassword}
+			username={username}
+			onUsernameChange={setUsername}
 			onSubmit={onSubmit}
 			establishConnection={establishConnection}
 			isReconnecting={connectionViewModel.connection.isReconnecting}>

@@ -1,4 +1,4 @@
-import {Location, OrderIdo, OrderStatus} from '../types/ido';
+import {Location, OrderIDO, OrderStatus} from '../types/ido';
 import GuestsModel, {Guest} from '../Models/GuestsModel';
 import Order from '../Models/Order';
 import OrdersModel from '../Models/OrdersModel';
@@ -115,7 +115,7 @@ export default class OrderViewModel {
 		this.ordersModel.removeOrder(orderID);
 	}
 
-	public assignedToOrder(order: OrderIdo) {
+	public assignedToOrder(order: OrderIDO) {
 		this.ordersModel.addOrder(new Order(order));
 		this.fetchGuestsDetails([order.guestId]).catch(e => {
 			console.warn("Could not fetch a gust's details", e);

@@ -10,6 +10,7 @@ import GuestMarker from '../Views/markers/ClientMarker';
 import MapLayoutController from './MapLayoutController';
 import {PointMarker} from '../../types/map';
 import {MyLocationContext, OrdersContext} from '../../contexts';
+import {Text} from 'react-native-svg';
 
 type MapMarkerControllerProps = {
 	style?: StyleProp<ViewStyle>;
@@ -44,7 +45,19 @@ const MapMarkersController = observer(({style}: MapMarkerControllerProps) => {
 
 	const allMarkers = guestsMarkers.concat(waiterMarker ? [waiterMarker] : []);
 
-	return <MapLayoutController markers={allMarkers} style={style} />;
+	const currentMap = myLocationViewModel.currentMap;
+
+	if (!currentMap) {
+		return <Text>Loading map...</Text>;
+	}
+
+	return (
+		<MapLayoutController
+			markers={allMarkers}
+			style={style}
+			imageURL={currentMap.imageURL}
+		/>
+	);
 });
 
 export default MapMarkersController;
