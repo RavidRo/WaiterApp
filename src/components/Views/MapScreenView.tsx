@@ -4,7 +4,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 
 import OrdersListController from '../Controllers/OrdersListController';
 import MapMarkersController from '../Controllers/MapMarkersController';
-import WarningsView from './WarningsView';
+import WarningsController from '../Controllers/WarningsController';
 
 type MapScreenViewProps = {
 	openBottomSheet: () => void;
@@ -24,7 +24,7 @@ export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 						</Text>
 					</Text>
 				</View>
-				<WarningsView />
+				<WarningsController />
 			</View>
 			<MapMarkersController style={styles.map} />
 			<TouchableOpacity
