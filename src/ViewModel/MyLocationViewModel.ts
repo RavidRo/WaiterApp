@@ -30,22 +30,18 @@ export default class MyLocationViewModel {
 		this.locationService.watchLocation(
 			location => {
 				if (!location) {
-					console.warn('Location out of bounds');
 					this.locationModel.location = undefined;
 				} else if (this.isValidLocation(location)) {
 					this.communicate.updateWaiterLocation(location);
 					this.locationModel.location = location;
 				} else {
-					console.warn(
-						'An invalid location has been received from the location service',
-						location
-					);
+					this.locationModel.locationError =
+						'Unexpected error, received invalid location ';
 					this.locationModel.location = undefined;
 				}
 				this.locationModel.locationError = undefined;
 			},
 			error => {
-				console.warn('Could not get the user location', error);
 				this.locationModel.location = undefined;
 				this.locationModel.locationError = error;
 			}

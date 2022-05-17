@@ -13,8 +13,8 @@ const WarningsView = observer((props: WarningsViewProps): JSX.Element => {
 
 	return (
 		<View style={styles.titleContainer}>
-			{props.warnings.map(warning => (
-				<Text>{'>' + warning}</Text>
+			{props.warnings.map((warning, index) => (
+				<Text key={index}>{`> ${warning}`}</Text>
 			))}
 		</View>
 	);

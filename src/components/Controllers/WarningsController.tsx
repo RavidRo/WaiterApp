@@ -19,8 +19,9 @@ const WarningsController = observer((): JSX.Element => {
 			: '',
 		...unavailableOrders.map(
 			order =>
-				`Order - ${order.guestName ?? order.id.slice(0, 4)}: Guest's
-				location is unavailable`
+				`Order - ${
+					order.guestName ?? order.id.slice(0, 4)
+				}: Guest's location is unavailable`
 		),
 		...outOfBoundsOrders.map(
 			order =>
