@@ -30,7 +30,7 @@ export default class MyLocationViewModel {
 		this.locationService.watchLocation(
 			location => {
 				if (!location) {
-					console.warn('Location out of bounds', location);
+					console.warn('Location out of bounds');
 					this.locationModel.location = undefined;
 				} else if (this.isValidLocation(location)) {
 					this.communicate.updateWaiterLocation(location);
@@ -42,10 +42,12 @@ export default class MyLocationViewModel {
 					);
 					this.locationModel.location = undefined;
 				}
+				this.locationModel.locationError = undefined;
 			},
 			error => {
 				console.warn('Could not get the user location', error);
 				this.locationModel.location = undefined;
+				this.locationModel.locationError = error;
 			}
 		);
 	}
@@ -69,6 +71,17 @@ export default class MyLocationViewModel {
 		return this.location
 			? this.mapViewModel.getMapByID(this.location.mapID)
 			: this.mapViewModel.defaultMap;
+	}
+
+	get currentLocationError(): string | undefined {
+		return this.locationModel.locationError;
+	}
+
+	get isCurrentLocationOutOfBound(): boolean {
+		return (
+			this.locationModel.location === undefined &&
+			this.locationModel.locationError === undefined
+		);
 	}
 
 	private approve() {

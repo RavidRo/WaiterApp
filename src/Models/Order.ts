@@ -13,6 +13,6 @@ export default class Order {
 		this.id = order.id;
 		this.items = order.items;
 		this.orderStatus = order.status;
-		this.guestID = order.guestID;
+		this.guestID = order.guestId;
 	}
 }

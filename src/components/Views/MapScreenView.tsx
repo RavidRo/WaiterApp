@@ -4,6 +4,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 
 import OrdersListController from '../Controllers/OrdersListController';
 import MapMarkersController from '../Controllers/MapMarkersController';
+import WarningsView from './WarningsView';
 
 type MapScreenViewProps = {
 	openBottomSheet: () => void;
@@ -14,13 +15,16 @@ type MapScreenViewProps = {
 export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 	return (
 		<View style={styles.screen} testID='homeScreen'>
-			<View style={styles.titleContainer}>
-				<Text style={styles.title}>
-					{`Hey ${props.myName ?? ''}, You're in `}
-					<Text style={styles.location}>
-						{props.mapName ?? 'Loading Map...'}
+			<View>
+				<View style={styles.titleContainer}>
+					<Text style={styles.title}>
+						{`Hey ${props.myName ?? ''}, You're in `}
+						<Text style={styles.location}>
+							{props.mapName ?? 'Loading Map...'}
+						</Text>
 					</Text>
-				</Text>
+				</View>
+				<WarningsView />
 			</View>
 			<MapMarkersController style={styles.map} />
 			<TouchableOpacity
@@ -54,8 +58,8 @@ export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 const styles = StyleSheet.create({
 	titleContainer: {
 		backgroundColor: '#99cbf2',
-		borderBottomColor: '#9fb7c9',
-		borderTopWidth: 1,
+		borderBottomColor: '#99cbf290',
+		borderBottomWidth: 1,
 		padding: 10,
 	},
 	title: {

@@ -76,6 +76,19 @@ export default class OrderViewModel {
 		return this.orders.filter(order => order.guestLocation !== undefined);
 	}
 
+	get unavailableOrders(): UIOrder[] {
+		return this.orders.filter(order => order.guestLocation === undefined);
+	}
+
+	get outOfBoundsOrders(): UIOrder[] {
+		const isOutOfBound = (value: Number) => value < 0 || value > 1;
+		return this.availableOrders.filter(
+			order =>
+				isOutOfBound(order.guestLocation!.x) ||
+				isOutOfBound(order.guestLocation!.y)
+		);
+	}
+
 	public fetchGuestsDetails(guestsIDs: string[]) {
 		return this.requests.getGuestsDetails(guestsIDs).then(guestsDetails => {
 			this.guestsModel.updateGuestsDetails(guestsDetails);
@@ -106,7 +119,7 @@ export default class OrderViewModel {
 
 	public assignedToOrder(order: OrderIDO) {
 		this.ordersModel.addOrder(new Order(order));
-		this.fetchGuestsDetails([order.guestID]).catch(e => {
+		this.fetchGuestsDetails([order.guestId]).catch(e => {
 			console.warn("Could not fetch a gust's details", e);
 		});
 	}
