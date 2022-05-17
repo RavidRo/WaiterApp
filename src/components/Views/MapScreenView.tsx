@@ -5,12 +5,15 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import OrdersListController from '../Controllers/OrdersListController';
 import MapMarkersController from '../Controllers/MapMarkersController';
 import WarningsController from '../Controllers/WarningsController';
+import NotificationIcon from './NotificationIcon';
 
 type MapScreenViewProps = {
 	openBottomSheet: () => void;
 	refBottomSheet: LegacyRef<RBSheet> | undefined;
 	myName: string | undefined;
 	mapName: string | undefined;
+	newOrdersUpdates: boolean;
+	onOrdersClose: () => void;
 };
 export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 	return (
@@ -30,10 +33,14 @@ export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 			<TouchableOpacity
 				style={styles.openDrawerButton}
 				onPress={props.openBottomSheet}>
-				<Text style={styles.openDrawerButtonText}>Your Orders</Text>
+				<View style={styles.textWithIcon}>
+					<Text style={styles.openDrawerButtonText}>Your Orders</Text>
+					{props.newOrdersUpdates && <NotificationIcon />}
+				</View>
 			</TouchableOpacity>
 			<RBSheet
 				ref={props.refBottomSheet}
+				onClose={props.onOrdersClose}
 				closeOnDragDown={true}
 				closeOnPressMask={false}
 				dragFromTopOnly={false}
@@ -92,5 +99,10 @@ const styles = StyleSheet.create({
 	openDrawerButtonText: {
 		fontSize: 18,
 		fontFamily: 'Montserrat-Medium',
+	},
+	textWithIcon: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
 	},
 });

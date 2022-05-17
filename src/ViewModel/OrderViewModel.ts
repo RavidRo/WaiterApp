@@ -5,7 +5,12 @@ import OrdersModel from '../Models/OrdersModel';
 import Requests from '../networking/Requests';
 import {ItemViewModel} from './ItemViewModel';
 
-export type UIOrder = Order & {
+export type UIOrder = {
+	id: string;
+	guestID: string;
+	items: Record<string, number>;
+	status: OrderStatus;
+	updated: boolean;
 	guestName?: string;
 	guestPhoneNumber?: string;
 	guestLocation?: Location;
@@ -60,7 +65,10 @@ export default class OrderViewModel {
 			const namedItems = this.nameItems(order.items);
 			const guest = this.guestsModel.getGuest(order.guestID);
 			return {
-				...order,
+				id: order.id,
+				guestID: order.guestID,
+				status: order.status,
+				updated: order.updated,
 				items: namedItems,
 				guestLocation: guest?.location,
 				guestName: guest?.name,
@@ -68,6 +76,7 @@ export default class OrderViewModel {
 			};
 		});
 	}
+
 	get guests(): Guest[] {
 		return this.guestsModel.guests;
 	}
@@ -87,6 +96,10 @@ export default class OrderViewModel {
 				isOutOfBound(order.guestLocation!.x) ||
 				isOutOfBound(order.guestLocation!.y)
 		);
+	}
+
+	public clearUpdates() {
+		this.ordersModel.clearUpdates();
 	}
 
 	public fetchGuestsDetails(guestsIDs: string[]) {

@@ -4,6 +4,7 @@ import {View, StyleSheet, Button, Text, TouchableOpacity} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 import {UIOrder} from '../../ViewModel/OrderViewModel';
+import NotificationIcon from './NotificationIcon';
 
 type OrderItemViewProps = {
 	order: UIOrder;
@@ -41,10 +42,12 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 							? `${props.order.guestName} < `
 							: `Order - ${props.order.id.slice(0, 5)}  < `}
 						<Text style={styles.orderStatus}>
-							{props.order.orderStatus}
+							{props.order.status}
 						</Text>
 						{' >'}
 					</Text>
+
+					{props.order.updated && <NotificationIcon />}
 				</View>
 				<View style={styles.items}>
 					{(props.unknownLocation || props.locationOutOfBounds) && (
@@ -80,7 +83,7 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 								)
 							)}
 							<View style={styles.statusButton}>
-								{props.order.orderStatus === 'on the way' ? (
+								{props.order.status === 'on the way' ? (
 									<Button
 										title='delivered'
 										onPress={() =>
@@ -88,7 +91,7 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 										}
 										disabled={props.loading}
 									/>
-								) : props.order.orderStatus === 'assigned' ? (
+								) : props.order.status === 'assigned' ? (
 									<Button
 										title='on the way'
 										onPress={() =>

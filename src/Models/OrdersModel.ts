@@ -23,7 +23,7 @@ export default class OrdersModel {
 	updateOrderStatus(orderID: string, status: OrderStatus): void {
 		const order = this._orders.get(orderID);
 		if (order) {
-			order.orderStatus = status;
+			order.status = status;
 		} else {
 			console.warn(
 				'updateOrderStatus - Could not find requested order',
@@ -47,5 +47,9 @@ export default class OrdersModel {
 			console.warn('Assigned to a order that was already added');
 		}
 		this._orders.set(order.id, order);
+	}
+
+	clearUpdates() {
+		this._orders.forEach(order => order.clearUpdates());
 	}
 }
