@@ -72,19 +72,8 @@ export default class OrderViewModel {
 		return this.guestsModel.guests;
 	}
 
-	get availableOrders(): {order: Order; location: Location}[] {
-		const guests = this.guestsModel.guests;
-		return this.orders
-			.map(order => {
-				const foundGuest = guests.find(
-					guest => guest.id === order.guestID
-				);
-				return {order, location: foundGuest?.location};
-			})
-			.filter(orderLocation => orderLocation.location) as {
-			order: Order;
-			location: Location;
-		}[];
+	get availableOrders(): UIOrder[] {
+		return this.orders.filter(order => order.guestLocation !== undefined);
 	}
 
 	public fetchGuestsDetails(guestsIDs: string[]) {
@@ -117,7 +106,7 @@ export default class OrderViewModel {
 
 	public assignedToOrder(order: OrderIDO) {
 		this.ordersModel.addOrder(new Order(order));
-		this.fetchGuestsDetails([order.guestId]).catch(e => {
+		this.fetchGuestsDetails([order.guestID]).catch(e => {
 			console.warn("Could not fetch a gust's details", e);
 		});
 	}

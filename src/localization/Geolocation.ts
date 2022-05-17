@@ -21,12 +21,12 @@ export default class Geolocation implements ILocationService {
 
 	private translateFunction(successCallback: (location?: Location) => void) {
 		return (location: GPS) => {
-			this.maps.forEach(map => {
+			for (const map of this.maps) {
 				if (map.hasInside(location)) {
 					const newLocation = map.translateGps(location);
 					return successCallback(newLocation);
 				}
-			});
+			}
 			return successCallback(undefined);
 		};
 	}

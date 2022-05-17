@@ -36,16 +36,19 @@ import ConnectionHandler from '../../src/communication/ConnectionHandler';
 
 import ConnectController from '../../src/components/Controllers/ConnectController';
 import ConnectionModel from '../../src/Models/ConnectionModel';
+import {Text} from 'react-native';
 
 const mockedRequests = {
 	login: jest.spyOn(Requests.prototype, 'login'),
 	items: jest.spyOn(Requests.prototype, 'getItems'),
 	orders: jest.spyOn(Requests.prototype, 'getWaiterOrders'),
+	name: jest.spyOn(Requests.prototype, 'getWaiterName'),
 };
 function mockDefaultImplementation() {
 	mockedRequests.login.mockImplementation(() => mockMakePromise('token'));
 	mockedRequests.items.mockImplementation(() => mockMakePromise([]));
 	mockedRequests.orders.mockImplementation(() => mockMakePromise([]));
+	mockedRequests.name.mockImplementation(() => mockMakePromise('Name'));
 }
 
 jest.setTimeout(10000);
@@ -61,7 +64,11 @@ beforeEach(() => {
 });
 
 test('Loads an input and a submit button', async () => {
-	const {getByTestId, queryByTestId} = render(<ConnectController />);
+	const {getByTestId, queryByTestId} = render(
+		<ConnectController>
+			<Text>Hello Test</Text>
+		</ConnectController>
+	);
 
 	expect(getByTestId('passwordInput')).toBeTruthy();
 	expect(getByTestId('submit')).toBeTruthy();
@@ -71,7 +78,11 @@ test('Loads an input and a submit button', async () => {
 test('Wrong password', async () => {
 	mockedRequests.login.mockImplementation(() => makeFail());
 
-	const {getByTestId, queryByTestId} = render(<ConnectController />);
+	const {getByTestId, queryByTestId} = render(
+		<ConnectController>
+			<Text>Hello Test</Text>
+		</ConnectController>
+	);
 	const button = getByTestId('submit');
 	fireEvent.press(button);
 
@@ -86,7 +97,11 @@ test('Wrong password', async () => {
 });
 
 test('Shows a loading indicator before results are fetched', async () => {
-	const {getByTestId, queryByTestId} = render(<ConnectController />);
+	const {getByTestId, queryByTestId} = render(
+		<ConnectController>
+			<Text>Hello Test</Text>
+		</ConnectController>
+	);
 
 	const button = getByTestId('submit');
 	fireEvent.press(button);
@@ -95,7 +110,11 @@ test('Shows a loading indicator before results are fetched', async () => {
 });
 
 test('Shows home page after connecting successfully', async () => {
-	const {getByTestId, queryByTestId} = render(<ConnectController />);
+	const {getByTestId, queryByTestId} = render(
+		<ConnectController>
+			<Text testID='homeScreen'>Hello Test</Text>
+		</ConnectController>
+	);
 
 	const button = getByTestId('submit');
 	fireEvent.press(button);

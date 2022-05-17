@@ -11,7 +11,7 @@ export type OrderStatus =
 
 export type OrderIDO = {
 	id: OrderID;
-	guestId: string;
+	guestID: string;
 	items: Record<string, int>;
 	status: OrderStatus;
 	creationTime: Date;

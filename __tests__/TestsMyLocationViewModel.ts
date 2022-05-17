@@ -1,6 +1,6 @@
 import {Location} from '../src/types/ido';
 
-const myLocation = {x: 14, y: 12};
+const myLocation = {x: 14, y: 12, mapID: ''};
 const mockWatchLocation = jest
 	.fn()
 	.mockImplementation((setLocation: (location: Location) => void) => {
@@ -19,6 +19,7 @@ jest.mock('../src/Models/MyLocationModel', () => {
 	return jest.fn().mockImplementation(() => {
 		return {
 			location: mockLocation,
+			locationApproved: true,
 		};
 	});
 });
@@ -32,6 +33,7 @@ import Notifications from '../src/communication/Notifications';
 import OrderViewModel from '../src/ViewModel/OrderViewModel';
 import Requests from '../src/networking/Requests';
 import {ItemViewModel} from '../src/ViewModel/ItemViewModel';
+import MapViewModel from '../src/ViewModel/MapsViewModel';
 
 const newMyLocationViewModel = () => {
 	const requests = new Requests();
@@ -42,7 +44,8 @@ const newMyLocationViewModel = () => {
 					new OrderViewModel(requests, new ItemViewModel(requests))
 				)
 			)
-		)
+		),
+		new MapViewModel(requests)
 	);
 };
 
@@ -61,13 +64,13 @@ afterEach(() => {
 describe('Constructor', () => {
 	it('Starting to check current location', () => {
 		const myLocationViewModel = newMyLocationViewModel();
-		myLocationViewModel.startTrackingLocation();
+		myLocationViewModel.startTrackingLocationWhenApproved();
 		expect(mockWatchLocation).toHaveBeenCalled();
 	});
 
 	it('Starting to update location according to changes', () => {
 		const myLocationViewModel = newMyLocationViewModel();
-		myLocationViewModel.startTrackingLocation();
+		myLocationViewModel.startTrackingLocationWhenApproved();
 		expect(myLocationViewModel.location).toEqual(myLocation);
 	});
 });

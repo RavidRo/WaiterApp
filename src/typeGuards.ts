@@ -3,7 +3,8 @@ import {Location, OrderIDO, OrderStatus} from './types/ido';
 export function isLocation(location: any): location is Location {
 	return (
 		(location as Location)?.x !== undefined &&
-		(location as Location)?.y !== undefined
+		(location as Location)?.y !== undefined &&
+		(location as Location)?.mapID !== undefined
 	);
 }
 

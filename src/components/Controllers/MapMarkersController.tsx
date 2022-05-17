@@ -29,15 +29,13 @@ const MapMarkersController = observer(({style}: MapMarkerControllerProps) => {
 	const ordersViewModel = useContext(OrdersContext);
 
 	//Guests Markers
-	const guestsMarkers = ordersViewModel.availableOrders.map(
-		({order, location}) => ({
-			point: {
-				name: order.id,
-				location,
-			},
-			marker: GuestMarker,
-		})
-	);
+	const guestsMarkers = ordersViewModel.availableOrders.map(order => ({
+		point: {
+			name: order.id,
+			location: order.guestLocation!,
+		},
+		marker: GuestMarker,
+	}));
 
 	//Waiter Marker
 	const myLocationViewModel = useContext(MyLocationContext);

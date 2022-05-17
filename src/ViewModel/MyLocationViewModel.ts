@@ -71,7 +71,7 @@ export default class MyLocationViewModel {
 			: this.mapViewModel.defaultMap;
 	}
 
-	approve() {
+	private approve() {
 		this.locationModel.approve();
 		if (this.tracking) {
 			this.startTrackingLocation();

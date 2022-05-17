@@ -1,13 +1,12 @@
-import {flushPromises, makePromise as mockMakePromise} from './PromiseUtils';
+import {makePromise as mockMakePromise} from './PromiseUtils';
 import OrderViewModel from '../src/ViewModel/OrderViewModel';
-import {ItemIDO, OrderIDO} from '../src/types/ido';
-import Order from '../src/Models/Order';
+import {OrderIDO} from '../src/types/ido';
 
 const mockListOfOrders: OrderIDO[] = [
 	{
 		id: '1',
 		items: {a: 2, b: 3},
-		status: 'inprogress',
+		status: 'assigned',
 		guestID: '1',
 		creationTime: new Date(),
 		terminationTime: new Date(),
@@ -15,40 +14,61 @@ const mockListOfOrders: OrderIDO[] = [
 	{
 		id: '2',
 		items: {a: 2, b: 3},
-		status: 'completed',
+		status: 'assigned',
 		guestID: '2',
 		creationTime: new Date(),
 		terminationTime: new Date(),
 	},
 ];
+
+const mockGuestLocation1 = {
+	x: -5,
+	y: 5,
+	mapID: '',
+};
+const mockGuestLocation2 = {
+	x: 12,
+	y: 34,
+	mapID: '',
+};
+
+const mockGuestDetails1 = {
+	id: '1',
+	name: 'string1',
+	phoneNumber: 'string1',
+};
+const mockGuestDetails2 = {
+	id: '2',
+	name: 'string2',
+	phoneNumber: 'string2',
+};
+
 const newOrders = [
 	{
-		guestID: '1',
 		id: '1',
+		guestID: '1',
+		guestName: mockGuestDetails1.name,
+		guestPhoneNumber: mockGuestDetails1.phoneNumber,
 		items: {
 			banana: 2,
 			boten: 3,
 		},
-		orderStatus: 'inprogress',
+		guestLocation: undefined,
+		orderStatus: 'assigned',
 	},
 	{
 		guestID: '2',
+		guestName: mockGuestDetails2.name,
+		guestPhoneNumber: mockGuestDetails2.phoneNumber,
 		id: '2',
 		items: {
 			banana: 2,
 			boten: 3,
 		},
-		orderStatus: 'completed',
+		guestLocation: undefined,
+		orderStatus: 'assigned',
 	},
 ];
-const mockGuestLocation1 = {
-	x: -5,
-	y: 5,
-};
-const mockGuestLocation2 = {
-	x: 12,
-	y: 34,
-};
 
 const mockGetWaiterOrders = jest.fn(() => mockMakePromise(mockListOfOrders));
 
@@ -63,6 +83,8 @@ jest.mock('../src/networking/Requests', () => {
 				]),
 			orderArrived: () => {},
 			login: () => mockMakePromise('id'),
+			getGuestsDetails: () =>
+				Promise.resolve([mockGuestDetails1, mockGuestDetails2]),
 		};
 	});
 });
@@ -122,10 +144,7 @@ describe('UpdateLocation', () => {
 			mockGuestLocation1
 		);
 		expect(orderVewModel.availableOrders).toEqual([
-			{
-				order: newOrders[0],
-				location: mockGuestLocation1,
-			},
+			{...newOrders[0], guestLocation: mockGuestLocation1},
 		]);
 	});
 	test('Getting the most updated location', async () => {
@@ -145,14 +164,8 @@ describe('UpdateLocation', () => {
 			mockGuestLocation2
 		);
 		expect(orderVewModel.availableOrders).toEqual([
-			{
-				order: newOrders[0],
-				location: mockGuestLocation1,
-			},
-			{
-				order: newOrders[1],
-				location: mockGuestLocation2,
-			},
+			{...newOrders[0], guestLocation: mockGuestLocation1},
+			{...newOrders[1], guestLocation: mockGuestLocation2},
 		]);
 	});
 });

@@ -24,6 +24,7 @@ beforeEach(() => {
 const location: Location = {
 	x: 12.5,
 	y: -29.12,
+	mapID: '',
 };
 const newCommunicate = () => {
 	const requests = new Requests();
@@ -39,6 +40,6 @@ describe('Sending notifications successfully', () => {
 	it('updateWaiterLocation', () => {
 		const communicate = newCommunicate();
 		communicate.updateWaiterLocation(location);
-		expect(mockSend).toBeCalledWith('updateWaiterLocation', location);
+		expect(mockSend).toBeCalledWith('updateWaiterLocation', {location});
 	});
 });

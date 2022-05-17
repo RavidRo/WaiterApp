@@ -52,8 +52,8 @@ describe('updateGuestLocation', () => {
 	it('Sending exactly the needed arguments', () => {
 		const notifications = newNotifications();
 		notifications.eventToCallback.updateGuestLocation({
-			guestId: 'Hey Aviv',
-			location: {x: 15, y: -26},
+			guestID: 'Hey Aviv',
+			location: {x: 15, y: -26, mapID: ''},
 		});
 		expect(mockUpdateGuestLocation).toBeCalledTimes(1);
 	});
@@ -61,8 +61,8 @@ describe('updateGuestLocation', () => {
 	it('Sending extra argument is accepted', () => {
 		const notifications = newNotifications();
 		notifications.eventToCallback.updateGuestLocation({
-			guestId: 'Hey Aviv',
-			location: {x: 15, y: -26},
+			guestID: 'Hey Aviv',
+			location: {x: 15, y: -26, mapID: ''},
 			random: 'WEEE',
 		});
 		expect(mockUpdateGuestLocation).toBeCalledTimes(1);
@@ -71,12 +71,12 @@ describe('updateGuestLocation', () => {
 	it('Sending something else then string as guest id', () => {
 		const notifications = newNotifications();
 		notifications.eventToCallback.updateGuestLocation({
-			guestId: 2,
-			location: {x: 15, y: -26},
+			guestID: 2,
+			location: {x: 15, y: -26, mapID: ''},
 		});
 		notifications.eventToCallback.updateGuestLocation({
-			guestId: ['Hey Aviv'],
-			location: {x: 15, y: -26},
+			guestID: ['Hey Aviv'],
+			location: {x: 15, y: -26, mapID: ''},
 		});
 		expect(mockUpdateGuestLocation).toBeCalledTimes(0);
 	});
@@ -85,7 +85,7 @@ describe('updateGuestLocation', () => {
 		const notifications = newNotifications();
 		[{z: 15, y: -26}, {x: 15}, {}, 2, '123'].forEach(location =>
 			notifications.eventToCallback.updateGuestLocation({
-				guestId: 'Hey Aviv',
+				guestID: 'Hey Aviv',
 				location: location,
 			})
 		);
@@ -112,7 +112,7 @@ describe('updateOrderStatus', () => {
 		const notifications = newNotifications();
 		notifications.eventToCallback.changeOrderStatus({
 			orderID: 'Hey Aviv',
-			orderStatus: 'inprogress',
+			orderStatus: 'assigned',
 		});
 		expect(mockUpdateOrderStatus).toBeCalledTimes(1);
 	});
@@ -121,7 +121,7 @@ describe('updateOrderStatus', () => {
 		const notifications = newNotifications();
 		notifications.eventToCallback.changeOrderStatus({
 			orderID: 'Hey Aviv',
-			orderStatus: 'inprogress',
+			orderStatus: 'assigned',
 			random: 'WEE',
 		});
 		expect(mockUpdateOrderStatus).toBeCalledTimes(1);
@@ -132,7 +132,7 @@ describe('updateOrderStatus', () => {
 		[{z: 15, y: -26}, {x: 15}, {}, 2, []].forEach(id =>
 			notifications.eventToCallback.changeOrderStatus({
 				id,
-				orderStatus: 'inprogress',
+				orderStatus: 'assigned',
 			})
 		);
 		expect(mockUpdateOrderStatus).toBeCalledTimes(0);
