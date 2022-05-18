@@ -1,7 +1,9 @@
 import {observer} from 'mobx-react-lite';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {Alert} from 'react-native';
 import {OrdersContext} from '../../contexts';
+import {useAsync} from '../../hooks/useAsync';
+import {wrapCatch} from '../../utils';
 import {UIOrder} from '../../ViewModel/OrderViewModel';
 import OrderItemView from '../Views/OrderItemView';
 
@@ -17,42 +19,18 @@ export default observer(function OrderItemController(
 ) {
 	const ordersViewModel = useContext(OrdersContext);
 
-	const [loading, setLoading] = useState(false);
-	const deliver = (orderID: string) => {
-		ordersViewModel
-			.deliver(orderID)
-			.finally(() => {
-				setLoading(false);
-			})
-			.catch(e => {
-				Alert.alert(e);
-			});
-	};
-
-	const onTheWay = (orderID: string) => {
-		setLoading(true);
-		ordersViewModel
-			.onTheWay(orderID)
-			.finally(() => {
-				setLoading(false);
-			})
-			.catch(e => {
-				Alert.alert(e);
-			});
-	};
-
-	const [loadingGuest, setLoadingGuest] = useState(false);
-	const fetchGuestDetails = (guestID: string) => {
-		setLoadingGuest(true);
-		ordersViewModel
-			.fetchGuestsDetails([guestID])
-			.finally(() => {
-				setLoadingGuest(false);
-			})
-			.catch(e => {
-				Alert.alert(e);
-			});
-	};
+	const {call: deliver, loading: loadingDelivering} = useAsync(
+		wrapCatch(ordersViewModel.deliver, e => Alert.alert(e))
+	);
+	const {call: onTheWay, loading: loadingOnTheWay} = useAsync(
+		wrapCatch(ordersViewModel.onTheWay, e => Alert.alert(e))
+	);
+	const {call: fetchGuestDetails, loading: loadingGuest} = useAsync(
+		(guestID: string) =>
+			ordersViewModel
+				.fetchGuestsDetails([guestID])
+				.catch(e => Alert.alert(e))
+	);
 
 	const dismissOrder = (orderID: string) => {
 		ordersViewModel.dismissOrder(orderID);
@@ -68,7 +46,7 @@ export default observer(function OrderItemController(
 		<OrderItemView
 			deliver={deliver}
 			onTheWay={onTheWay}
-			loading={loading}
+			loading={loadingDelivering || loadingOnTheWay}
 			evenItem={props.evenItem}
 			order={props.order}
 			selectOrder={props.selectOrder}
