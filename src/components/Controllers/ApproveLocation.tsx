@@ -1,7 +1,7 @@
 import {observer} from 'mobx-react-lite';
 import React, {useCallback, useContext, useEffect} from 'react';
 import {Alert, Button} from 'react-native';
-import {MyLocationContext} from '../contexts';
+import {MyLocationContext} from '../../contexts';
 
 type ApproveLocationProps = {
 	children: React.ReactNode;

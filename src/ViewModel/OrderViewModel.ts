@@ -31,7 +31,7 @@ export default class OrderViewModel {
 
 	public synchronizeOrders(): Promise<void> {
 		return this.requests.getWaiterOrders().then(newOrders => {
-			const orders = newOrders.map(order => new Order(order));
+			const orders = newOrders.map(order => new Order(order, false));
 			this.ordersModel.orders = orders;
 
 			// Updating the guests
@@ -113,16 +113,18 @@ export default class OrderViewModel {
 	}
 
 	public updateOrderStatus(orderID: string, status: OrderStatus): void {
-		this.ordersModel.updateOrderStatus(orderID, status);
+		this.ordersModel.updateOrderStatus(orderID, status, true);
 	}
 
 	public deliver(orderID: string) {
-		return this.requests.delivered(orderID);
+		return this.requests.delivered(orderID).then(() => {
+			this.ordersModel.updateOrderStatus(orderID, 'delivered', false);
+		});
 	}
 
 	public onTheWay(orderID: string) {
 		return this.requests.onTheWay(orderID).then(() => {
-			this.ordersModel.updateOrderStatus(orderID, 'on the way');
+			this.ordersModel.updateOrderStatus(orderID, 'on the way', false);
 		});
 	}
 

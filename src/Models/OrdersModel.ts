@@ -20,10 +20,14 @@ export default class OrdersModel {
 		});
 	}
 
-	updateOrderStatus(orderID: string, status: OrderStatus): void {
+	updateOrderStatus(
+		orderID: string,
+		status: OrderStatus,
+		update: boolean
+	): void {
 		const order = this._orders.get(orderID);
 		if (order) {
-			order.status = status;
+			order.setStatus(status, update);
 		} else {
 			console.warn(
 				'updateOrderStatus - Could not find requested order',

@@ -1,23 +1,21 @@
-import {faExclamation} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+// import {faBell} from '@fortawesome/free-solid-svg-icons';
+// import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 export default function NotificationIcon() {
 	return (
 		<View style={styles.iconCircle}>
-			<FontAwesomeIcon icon={faExclamation} size={15} />
+			{/* <FontAwesomeIcon icon={faBell} size={13} color={'#8f6e46'} /> */}
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	iconCircle: {
-		backgroundColor: 'orange',
+		backgroundColor: '#d18b6b',
 		borderRadius: 100,
-		padding: 2,
-		borderWidth: 1,
-		borderColor: '#6666',
-		margin: 5,
+		padding: 6,
+		margin: 7,
 	},
 });

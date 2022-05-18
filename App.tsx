@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import ApproveLocation from './src/components/ApproveLocation';
+import ApproveLocation from './src/components/Controllers/ApproveLocation';
 import ConnectController from './src/components/Controllers/ConnectController';
 import MapScreenController from './src/components/Controllers/MapScreenController';
 

@@ -34,8 +34,8 @@ export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 				style={styles.openDrawerButton}
 				onPress={props.openBottomSheet}>
 				<View style={styles.textWithIcon}>
-					<Text style={styles.openDrawerButtonText}>Your Orders</Text>
 					{props.newOrdersUpdates && <NotificationIcon />}
+					<Text style={styles.openDrawerButtonText}>Your Orders</Text>
 				</View>
 			</TouchableOpacity>
 			<RBSheet

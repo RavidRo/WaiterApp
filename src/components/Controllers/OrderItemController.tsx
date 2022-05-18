@@ -3,7 +3,6 @@ import React, {useContext} from 'react';
 import {Alert} from 'react-native';
 import {OrdersContext} from '../../contexts';
 import {useAsync} from '../../hooks/useAsync';
-import {wrapCatch} from '../../utils';
 import {UIOrder} from '../../ViewModel/OrderViewModel';
 import OrderItemView from '../Views/OrderItemView';
 
@@ -20,11 +19,14 @@ export default observer(function OrderItemController(
 	const ordersViewModel = useContext(OrdersContext);
 
 	const {call: deliver, loading: loadingDelivering} = useAsync(
-		wrapCatch(ordersViewModel.deliver, e => Alert.alert(e))
+		(orderID: string) =>
+			ordersViewModel.deliver(orderID).catch(e => Alert.alert(e))
 	);
 	const {call: onTheWay, loading: loadingOnTheWay} = useAsync(
-		wrapCatch(ordersViewModel.onTheWay, e => Alert.alert(e))
+		(orderID: string) =>
+			ordersViewModel.onTheWay(orderID).catch(e => Alert.alert(e))
 	);
+
 	const {call: fetchGuestDetails, loading: loadingGuest} = useAsync(
 		(guestID: string) =>
 			ordersViewModel
