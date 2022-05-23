@@ -1,7 +1,7 @@
 import {observer} from 'mobx-react-lite';
 import React, {useContext} from 'react';
 import {Alert} from 'react-native';
-import {OrdersContext} from '../../contexts';
+import {MapsContext, OrdersContext} from '../../contexts';
 import {useAsync} from '../../hooks/useAsync';
 import {UIOrder} from '../../ViewModel/OrderViewModel';
 import OrderItemView from '../Views/OrderItemView';
@@ -17,6 +17,7 @@ export default observer(function OrderItemController(
 	props: OrderItemControllerProps
 ) {
 	const ordersViewModel = useContext(OrdersContext);
+	const mapsViewModel = useContext(MapsContext);
 
 	const {call: deliver, loading: loadingDelivering} = useAsync(
 		(orderID: string) =>
@@ -44,6 +45,7 @@ export default observer(function OrderItemController(
 		guestLocation !== undefined &&
 		(!isInBound(guestLocation.x) || !isInBound(guestLocation.y));
 
+	const mapID = props.order.guestLocation?.mapID;
 	return (
 		<OrderItemView
 			deliver={deliver}
@@ -59,6 +61,7 @@ export default observer(function OrderItemController(
 			fetchGuestDetails={fetchGuestDetails}
 			loadingGuest={loadingGuest}
 			guestsDetailsAvailable={props.order.guestPhoneNumber !== undefined}
+			mapName={mapID && mapsViewModel.getMapByID(mapID)?.name}
 		/>
 	);
 });

@@ -20,9 +20,25 @@ type OrderItemViewProps = {
 	loadingGuest: boolean;
 	guestsDetailsAvailable: boolean;
 	locationOutOfBounds: boolean;
+	mapName: string | undefined;
 };
 
 export default observer(function OrderItemView(props: OrderItemViewProps) {
+	const orderName = props.order.guestName
+		? `${props.order.guestName}`
+		: `Order - ${props.order.id.slice(0, 5)}`;
+
+	const warnings = [
+		...(props.unknownLocation ? ["Guest's location is unknown"] : []),
+		...(props.locationOutOfBounds
+			? ["Guest's location is out of the serving area"]
+			: []),
+	];
+	const warningsWithDetails =
+		warnings.length > 0 && props.guestsDetailsAvailable
+			? [...warnings, `Phone number: ${props.order.guestPhoneNumber}`]
+			: [];
+
 	return (
 		<TouchableOpacity onPress={() => props.selectOrder(props.order.id)}>
 			<View
@@ -38,37 +54,19 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 					/>
 
 					<Text style={styles.orderText}>
-						{props.order.guestName
-							? `${props.order.guestName} < `
-							: `Order - ${props.order.id.slice(0, 5)}  < `}
-						<Text style={styles.orderStatus}>
-							{props.order.status}
-						</Text>
-						{' >'}
+						{orderName}
+						{` - ${props.order.status}`}
+						{` - ${props.mapName ?? 'unknown'}`}
 					</Text>
 
 					{props.order.updated && <NotificationIcon />}
 				</View>
 				<View style={styles.items}>
-					{(props.unknownLocation || props.locationOutOfBounds) && (
-						<>
-							{props.unknownLocation && (
-								<Text style={styles.dismiss}>
-									Guest's location is unknown
-								</Text>
-							)}
-							{props.locationOutOfBounds && (
-								<Text style={styles.dismiss}>
-									Guest's location is out of the serving area
-								</Text>
-							)}
-							{props.guestsDetailsAvailable && (
-								<Text style={styles.dismiss}>
-									Phone number: {props.order.guestPhoneNumber}
-								</Text>
-							)}
-						</>
-					)}
+					{warningsWithDetails.map((warning, index) => (
+						<Text key={index} style={styles.dismiss}>
+							{warning}
+						</Text>
+					))}
 					{props.selected && (
 						<>
 							{Object.entries(props.order.items).map(

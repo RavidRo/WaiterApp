@@ -13,10 +13,10 @@ const WarningsController = observer((): JSX.Element => {
 	const currentLocationError = myLocation.currentLocationError;
 
 	const warnings = [
-		outOfBound ? "You're out side of the service area" : '',
-		currentLocationError
-			? `Could not get your location - ${currentLocationError}`
-			: '',
+		...(outOfBound ? ["You're out side of the service area"] : []),
+		...(currentLocationError
+			? [`Could not get your location - ${currentLocationError}`]
+			: []),
 		...unavailableOrders.map(
 			order =>
 				`Order - ${
@@ -29,7 +29,7 @@ const WarningsController = observer((): JSX.Element => {
 					order.guestName ?? order.id.slice(0, 4)
 				}: Guest is out side of service area`
 		),
-	].filter(warn => warn !== '');
+	];
 
 	if (warnings.length === 0) {
 		return <></>;
