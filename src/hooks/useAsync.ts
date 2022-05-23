@@ -26,5 +26,5 @@ export function useAsync<T extends (...args: any[]) => Promise<any>>(
 		}) as ReturnType<T>;
 	};
 
-	return {call, loading};
+	return {call, loading, mounted};
 }

@@ -54,6 +54,7 @@ beforeEach(() => {
 	(Geolocation as unknown as jest.Mock).mockClear();
 
 	jest.useFakeTimers('legacy');
+	jest.spyOn(console, 'warn').mockImplementation(jest.fn());
 });
 
 afterEach(() => {

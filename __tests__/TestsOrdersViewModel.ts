@@ -1,5 +1,5 @@
 import {makePromise as mockMakePromise} from './PromiseUtils';
-import OrderViewModel from '../src/ViewModel/OrderViewModel';
+import OrderViewModel, {UIOrder} from '../src/ViewModel/OrderViewModel';
 import {OrderIDO} from '../src/types/ido';
 
 const mockListOfOrders: OrderIDO[] = [
@@ -43,7 +43,7 @@ const mockGuestDetails2 = {
 	phoneNumber: 'string2',
 };
 
-const newOrders = [
+const newOrders: UIOrder[] = [
 	{
 		id: '1',
 		guestID: '1',
@@ -54,7 +54,8 @@ const newOrders = [
 			boten: 3,
 		},
 		guestLocation: undefined,
-		orderStatus: 'assigned',
+		status: 'assigned',
+		updated: false,
 	},
 	{
 		guestID: '2',
@@ -66,7 +67,8 @@ const newOrders = [
 			boten: 3,
 		},
 		guestLocation: undefined,
-		orderStatus: 'assigned',
+		status: 'assigned',
+		updated: false,
 	},
 ];
 
@@ -144,7 +146,11 @@ describe('UpdateLocation', () => {
 			mockGuestLocation1
 		);
 		expect(orderVewModel.availableOrders).toEqual([
-			{...newOrders[0], guestLocation: mockGuestLocation1},
+			{
+				...newOrders[0],
+				guestLocation: mockGuestLocation1,
+				updated: false,
+			},
 		]);
 	});
 	test('Getting the most updated location', async () => {
@@ -163,9 +169,16 @@ describe('UpdateLocation', () => {
 			mockListOfOrders[1].guestId,
 			mockGuestLocation2
 		);
-		expect(orderVewModel.availableOrders).toEqual([
-			{...newOrders[0], guestLocation: mockGuestLocation1},
-			{...newOrders[1], guestLocation: mockGuestLocation2},
-		]);
+		const expectedOrders: UIOrder[] = [
+			{
+				...newOrders[0],
+				guestLocation: mockGuestLocation1,
+			},
+			{
+				...newOrders[1],
+				guestLocation: mockGuestLocation2,
+			},
+		];
+		expect(orderVewModel.availableOrders).toEqual(expectedOrders);
 	});
 });

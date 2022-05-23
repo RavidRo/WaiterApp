@@ -61,6 +61,8 @@ beforeEach(() => {
 	ConnectionModel.getInstance().token = undefined;
 
 	mockDefaultImplementation();
+
+	jest.spyOn(console, 'info').mockImplementation(jest.fn());
 });
 
 test('Loads an input and a submit button', async () => {

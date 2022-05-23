@@ -19,16 +19,23 @@ const ConnectController = observer((props: ConnectControllerProps) => {
 	const [password, setPassword] = useState('');
 	const [username, setUsername] = useState('');
 
-	const {call: establishConnection, loading: isEstablishingConnection} =
-		useAsync(() =>
-			connectionViewModel
-				.connect()
-				.then(() => setIsConnected(true))
-				.catch(e => {
-					Alert.alert("Can't establish connection to server");
-					console.warn(e);
-				})
-		);
+	const {
+		call: establishConnection,
+		loading: isEstablishingConnection,
+		mounted,
+	} = useAsync(() =>
+		connectionViewModel
+			.connect()
+			.then(() => {
+				if (mounted.current) {
+					setIsConnected(true);
+				}
+			})
+			.catch(e => {
+				Alert.alert("Can't establish connection to server");
+				console.warn(e);
+			})
+	);
 
 	const {call: logIn, loading: isLoggingIn} = useAsync(() =>
 		connectionViewModel.login(username, password)
