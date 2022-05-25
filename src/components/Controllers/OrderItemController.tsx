@@ -8,7 +8,7 @@ import OrderItemView from '../Views/OrderItemView';
 
 type OrderItemControllerProps = {
 	order: UIOrder;
-	selectedOrderID: string | undefined;
+	selectedOrdersID: string[];
 	evenItem: boolean;
 	selectOrder: (string: string) => void;
 };
@@ -35,9 +35,8 @@ export default observer(function OrderItemController(
 				.catch(e => Alert.alert(e))
 	);
 
-	const dismissOrder = (orderID: string) => {
+	const dismissOrder = (orderID: string) =>
 		ordersViewModel.dismissOrder(orderID);
-	};
 
 	const guestLocation = props.order.guestLocation;
 	const isInBound = (n: Number) => n >= 0 && n <= 1;
@@ -54,7 +53,7 @@ export default observer(function OrderItemController(
 			evenItem={props.evenItem}
 			order={props.order}
 			selectOrder={props.selectOrder}
-			selected={props.selectedOrderID === props.order.id}
+			selected={props.selectedOrdersID.includes(props.order.id)}
 			dismissOrder={dismissOrder}
 			unknownLocation={guestLocation === undefined}
 			locationOutOfBounds={locationOutOfBounds}

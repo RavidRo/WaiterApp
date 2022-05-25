@@ -40,7 +40,9 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 			: [];
 
 	return (
-		<TouchableOpacity onPress={() => props.selectOrder(props.order.id)}>
+		<TouchableOpacity
+			onPress={() => props.selectOrder(props.order.id)}
+			testID='orderItem'>
 			<View
 				style={[
 					styles.orderContainer,
@@ -53,7 +55,7 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 						style={styles.iconStyle}
 					/>
 
-					<Text style={styles.orderText}>
+					<Text style={styles.orderText} testID='orderTitle'>
 						{orderName}
 						{` - ${props.order.status}`}
 						{` - ${props.mapName ?? 'unknown'}`}
@@ -106,6 +108,7 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 										}
 										disabled={props.loading}
 										color={'#d68383'}
+										testID='dismissButton'
 									/>
 								)}
 								{!props.guestsDetailsAvailable && (

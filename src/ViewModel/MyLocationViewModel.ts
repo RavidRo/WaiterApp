@@ -30,13 +30,14 @@ export default class MyLocationViewModel {
 		this.locationService.watchLocation(
 			location => {
 				if (!location) {
+					// Outside of service area
 					this.locationModel.location = undefined;
 				} else if (this.isValidLocation(location)) {
 					this.communicate.updateWaiterLocation(location);
 					this.locationModel.location = location;
 				} else {
-					this.locationModel.locationError =
-						'Unexpected error, received invalid location ';
+					const error = 'Unexpected error, received invalid location';
+					this.locationModel.locationError = error;
 					this.locationModel.location = undefined;
 				}
 				this.locationModel.locationError = undefined;

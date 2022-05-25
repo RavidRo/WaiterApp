@@ -8,10 +8,19 @@ type OrdersProps = {};
 
 const OrdersList = observer((_: OrdersProps) => {
 	const ordersViewModel = useContext(OrdersContext);
-	const [selectedOrder, setSelectedOrder] = useState<string | undefined>();
+	const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
 
 	const selectOrder = (orderId: string) => {
-		setSelectedOrder(selectedOrder === orderId ? undefined : orderId);
+		if (selectedOrders.includes(orderId)) {
+			setSelectedOrders(prevSelectedOrders =>
+				prevSelectedOrders.filter(id => id !== orderId)
+			);
+		} else {
+			setSelectedOrders(prevSelectedOrders => [
+				...prevSelectedOrders,
+				orderId,
+			]);
+		}
 	};
 
 	const orders = ordersViewModel.orders;
@@ -20,7 +29,7 @@ const OrdersList = observer((_: OrdersProps) => {
 		<OrdersListView
 			orders={orders}
 			selectOrder={selectOrder}
-			selectedOrderID={selectedOrder}
+			selectedOrdersID={selectedOrders}
 		/>
 	);
 });

@@ -1,3 +1,6 @@
+export function makeVoidPromise(): Promise<void> {
+	return new Promise(resolve => resolve());
+}
 export function makePromise<T>(value: T): Promise<T> {
 	return new Promise<T>(resolve => resolve(value));
 }

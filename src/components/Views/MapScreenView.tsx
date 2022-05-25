@@ -31,6 +31,7 @@ export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 			</View>
 			<MapMarkersController style={styles.map} />
 			<TouchableOpacity
+				testID='ordersListButton'
 				style={styles.openDrawerButton}
 				onPress={props.openBottomSheet}>
 				<View style={styles.textWithIcon}>

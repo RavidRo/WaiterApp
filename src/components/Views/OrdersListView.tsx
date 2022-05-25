@@ -7,7 +7,7 @@ import OrderItemController from '../Controllers/OrderItemController';
 type OrdersViewProps = {
 	orders: UIOrder[];
 	selectOrder: (string: string) => void;
-	selectedOrderID: string | undefined;
+	selectedOrdersID: string[];
 };
 
 const OrdersListView = observer((props: OrdersViewProps) => {
@@ -24,15 +24,17 @@ const OrdersListView = observer((props: OrdersViewProps) => {
 					<Text style={styles.title}>Your assigned orders</Text>
 				</View>
 			)}
-			{props.orders.map((order, index) => (
-				<OrderItemController
-					evenItem={index % 2 === 0}
-					order={order}
-					selectOrder={props.selectOrder}
-					key={order.id}
-					selectedOrderID={props.selectedOrderID}
-				/>
-			))}
+			<View testID='ordersList'>
+				{props.orders.map((order, index) => (
+					<OrderItemController
+						evenItem={index % 2 === 0}
+						order={order}
+						selectOrder={props.selectOrder}
+						key={order.id}
+						selectedOrdersID={props.selectedOrdersID}
+					/>
+				))}
+			</View>
 		</View>
 	);
 });

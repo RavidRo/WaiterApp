@@ -3,12 +3,13 @@ import OrderViewModel from '../ViewModel/OrderViewModel';
 
 type Params = {[param: string]: unknown};
 export default class Notifications {
-	private orders: OrderViewModel;
-	public eventToCallback: Record<string, (params: Params) => void> = {
-		updateGuestLocation: params => this.updateGuestLocation(params),
-		changeOrderStatus: params => this.changeOrderStatus(params),
-		assignedToOrder: params => this.assignedToOrder(params),
-	};
+	private readonly orders: OrderViewModel;
+	public readonly eventToCallback: Record<string, (params: Params) => void> =
+		{
+			updateGuestLocation: params => this.updateGuestLocation(params),
+			changeOrderStatus: params => this.changeOrderStatus(params),
+			assignedToOrder: params => this.assignedToOrder(params),
+		};
 
 	constructor(orderViewModel: OrderViewModel) {
 		this.orders = orderViewModel;

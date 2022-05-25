@@ -34,3 +34,7 @@ export const OrdersContext = createContext<OrderViewModel>(orders);
 export const itemsContext = createContext<ItemViewModel>(items);
 export const MapsContext = createContext<MapViewModel>(maps);
 export const MyLocationContext = createContext<MyLocationViewModel>(myLocation);
+
+export const __test__ = {
+	notifications,
+};

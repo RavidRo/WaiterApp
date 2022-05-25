@@ -15,7 +15,7 @@ export type OrderIDO = {
 	items: Record<string, number>;
 	status: OrderStatus;
 	creationTime: Date;
-	terminationTime: Date;
+	terminationTime?: Date;
 };
 export type Location = {
 	x: number;
