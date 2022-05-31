@@ -102,7 +102,7 @@ describe('getLocation', () => {
 				expect(location).toEqual({
 					x: 0.25,
 					y: 0.75,
-					mapID: mockMapID,
+					mapId: mockMapID,
 				}),
 			() => {}
 		);
@@ -119,7 +119,7 @@ describe('getLocation', () => {
 				expect(location).toEqual({
 					x: 0.5,
 					y: 0.5,
-					mapID: mockMapID,
+					mapId: mockMapID,
 				}),
 			() => {}
 		);
@@ -167,7 +167,7 @@ describe('watchLocation', () => {
 				expect(location).toEqual({
 					x: 0.25,
 					y: 0.75,
-					mapID: mockMapID,
+					mapId: mockMapID,
 				}),
 			() => {}
 		);
@@ -184,7 +184,7 @@ describe('watchLocation', () => {
 				expect(location).toEqual({
 					x: 0.5,
 					y: 0.5,
-					mapID: mockMapID,
+					mapId: mockMapID,
 				}),
 			() => {}
 		);

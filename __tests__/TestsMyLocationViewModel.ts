@@ -1,6 +1,6 @@
 import {Location} from '../src/types/ido';
 
-const myLocation = {x: 14, y: 12, mapID: ''};
+const myLocation = {x: 14, y: 12, mapId: ''};
 const mockWatchLocation = jest
 	.fn()
 	.mockImplementation((setLocation: (location: Location) => void) => {

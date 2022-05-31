@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 	},
 	orderText: {
+		textTransform: 'capitalize',
 		fontFamily: 'Montserrat-Medium',
 		fontSize: 18,
 	},

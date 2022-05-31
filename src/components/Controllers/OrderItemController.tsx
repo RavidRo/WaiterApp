@@ -44,7 +44,7 @@ export default observer(function OrderItemController(
 		guestLocation !== undefined &&
 		(!isInBound(guestLocation.x) || !isInBound(guestLocation.y));
 
-	const mapID = props.order.guestLocation?.mapID;
+	const mapID = props.order.guestLocation?.mapId;
 	return (
 		<OrderItemView
 			deliver={deliver}

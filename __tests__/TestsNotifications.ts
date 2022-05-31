@@ -53,7 +53,7 @@ describe('updateGuestLocation', () => {
 		const notifications = newNotifications();
 		notifications.eventToCallback.updateGuestLocation({
 			guestID: 'Hey Aviv',
-			location: {x: 15, y: -26, mapID: ''},
+			location: {x: 15, y: -26, mapId: ''},
 		});
 		expect(mockUpdateGuestLocation).toBeCalledTimes(1);
 	});
@@ -62,7 +62,7 @@ describe('updateGuestLocation', () => {
 		const notifications = newNotifications();
 		notifications.eventToCallback.updateGuestLocation({
 			guestID: 'Hey Aviv',
-			location: {x: 15, y: -26, mapID: ''},
+			location: {x: 15, y: -26, mapId: ''},
 			random: 'WEEE',
 		});
 		expect(mockUpdateGuestLocation).toBeCalledTimes(1);
@@ -72,11 +72,11 @@ describe('updateGuestLocation', () => {
 		const notifications = newNotifications();
 		notifications.eventToCallback.updateGuestLocation({
 			guestID: 2,
-			location: {x: 15, y: -26, mapID: ''},
+			location: {x: 15, y: -26, mapId: ''},
 		});
 		notifications.eventToCallback.updateGuestLocation({
 			guestID: ['Hey Aviv'],
-			location: {x: 15, y: -26, mapID: ''},
+			location: {x: 15, y: -26, mapId: ''},
 		});
 		expect(mockUpdateGuestLocation).toBeCalledTimes(0);
 	});

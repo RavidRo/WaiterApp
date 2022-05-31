@@ -42,7 +42,7 @@ export default class LocationMap {
 				location
 			) / this.height;
 
-		return {x: localX, y: localY, mapID: this.map.id};
+		return {x: localX, y: localY, mapId: this.map.id};
 	}
 
 	hasInside(location: GPS) {

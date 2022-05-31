@@ -54,7 +54,6 @@ export default function LoginView(props: LoginViewProps) {
 					onChangeText={props.onUsernameChange}
 					value={props.username}
 					placeholder='Your Username'
-					secureTextEntry
 					testID='usernameInput'
 				/>
 				<TextInput

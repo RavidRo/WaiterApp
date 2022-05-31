@@ -24,12 +24,12 @@ const mockListOfOrders: OrderIDO[] = [
 const mockGuestLocation1 = {
 	x: -5,
 	y: 5,
-	mapID: '',
+	mapId: '',
 };
 const mockGuestLocation2 = {
 	x: 12,
 	y: 34,
-	mapID: '',
+	mapId: '',
 };
 
 const mockGuestDetails1 = {

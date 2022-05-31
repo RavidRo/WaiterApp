@@ -35,7 +35,7 @@ export default class GuestsModel {
 			if (!this._guests.has(guest.id)) {
 				this._guests.set(guest.id, new Guest(guest.id));
 			}
-			this._guests.get(guest.id)!.name = guest.name;
+			this._guests.get(guest.id)!.name = guest.username;
 			this._guests.get(guest.id)!.phoneNumber = guest.phoneNumber;
 		});
 	}
