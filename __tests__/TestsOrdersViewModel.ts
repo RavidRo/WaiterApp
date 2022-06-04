@@ -1,13 +1,13 @@
 import {makePromise as mockMakePromise} from './PromiseUtils';
 import OrderViewModel, {UIOrder} from '../src/ViewModel/OrderViewModel';
-import {OrderIDO} from '../src/types/ido';
+import {GuestIDO, Location, OrderIDO} from '../src/types/ido';
 
 const mockListOfOrders: OrderIDO[] = [
 	{
 		id: '1',
 		items: {a: 2, b: 3},
 		status: 'assigned',
-		guestId: '1',
+		guestID: '1',
 		creationTime: new Date(),
 		terminationTime: new Date(),
 	},
@@ -15,31 +15,31 @@ const mockListOfOrders: OrderIDO[] = [
 		id: '2',
 		items: {a: 2, b: 3},
 		status: 'assigned',
-		guestId: '2',
+		guestID: '2',
 		creationTime: new Date(),
 		terminationTime: new Date(),
 	},
 ];
 
-const mockGuestLocation1 = {
+const mockGuestLocation1: Location = {
 	x: -5,
 	y: 5,
-	mapId: '',
+	mapID: '',
 };
-const mockGuestLocation2 = {
+const mockGuestLocation2: Location = {
 	x: 12,
 	y: 34,
-	mapId: '',
+	mapID: '',
 };
 
-const mockGuestDetails1 = {
+const mockGuestDetails1: GuestIDO = {
 	id: '1',
-	name: 'string1',
+	username: 'string1',
 	phoneNumber: 'string1',
 };
-const mockGuestDetails2 = {
+const mockGuestDetails2: GuestIDO = {
 	id: '2',
-	name: 'string2',
+	username: 'string2',
 	phoneNumber: 'string2',
 };
 
@@ -47,7 +47,7 @@ const newOrders: UIOrder[] = [
 	{
 		id: '1',
 		guestID: '1',
-		guestName: mockGuestDetails1.name,
+		guestName: mockGuestDetails1.username,
 		guestPhoneNumber: mockGuestDetails1.phoneNumber,
 		items: {
 			banana: 2,
@@ -59,7 +59,7 @@ const newOrders: UIOrder[] = [
 	},
 	{
 		guestID: '2',
-		guestName: mockGuestDetails2.name,
+		guestName: mockGuestDetails2.username,
 		guestPhoneNumber: mockGuestDetails2.phoneNumber,
 		id: '2',
 		items: {
@@ -142,7 +142,7 @@ describe('UpdateLocation', () => {
 		await itemViewModel.syncItems();
 		await orderVewModel.synchronizeOrders();
 		orderVewModel.updateGuestLocation(
-			mockListOfOrders[0].guestId,
+			mockListOfOrders[0].guestID,
 			mockGuestLocation1
 		);
 		expect(orderVewModel.availableOrders).toEqual([
@@ -158,15 +158,15 @@ describe('UpdateLocation', () => {
 		await itemViewModel.syncItems();
 		await orderVewModel.synchronizeOrders();
 		orderVewModel.updateGuestLocation(
-			mockListOfOrders[0].guestId,
+			mockListOfOrders[0].guestID,
 			mockGuestLocation1
 		);
 		orderVewModel.updateGuestLocation(
-			mockListOfOrders[1].guestId,
+			mockListOfOrders[1].guestID,
 			mockGuestLocation1
 		);
 		orderVewModel.updateGuestLocation(
-			mockListOfOrders[1].guestId,
+			mockListOfOrders[1].guestID,
 			mockGuestLocation2
 		);
 		const expectedOrders: UIOrder[] = [

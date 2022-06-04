@@ -14,7 +14,7 @@ export default class Order {
 		this.id = order.id;
 		this.items = order.items;
 		this._status = order.status;
-		this.guestID = order.guestId;
+		this.guestID = order.guestID;
 		this._updated = updated;
 	}
 

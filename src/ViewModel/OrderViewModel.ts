@@ -140,7 +140,7 @@ export default class OrderViewModel {
 
 	public assignedToOrder(order: OrderIDO) {
 		this.ordersModel.addOrder(new Order(order));
-		this.fetchGuestsDetails([order.guestId]).catch(e => {
+		this.fetchGuestsDetails([order.guestID]).catch(e => {
 			console.warn("Could not fetch a gust's details", e);
 		});
 	}

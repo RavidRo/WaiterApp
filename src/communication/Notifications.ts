@@ -59,7 +59,7 @@ export default class Notifications {
 
 	private errorGuest(params: Params): void {
 		const errorMsg = params.errorMsg;
-		const orderID = params.orderId;
+		const orderID = params.orderID;
 		if (isString(errorMsg) && isString(orderID)) {
 			this.orders.setError(orderID, errorMsg);
 			return;

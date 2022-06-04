@@ -6,27 +6,20 @@ import OrdersListController from '../Controllers/OrdersListController';
 import MapMarkersController from '../Controllers/MapMarkersController';
 import WarningsController from '../Controllers/WarningsController';
 import NotificationIcon from './NotificationIcon';
+import MapStatusBarController from '../Controllers/MapStatusBarController';
 
 type MapScreenViewProps = {
 	openBottomSheet: () => void;
 	refBottomSheet: LegacyRef<RBSheet> | undefined;
-	myName: string | undefined;
-	mapName: string | undefined;
 	newOrdersUpdates: boolean;
 	onOrdersClose: () => void;
+	refresh: () => void;
 };
 export default function MapScreenView(props: MapScreenViewProps): JSX.Element {
 	return (
 		<View style={styles.screen} testID='homeScreen'>
 			<View>
-				<View style={styles.titleContainer}>
-					<Text style={styles.title}>
-						{`Hey ${props.myName ?? ''}, You're in `}
-						<Text style={styles.location}>
-							{props.mapName ?? 'Loading Map...'}
-						</Text>
-					</Text>
-				</View>
+				<MapStatusBarController refresh={props.refresh} />
 				<WarningsController />
 			</View>
 			<MapMarkersController style={styles.map} />

@@ -6,7 +6,7 @@ import ConnectView from '../Views/ConnectView';
 import {useAsync} from '../../hooks/useAsync';
 
 type ConnectControllerProps = {
-	children: React.ReactNode;
+	children: ({refresh}: {refresh: () => void}) => React.ReactNode;
 };
 
 const ConnectController = observer((props: ConnectControllerProps) => {

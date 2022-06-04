@@ -69,7 +69,7 @@ export default class MyLocationViewModel {
 
 	get currentMap(): MapIDO | undefined {
 		return this.location
-			? this.mapViewModel.getMapByID(this.location.mapId)
+			? this.mapViewModel.getMapByID(this.location.mapID)
 			: this.mapViewModel.defaultMap;
 	}
 

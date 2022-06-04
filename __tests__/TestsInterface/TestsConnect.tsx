@@ -43,12 +43,14 @@ const mockedRequests = {
 	items: jest.spyOn(Requests.prototype, 'getItems'),
 	orders: jest.spyOn(Requests.prototype, 'getWaiterOrders'),
 	name: jest.spyOn(Requests.prototype, 'getWaiterName'),
+	maps: jest.spyOn(Requests.prototype, 'getMaps'),
 };
 function mockDefaultImplementation() {
 	mockedRequests.login.mockImplementation(() => mockMakePromise('token'));
 	mockedRequests.items.mockImplementation(() => mockMakePromise([]));
 	mockedRequests.orders.mockImplementation(() => mockMakePromise([]));
 	mockedRequests.name.mockImplementation(() => mockMakePromise('Name'));
+	mockedRequests.maps.mockImplementation(() => mockMakePromise([]));
 }
 
 jest.setTimeout(10000);
