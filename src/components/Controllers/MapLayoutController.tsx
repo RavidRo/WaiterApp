@@ -19,11 +19,22 @@ export default function MapLayoutController({
 	const [imageHeight, setImageHeight] = useState<number | undefined>();
 	const [width, setWidth] = useState<number | undefined>();
 	const [height, setHeight] = useState<number | undefined>();
+	const [error, setError] = useState<string>();
 
-	Image.getSize(imageURL, (newImageWidth, newImageHeight) => {
-		setImageWidth(newImageWidth);
-		setImageHeight(newImageHeight);
-	});
+	Image.getSize(
+		imageURL,
+		(newImageWidth, newImageHeight) => {
+			setImageWidth(newImageWidth);
+			setImageHeight(newImageHeight);
+		},
+		imageError => {
+			setError("There was a problem in loading the map's image");
+			console.error(
+				`Could not fetch image sizes for ${imageURL}`,
+				imageError
+			);
+		}
+	);
 
 	const onLayout = (event: LayoutChangeEvent) => {
 		const {height: newHeight, width: newWidth} = event.nativeEvent.layout;
@@ -40,6 +51,7 @@ export default function MapLayoutController({
 		height,
 		markers,
 		imageURL,
+		error,
 	};
 
 	return <MapView {...props} />;

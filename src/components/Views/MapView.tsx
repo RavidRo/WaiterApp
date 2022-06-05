@@ -18,6 +18,7 @@ type MapViewProps = {
 	width: number | undefined;
 	height: number | undefined;
 	imageURL: string;
+	error?: string;
 };
 
 export default function MapView(props: MapViewProps) {
@@ -35,8 +36,10 @@ export default function MapView(props: MapViewProps) {
 					parentWidth={props.width}
 					parentHeight={props.height}
 				/>
+			) : props.error ? (
+				<Text>{props.error}</Text>
 			) : (
-				<Text>Loading</Text>
+				<Text>Loading map's image...</Text>
 			)}
 		</View>
 	);
