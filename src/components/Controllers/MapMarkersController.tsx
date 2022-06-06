@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle, Text} from 'react-native';
 
 import {observer} from 'mobx-react-lite';
 import {Location} from '../../types/ido';
@@ -10,7 +10,6 @@ import GuestMarker from '../Views/markers/ClientMarker';
 import MapLayoutController from './MapLayoutController';
 import {PointMarker} from '../../types/map';
 import {MyLocationContext, OrdersContext} from '../../contexts';
-import {Text} from 'react-native-svg';
 
 type MapMarkerControllerProps = {
 	style?: StyleProp<ViewStyle>;
@@ -50,9 +49,12 @@ const MapMarkersController = observer(({style}: MapMarkerControllerProps) => {
 	const allMarkers = guestsMarkers.concat(waiterMarker ? [waiterMarker] : []);
 
 	const currentMap = myLocationViewModel.currentMap;
-
 	if (!currentMap) {
-		return <Text>Loading map...</Text>;
+		return (
+			<View style={styles.loadingContainer}>
+				<Text style={styles.loadingText}>Loading map...</Text>
+			</View>
+		);
 	}
 
 	return (
@@ -62,6 +64,18 @@ const MapMarkersController = observer(({style}: MapMarkerControllerProps) => {
 			imageURL={currentMap.imageURL}
 		/>
 	);
+});
+
+const styles = StyleSheet.create({
+	loadingContainer: {
+		flex: 1,
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	loadingText: {
+		fontSize: 20,
+	},
 });
 
 export default MapMarkersController;
