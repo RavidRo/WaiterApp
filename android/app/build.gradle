@@ -224,6 +224,12 @@ android {
         }
     }
     signingConfigs {
+        release {
+            storeFile file('your_key_name.keystore')
+            storePassword "serviceanywhere" //System.console().readLine("\nKeystore password:")
+            keyAlias "serviceanywhere" //System.console().readLine("\nAlias: ")
+            keyPassword "serviceanywhere" //System.console().readLine("\nAlias password: ")
+        }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
