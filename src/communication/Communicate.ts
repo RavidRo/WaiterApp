@@ -12,4 +12,8 @@ export default class Communicate {
 			location: waiterLocation,
 		});
 	}
+
+	notifyOnError(errorMsg: string): void {
+		this.connectionHandler.send('locationErrorWaiter', {errorMsg});
+	}
 }

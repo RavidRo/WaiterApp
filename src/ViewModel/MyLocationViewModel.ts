@@ -30,19 +30,21 @@ export default class MyLocationViewModel {
 		this.locationService.watchLocation(
 			location => {
 				if (!location) {
-					// Outside of service area
+					this.communicate.notifyOnError('Outside of service area');
 					this.locationModel.location = undefined;
 				} else if (this.isValidLocation(location)) {
 					this.communicate.updateWaiterLocation(location);
 					this.locationModel.location = location;
 				} else {
 					const error = 'Unexpected error, received invalid location';
+					this.communicate.notifyOnError(error);
 					this.locationModel.locationError = error;
 					this.locationModel.location = undefined;
 				}
 				this.locationModel.locationError = undefined;
 			},
 			error => {
+				this.communicate.notifyOnError(error);
 				this.locationModel.location = undefined;
 				this.locationModel.locationError = error;
 			}
@@ -99,8 +101,11 @@ export default class MyLocationViewModel {
 
 		return approvingLocationRequest
 			.catch(() => {
+				this.communicate.notifyOnError(
+					'Location services are not approved'
+				);
 				return Promise.reject(
-					'Location needs to be approved for the user to watch your location'
+					'Location needs to be approved for the guests to watch your location'
 				);
 			})
 			.then(value => {
@@ -108,11 +113,14 @@ export default class MyLocationViewModel {
 					return this.approve();
 				} else if (value === 'never_ask_again') {
 					return Promise.reject(
-						'Pls enable location permission in the Settings -> Apps -> service_everywhere'
+						'Pls enable location permission in Settings -> Apps -> service_everywhere'
 					);
 				} else {
+					this.communicate.notifyOnError(
+						'Location services are not approved'
+					);
 					return Promise.reject(
-						'Location needs to be approved for the user to watch your location'
+						'Location needs to be approved for the guests to watch your location'
 					);
 				}
 			});
