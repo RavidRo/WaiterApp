@@ -39,19 +39,6 @@ export default class Requests {
 	}
 
 	getMaps(): Promise<MapIDO[]> {
-		return Promise.resolve([
-			{
-				corners: {
-					bottomRightGPS: {longitude: 34.802516, latitude: 31.261649},
-					bottomLeftGPS: {longitude: 34.800838, latitude: 31.261649},
-					topRightGPS: {longitude: 34.802516, latitude: 31.26355},
-					topLeftGPS: {longitude: 34.800838, latitude: 31.26355},
-				},
-				id: 'Random Map ID',
-				imageURL:
-					'https://res.cloudinary.com/noa-health/image/upload/v1640287601/bengurion-map_q32yck.png',
-				name: 'Beit Ha Student',
-			},
-		]);
+		return this.handler.get('getMaps');
 	}
 }
