@@ -9,6 +9,7 @@ export default class Notifications {
 			updateGuestLocation: params => this.updateGuestLocation(params),
 			changeOrderStatus: params => this.changeOrderStatus(params),
 			assignedToOrder: params => this.assignedToOrder(params),
+			errorGuest: params => this.errorGuest(params),
 		};
 
 	constructor(orderViewModel: OrderViewModel) {
@@ -52,6 +53,20 @@ export default class Notifications {
 
 		console.warn(
 			'In the event, "changeOrderStatus", parameters are not in the right format',
+			params
+		);
+	}
+
+	private errorGuest(params: Params): void {
+		const errorMsg = params.errorMsg;
+		const orderID = params.orderId;
+		if (isString(errorMsg) && isString(orderID)) {
+			this.orders.setError(orderID, errorMsg);
+			return;
+		}
+
+		console.warn(
+			'In the event, "errorGuest", parameters are not in the right format',
 			params
 		);
 	}

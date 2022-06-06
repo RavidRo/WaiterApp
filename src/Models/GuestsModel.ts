@@ -35,9 +35,18 @@ export default class GuestsModel {
 			if (!this._guests.has(guest.id)) {
 				this._guests.set(guest.id, new Guest(guest.id));
 			}
-			this._guests.get(guest.id)!.name = guest.username;
-			this._guests.get(guest.id)!.phoneNumber = guest.phoneNumber;
+			const guestObject = this._guests.get(guest.id)!;
+			guestObject.name = guest.username;
+			guestObject.phoneNumber = guest.phoneNumber;
 		});
+	}
+
+	setError(guestID: string, errorMsg: string) {
+		if (!this._guests.has(guestID)) {
+			this._guests.set(guestID, new Guest(guestID));
+		}
+		const guestObject = this._guests.get(guestID)!;
+		guestObject.error = errorMsg;
 	}
 }
 
@@ -46,9 +55,18 @@ export class Guest {
 	public name?: string;
 	public phoneNumber?: string;
 	public location?: Location;
+	private _error?: string;
 
 	constructor(id: string) {
 		this.id = id;
 		makeAutoObservable(this);
+	}
+
+	get error() {
+		return this._error;
+	}
+
+	set error(errorMsg: string | undefined) {
+		this._error = errorMsg;
 	}
 }

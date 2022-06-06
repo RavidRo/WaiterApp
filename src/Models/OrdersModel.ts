@@ -20,6 +20,10 @@ export default class OrdersModel {
 		});
 	}
 
+	getGuestID(orderID: string) {
+		return this._orders.get(orderID)?.guestID;
+	}
+
 	updateOrderStatus(
 		orderID: string,
 		status: OrderStatus,

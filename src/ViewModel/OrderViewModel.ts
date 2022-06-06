@@ -14,6 +14,7 @@ export type UIOrder = {
 	guestName?: string;
 	guestPhoneNumber?: string;
 	guestLocation?: Location;
+	errorMsg?: string;
 };
 
 export default class OrderViewModel {
@@ -73,6 +74,7 @@ export default class OrderViewModel {
 				guestLocation: guest?.location,
 				guestName: guest?.name,
 				guestPhoneNumber: guest?.phoneNumber,
+				errorMsg: guest?.error,
 			};
 		});
 	}
@@ -96,6 +98,10 @@ export default class OrderViewModel {
 				isOutOfBound(order.guestLocation!.x) ||
 				isOutOfBound(order.guestLocation!.y)
 		);
+	}
+
+	get erroredOrders(): UIOrder[] {
+		return this.orders.filter(order => order.errorMsg !== undefined);
 	}
 
 	public clearUpdates() {
@@ -137,5 +143,12 @@ export default class OrderViewModel {
 		this.fetchGuestsDetails([order.guestId]).catch(e => {
 			console.warn("Could not fetch a gust's details", e);
 		});
+	}
+
+	public setError(orderID: string, errorMsg: string) {
+		const guestID = this.ordersModel.getGuestID(orderID);
+		if (guestID) {
+			this.guestsModel.setError(guestID, errorMsg);
+		}
 	}
 }

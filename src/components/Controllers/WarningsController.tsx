@@ -9,6 +9,7 @@ const WarningsController = observer((): JSX.Element => {
 
 	const unavailableOrders = orders.unavailableOrders;
 	const outOfBoundsOrders = orders.outOfBoundsOrders;
+	const erroredOrders = orders.erroredOrders;
 	const outOfBound = myLocation.isCurrentLocationOutOfBound;
 	const currentLocationError = myLocation.currentLocationError;
 
@@ -23,6 +24,7 @@ const WarningsController = observer((): JSX.Element => {
 					order.guestName ?? order.id.slice(0, 4)
 				}: Guest's location is unavailable`
 		),
+		...erroredOrders.map(order => order.errorMsg!),
 		...outOfBoundsOrders.map(
 			order =>
 				`Order - ${
