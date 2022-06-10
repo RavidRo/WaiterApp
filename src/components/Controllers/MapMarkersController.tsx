@@ -26,28 +26,9 @@ function createGuestMarker(myLocation?: Location): PointMarker | undefined {
 
 const MapMarkersController = observer(({style}: MapMarkerControllerProps) => {
 	const ordersViewModel = useContext(OrdersContext);
-
-	//Guests Markers
-	const guestsMarkers = ordersViewModel.availableOrders.map(order => {
-		const orderName = order.guestName
-			? order.guestName
-			: order.id.slice(0, 5);
-
-		return {
-			point: {
-				name: `${orderName} - ${order.status}`,
-				location: order.guestLocation!,
-			},
-			marker: GuestMarker,
-		};
-	});
-
-	//Waiter Marker
 	const myLocationViewModel = useContext(MyLocationContext);
-	const waiterMarker = createGuestMarker(myLocationViewModel.location);
 
-	const allMarkers = guestsMarkers.concat(waiterMarker ? [waiterMarker] : []);
-
+	// Getting current Map
 	const currentMap = myLocationViewModel.currentMap;
 	if (!currentMap) {
 		return (
@@ -56,6 +37,27 @@ const MapMarkersController = observer(({style}: MapMarkerControllerProps) => {
 			</View>
 		);
 	}
+	//Waiter Marker
+	const waiterMarker = createGuestMarker(myLocationViewModel.location);
+
+	//Guests Markers
+	const guestsMarkers = ordersViewModel.availableOrders
+		.filter(order => order.guestLocation!.mapID === currentMap.id)
+		.map(order => {
+			const orderName = order.guestName
+				? order.guestName
+				: order.id.slice(0, 5);
+
+			return {
+				point: {
+					name: `${orderName} - ${order.status}`,
+					location: order.guestLocation!,
+				},
+				marker: GuestMarker,
+			};
+		});
+
+	const allMarkers = guestsMarkers.concat(waiterMarker ? [waiterMarker] : []);
 
 	return (
 		<MapLayoutController
