@@ -16,9 +16,11 @@ import MapScreenController from './src/components/Controllers/MapScreenControlle
 const App = () => {
 	return (
 		<ConnectController>
-			<ApproveLocation>
-				<MapScreenController />
-			</ApproveLocation>
+			{({refresh}) => (
+				<ApproveLocation>
+					<MapScreenController refresh={refresh} />
+				</ApproveLocation>
+			)}
 		</ConnectController>
 	);
 };

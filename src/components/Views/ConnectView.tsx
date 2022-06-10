@@ -13,7 +13,7 @@ type LoginViewProps = {
 	establishConnection: () => void;
 	isReconnecting: boolean;
 
-	children: React.ReactNode;
+	children: ({refresh}: {refresh: () => void}) => React.ReactNode;
 };
 
 export default function LoginView(props: LoginViewProps) {
@@ -25,7 +25,7 @@ export default function LoginView(props: LoginViewProps) {
 						Connection lost, trying to reconnect...
 					</Text>
 				)}
-				{props.children}
+				{props.children({refresh: props.establishConnection})}
 			</>
 		);
 	}
