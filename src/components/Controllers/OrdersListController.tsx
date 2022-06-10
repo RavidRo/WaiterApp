@@ -10,15 +10,15 @@ const OrdersList = observer((_: OrdersProps) => {
 	const ordersViewModel = useContext(OrdersContext);
 	const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
 
-	const selectOrder = (orderId: string) => {
-		if (selectedOrders.includes(orderId)) {
+	const selectOrder = (orderID: string) => {
+		if (selectedOrders.includes(orderID)) {
 			setSelectedOrders(prevSelectedOrders =>
-				prevSelectedOrders.filter(id => id !== orderId)
+				prevSelectedOrders.filter(id => id !== orderID)
 			);
 		} else {
 			setSelectedOrders(prevSelectedOrders => [
 				...prevSelectedOrders,
-				orderId,
+				orderID,
 			]);
 		}
 	};

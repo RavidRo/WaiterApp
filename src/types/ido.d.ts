@@ -11,7 +11,7 @@ export type OrderStatus =
 
 export type OrderIDO = {
 	id: OrderID;
-	guestId: string;
+	guestID: string;
 	items: Record<string, number>;
 	status: OrderStatus;
 	creationTime: Date;
@@ -20,7 +20,7 @@ export type OrderIDO = {
 export type Location = {
 	x: number;
 	y: number;
-	mapId: string;
+	mapID: string;
 };
 export type Corners = {
 	topRightGPS: GPS;

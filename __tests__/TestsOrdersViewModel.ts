@@ -7,7 +7,7 @@ const mockListOfOrders: OrderIDO[] = [
 		id: '1',
 		items: {a: 2, b: 3},
 		status: 'assigned',
-		guestId: '1',
+		guestID: '1',
 		creationTime: new Date(),
 		terminationTime: new Date(),
 	},
@@ -15,7 +15,7 @@ const mockListOfOrders: OrderIDO[] = [
 		id: '2',
 		items: {a: 2, b: 3},
 		status: 'assigned',
-		guestId: '2',
+		guestID: '2',
 		creationTime: new Date(),
 		terminationTime: new Date(),
 	},
@@ -24,12 +24,12 @@ const mockListOfOrders: OrderIDO[] = [
 const mockGuestLocation1: Location = {
 	x: -5,
 	y: 5,
-	mapId: '',
+	mapID: '',
 };
 const mockGuestLocation2: Location = {
 	x: 12,
 	y: 34,
-	mapId: '',
+	mapID: '',
 };
 
 const mockGuestDetails1: GuestIDO = {
@@ -142,7 +142,7 @@ describe('UpdateLocation', () => {
 		await itemViewModel.syncItems();
 		await orderVewModel.synchronizeOrders();
 		orderVewModel.updateGuestLocation(
-			mockListOfOrders[0].guestId,
+			mockListOfOrders[0].guestID,
 			mockGuestLocation1
 		);
 		expect(orderVewModel.availableOrders).toEqual([
@@ -158,15 +158,15 @@ describe('UpdateLocation', () => {
 		await itemViewModel.syncItems();
 		await orderVewModel.synchronizeOrders();
 		orderVewModel.updateGuestLocation(
-			mockListOfOrders[0].guestId,
+			mockListOfOrders[0].guestID,
 			mockGuestLocation1
 		);
 		orderVewModel.updateGuestLocation(
-			mockListOfOrders[1].guestId,
+			mockListOfOrders[1].guestID,
 			mockGuestLocation1
 		);
 		orderVewModel.updateGuestLocation(
-			mockListOfOrders[1].guestId,
+			mockListOfOrders[1].guestID,
 			mockGuestLocation2
 		);
 		const expectedOrders: UIOrder[] = [

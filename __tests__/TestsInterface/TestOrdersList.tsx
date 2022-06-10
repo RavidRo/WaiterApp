@@ -125,7 +125,7 @@ test('Show orders when received orders from server', async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {},
 			status: 'assigned',
@@ -150,14 +150,14 @@ test('Show multiple orders when received orders from server', async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {},
 			status: 'assigned',
@@ -182,14 +182,14 @@ test('Shows the orders correct statuses', async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {},
 			status: 'on the way',
@@ -221,14 +221,14 @@ test('Items does not show before opening item', async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {'1': 5, '3': 10},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {'2': 5},
 			status: 'on the way',
@@ -270,14 +270,14 @@ test('Shows the orders correct items', async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {'1': 5, '3': 10},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {'2': 5},
 			status: 'on the way',
@@ -324,14 +324,14 @@ test('Shows the orders correct items quantities', async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {'1': 13, '3': 17},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {'2': 23},
 			status: 'on the way',
@@ -378,14 +378,14 @@ test("Orders' statuses changed when notifications are received", async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {},
 			status: 'on the way',
@@ -425,14 +425,14 @@ test('Dismiss button appear when status is changed to delivered', async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {},
 			status: 'on the way',
@@ -473,14 +473,14 @@ test('Dismiss button appear when status is changed to canceled', async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {},
 			status: 'on the way',
@@ -521,14 +521,14 @@ test('Dismiss button appear when status is changed to in preparation', async () 
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {},
 			status: 'on the way',
@@ -569,14 +569,14 @@ test('Dismiss buttons appears only inside the expanded item', async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {},
 			status: 'on the way',
@@ -612,14 +612,14 @@ test('Dismissing an order removes it completely from the orders list', async () 
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {},
 			status: 'on the way',
@@ -668,14 +668,14 @@ test('A new order appear when a notification received', async () => {
 	const orders: OrderIDO[] = [
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '1',
 			items: {},
 			status: 'assigned',
 		},
 		{
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			id: '2',
 			items: {},
 			status: 'on the way',
@@ -695,7 +695,7 @@ test('A new order appear when a notification received', async () => {
 		const order: OrderIDO = {
 			id: '3',
 			creationTime: new Date(),
-			guestId: '1',
+			guestID: '1',
 			items: {},
 			status: 'assigned',
 		};

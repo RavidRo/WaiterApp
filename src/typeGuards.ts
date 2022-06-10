@@ -4,7 +4,7 @@ export function isLocation(location: any): location is Location {
 	return (
 		(location as Location)?.x !== undefined &&
 		(location as Location)?.y !== undefined &&
-		(location as Location)?.mapId !== undefined
+		(location as Location)?.mapID !== undefined
 	);
 }
 
@@ -15,7 +15,7 @@ export function isString(someString: any): someString is string {
 export function isOrder(o: any): o is OrderIDO {
 	return (
 		isString(o.id) &&
-		isString(o.guestId) &&
+		isString(o.guestID) &&
 		typeof o.items === 'object' &&
 		Object.values(o.items).every(Number.isInteger) &&
 		isOrderStatus(o.status)

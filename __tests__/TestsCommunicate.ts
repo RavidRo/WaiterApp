@@ -24,7 +24,7 @@ beforeEach(() => {
 const location: Location = {
 	x: 12.5,
 	y: -29.12,
-	mapId: '',
+	mapID: '',
 };
 const newCommunicate = () => {
 	const requests = new Requests();

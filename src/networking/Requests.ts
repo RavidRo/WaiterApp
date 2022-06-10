@@ -20,11 +20,11 @@ export default class Requests {
 	}
 
 	delivered(orderID: string): Promise<void> {
-		return this.handler.post('orderArrived', {orderId: orderID});
+		return this.handler.post('orderArrived', {orderID: orderID});
 	}
 
 	onTheWay(orderID: string): Promise<void> {
-		return this.handler.post('orderOnTheWay', {orderId: orderID});
+		return this.handler.post('orderOnTheWay', {orderID: orderID});
 	}
 
 	getWaiterName(): Promise<string> {
