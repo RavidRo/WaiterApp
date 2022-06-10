@@ -45,6 +45,7 @@ const mockedRequests = {
 	delivered: jest.spyOn(Requests.prototype, 'delivered'),
 	onTheWay: jest.spyOn(Requests.prototype, 'onTheWay'),
 	guests: jest.spyOn(Requests.prototype, 'getGuestsDetails'),
+	maps: jest.spyOn(Requests.prototype, 'getMaps'),
 };
 
 function mockDefaultImplementation() {
@@ -55,6 +56,7 @@ function mockDefaultImplementation() {
 	mockedRequests.delivered.mockImplementation(() => makeVoidPromise());
 	mockedRequests.onTheWay.mockImplementation(() => makeVoidPromise());
 	mockedRequests.guests.mockImplementation(() => mockMakePromise([]));
+	mockedRequests.maps.mockImplementation(() => mockMakePromise([]));
 }
 
 jest.setTimeout(10000);
