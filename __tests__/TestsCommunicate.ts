@@ -15,6 +15,7 @@ import Notifications from '../src/communication/Notifications';
 import {ItemViewModel} from '../src/ViewModel/ItemViewModel';
 import OrderViewModel from '../src/ViewModel/OrderViewModel';
 import Requests from '../src/networking/Requests';
+import MapsViewModel from '../src/ViewModel/MapsViewModel';
 
 beforeEach(() => {
 	(ConnectionHandler as unknown as jest.Mock).mockClear();
@@ -31,7 +32,11 @@ const newCommunicate = () => {
 	return new Communicate(
 		new ConnectionHandler(
 			new Notifications(
-				new OrderViewModel(requests, new ItemViewModel(requests))
+				new OrderViewModel(
+					requests,
+					new ItemViewModel(requests),
+					new MapsViewModel(requests)
+				)
 			)
 		)
 	);

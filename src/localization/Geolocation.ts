@@ -2,7 +2,7 @@ import {autorun} from 'mobx';
 
 import {Location} from '../types/ido';
 import {GPS} from '../types/map';
-import MapViewModel from '../ViewModel/MapsViewModel';
+import MapsViewModel from '../ViewModel/MapsViewModel';
 import GeolocationAdapter from './GeolocationAdapter';
 
 import {ILocationService} from './ILocationService';
@@ -12,7 +12,7 @@ export default class Geolocation implements ILocationService {
 	private readonly geolocationAdapter: GeolocationAdapter;
 	private maps: LocationMap[] = [];
 
-	constructor(mapsViewModel: MapViewModel) {
+	constructor(mapsViewModel: MapsViewModel) {
 		autorun(() => {
 			this.maps = mapsViewModel.maps.map(map => new LocationMap(map));
 		});

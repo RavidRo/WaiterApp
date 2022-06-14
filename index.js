@@ -1,6 +1,3 @@
-/**
- * @format
- */
 if (
 	!new (class {
 		x;

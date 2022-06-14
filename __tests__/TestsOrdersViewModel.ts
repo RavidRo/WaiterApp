@@ -93,11 +93,16 @@ jest.mock('../src/networking/Requests', () => {
 
 import Requests from '../src/networking/Requests';
 import {ItemViewModel} from '../src/ViewModel/ItemViewModel';
+import MapsViewModel from '../src/ViewModel/MapsViewModel';
 
 const newViewModels = () => {
 	const requests = new Requests();
 	const itemViewModel = new ItemViewModel(requests);
-	const orderViewModel = new OrderViewModel(requests, itemViewModel);
+	const orderViewModel = new OrderViewModel(
+		requests,
+		itemViewModel,
+		new MapsViewModel(requests)
+	);
 	return {orderVewModel: orderViewModel, itemViewModel};
 };
 

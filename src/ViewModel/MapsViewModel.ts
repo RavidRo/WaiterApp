@@ -2,7 +2,7 @@ import MapsModel from '../Models/MapsModel';
 import Requests from '../networking/Requests';
 import {MapIDO} from '../types/ido';
 
-export default class MapViewModel {
+export default class MapsViewModel {
 	private mapsModel: MapsModel;
 	private requests: Requests;
 

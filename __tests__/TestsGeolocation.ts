@@ -51,7 +51,7 @@ jest.mock('../src/networking/Requests', () => {
 });
 
 import GeolocationAdapter from '../src/localization/GeolocationAdapter';
-import MapViewModel from '../src/ViewModel/MapsViewModel';
+import MapsViewModel from '../src/ViewModel/MapsViewModel';
 import Requests from '../src/networking/Requests';
 
 beforeEach(() => {
@@ -78,7 +78,7 @@ beforeEach(() => {
 });
 
 async function makeGeolocation() {
-	const mapsViewModel = new MapViewModel(new Requests());
+	const mapsViewModel = new MapsViewModel(new Requests());
 	const geolocation = new Geolocation(mapsViewModel);
 	await mapsViewModel.syncMaps();
 	return geolocation;

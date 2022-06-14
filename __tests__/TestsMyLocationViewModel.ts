@@ -33,7 +33,7 @@ import Notifications from '../src/communication/Notifications';
 import OrderViewModel from '../src/ViewModel/OrderViewModel';
 import Requests from '../src/networking/Requests';
 import {ItemViewModel} from '../src/ViewModel/ItemViewModel';
-import MapViewModel from '../src/ViewModel/MapsViewModel';
+import MapsViewModel from '../src/ViewModel/MapsViewModel';
 
 const newMyLocationViewModel = () => {
 	const requests = new Requests();
@@ -41,11 +41,15 @@ const newMyLocationViewModel = () => {
 		new Communicate(
 			new ConnectionHandler(
 				new Notifications(
-					new OrderViewModel(requests, new ItemViewModel(requests))
+					new OrderViewModel(
+						requests,
+						new ItemViewModel(requests),
+						new MapsViewModel(requests)
+					)
 				)
 			)
 		),
-		new MapViewModel(requests)
+		new MapsViewModel(requests)
 	);
 };
 

@@ -4,6 +4,7 @@ import Order from '../Models/Order';
 import OrdersModel from '../Models/OrdersModel';
 import Requests from '../networking/Requests';
 import {ItemViewModel} from './ItemViewModel';
+import MapsViewModel from './MapsViewModel';
 
 export type UIOrder = {
 	id: string;
@@ -22,10 +23,16 @@ export default class OrderViewModel {
 	private ordersModel: OrdersModel;
 	private guestsModel: GuestsModel;
 	private itemViewModel: ItemViewModel;
+	private mapsViewModel: MapsViewModel;
 
-	constructor(requests: Requests, itemViewModel: ItemViewModel) {
+	constructor(
+		requests: Requests,
+		itemViewModel: ItemViewModel,
+		mapsViewMode: MapsViewModel
+	) {
 		this.requests = requests;
 		this.ordersModel = new OrdersModel();
+		this.mapsViewModel = mapsViewMode;
 		this.guestsModel = new GuestsModel();
 		this.itemViewModel = itemViewModel;
 	}
@@ -115,7 +122,14 @@ export default class OrderViewModel {
 	}
 
 	public updateGuestLocation(guestID: string, guestLocation: Location): void {
-		this.guestsModel.updateGuestLocation(guestID, guestLocation);
+		if (!this.mapsViewModel.getMapByID(guestLocation.mapID)) {
+			this.guestsModel.setError(
+				guestID,
+				'Unexpected Error - received location map is unknown'
+			);
+		} else {
+			this.guestsModel.updateGuestLocation(guestID, guestLocation);
+		}
 	}
 
 	public updateOrderStatus(orderID: string, status: OrderStatus): void {

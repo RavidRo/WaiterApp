@@ -1,6 +1,7 @@
 import Notifications from '../src/communication/Notifications';
 import Requests from '../src/networking/Requests';
 import {ItemViewModel} from '../src/ViewModel/ItemViewModel';
+import MapsViewModel from '../src/ViewModel/MapsViewModel';
 
 const mockUpdateGuestLocation = jest.fn();
 const mockUpdateOrderStatus = jest.fn();
@@ -23,7 +24,11 @@ import OrderViewModel from '../src/ViewModel/OrderViewModel';
 const newNotifications = () => {
 	const requests = new Requests();
 	return new Notifications(
-		new OrderViewModel(requests, new ItemViewModel(requests))
+		new OrderViewModel(
+			requests,
+			new ItemViewModel(requests),
+			new MapsViewModel(requests)
+		)
 	);
 };
 
@@ -35,6 +40,8 @@ beforeEach(() => {
 });
 
 describe('updateGuestLocation', () => {
+	it.todo('Get notified of location with unknown mapID');
+
 	it('Sending no arguments', () => {
 		const notifications = newNotifications();
 		notifications.eventToCallback.updateGuestLocation({});
