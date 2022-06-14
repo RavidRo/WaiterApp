@@ -41,6 +41,11 @@ class RequestsHandler {
 					// that falls out of the range of 2xx
 					const rawMsg = error?.response?.data;
 					console.warn(`Request<${endPoint}>`, rawMsg ?? error);
+					if (!rawMsg) {
+						console.error(error.response.data);
+						console.error(error.response.status);
+						console.error(error.response.headers);
+					}
 					const msg = isString(rawMsg)
 						? rawMsg
 						: 'An unknown error has been received from the server';
