@@ -4,16 +4,16 @@ import {ILocationService} from '../localization/ILocationService';
 import MyLocationModel from '../Models/MyLocationModel';
 import Communicate from '../communication/Communicate';
 import {PermissionsAndroid, Platform} from 'react-native';
-import MapViewModel from './MapsViewModel';
+import MapsViewModel from './MapsViewModel';
 
 export default class MyLocationViewModel {
 	private locationService: ILocationService;
 	private locationModel: MyLocationModel;
 	private communicate: Communicate;
 	private tracking: boolean;
-	private mapViewModel: MapViewModel;
+	private mapViewModel: MapsViewModel;
 
-	constructor(communicate: Communicate, mapViewModel: MapViewModel) {
+	constructor(communicate: Communicate, mapViewModel: MapsViewModel) {
 		this.locationModel = new MyLocationModel();
 		this.locationService = new Geolocation(mapViewModel);
 		this.communicate = communicate;
@@ -67,10 +67,16 @@ export default class MyLocationViewModel {
 		return this.locationModel.locationApproved;
 	}
 
-	get currentMap(): MapIDO | undefined {
+	get currentOrDefaultMap(): MapIDO | undefined {
 		return this.location
 			? this.mapViewModel.getMapByID(this.location.mapID)
 			: this.mapViewModel.defaultMap;
+	}
+
+	get currentMap(): MapIDO | undefined {
+		return this.location
+			? this.mapViewModel.getMapByID(this.location.mapID)
+			: undefined;
 	}
 
 	get currentLocationError(): string | undefined {

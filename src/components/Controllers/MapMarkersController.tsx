@@ -29,7 +29,7 @@ const MapMarkersController = observer(({style}: MapMarkerControllerProps) => {
 	const myLocationViewModel = useContext(MyLocationContext);
 
 	// Getting current Map
-	const currentMap = myLocationViewModel.currentMap;
+	const currentMap = myLocationViewModel.currentOrDefaultMap;
 	if (!currentMap) {
 		return (
 			<View style={styles.loadingContainer}>

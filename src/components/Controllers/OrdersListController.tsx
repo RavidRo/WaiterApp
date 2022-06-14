@@ -6,7 +6,7 @@ import OrdersListView from '../Views/OrdersListView';
 
 type OrdersProps = {};
 
-const OrdersList = observer((_: OrdersProps) => {
+const OrdersListController = observer((_: OrdersProps) => {
 	const ordersViewModel = useContext(OrdersContext);
 	const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
 
@@ -34,4 +34,4 @@ const OrdersList = observer((_: OrdersProps) => {
 	);
 });
 
-export default OrdersList;
+export default OrdersListController;

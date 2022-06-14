@@ -12,12 +12,17 @@ export default function MapStatusBarController(
 	const connectViewModel = useContext(ConnectionContext);
 	const myLocationViewModel = useContext(MyLocationContext);
 
+	const unavailableLocation =
+		myLocationViewModel.currentLocationError !== undefined ||
+		myLocationViewModel.isCurrentLocationOutOfBound;
+
 	const mapName = myLocationViewModel.currentMap?.name;
 	const myName = connectViewModel.myName;
 	return (
 		<MapStatusBarView
 			mapName={mapName}
 			myName={myName}
+			unavailableLocation={unavailableLocation}
 			refresh={props.refresh}
 		/>
 	);

@@ -7,17 +7,21 @@ import {faArrowRotateRight} from '@fortawesome/free-solid-svg-icons';
 type MapStatusBarViewProps = {
 	myName?: string;
 	mapName?: string;
+	unavailableLocation: boolean;
 	refresh: () => void;
 };
 
 export default function MapStatusBarView(props: MapStatusBarViewProps) {
+	const hello = `Hey ${props.myName ?? ''},`;
+	const prefixLocation = props.unavailableLocation ? '' : "you're in";
+	const location = props.unavailableLocation
+		? 'your location is unavailable'
+		: props.mapName ?? 'Loading Location...';
 	return (
 		<View style={styles.titleContainer}>
 			<Text style={styles.title}>
-				{`Hey ${props.myName ?? ''}, You're in `}
-				<Text style={styles.location}>
-					{props.mapName ?? 'Loading Map...'}
-				</Text>
+				{`${hello} ${prefixLocation} `}
+				<Text style={styles.location}>{location}</Text>
 			</Text>
 			<TouchableOpacity onPress={() => props.refresh()}>
 				<FontAwesomeIcon
