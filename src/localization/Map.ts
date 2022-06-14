@@ -28,6 +28,10 @@ export default class LocationMap {
 	translateGps(location: GPS) {
 		const corners = this.map.corners;
 
+		// TODO: The sign calculation are not precise for maps that are not parallel to the equator.
+
+		const signX =
+			corners.topLeftGPS.longitude > location.longitude ? -1 : 1;
 		const localX =
 			this.distanceFromLine(
 				corners.topLeftGPS,
@@ -35,6 +39,7 @@ export default class LocationMap {
 				location
 			) / this.width;
 
+		const signY = corners.topLeftGPS.latitude < location.latitude ? -1 : 1;
 		const localY =
 			this.distanceFromLine(
 				corners.topLeftGPS,
@@ -42,7 +47,7 @@ export default class LocationMap {
 				location
 			) / this.height;
 
-		return {x: localX, y: localY, mapID: this.map.id};
+		return {x: localX * signX, y: localY * signY, mapID: this.map.id};
 	}
 
 	hasInside(location: GPS) {
