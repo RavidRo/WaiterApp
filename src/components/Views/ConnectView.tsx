@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 
-type LoginViewProps = {
+type ConnectViewProps = {
 	isConnected: boolean;
 	loggedIn: boolean;
 	isLoading: boolean;
@@ -16,7 +16,7 @@ type LoginViewProps = {
 	children: ({refresh}: {refresh: () => void}) => React.ReactNode;
 };
 
-export default function LoginView(props: LoginViewProps) {
+export default function ConnectView(props: ConnectViewProps) {
 	if (props.isConnected) {
 		return (
 			<>

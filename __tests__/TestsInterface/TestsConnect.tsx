@@ -69,9 +69,7 @@ beforeEach(() => {
 
 test('Loads an input and a submit button', async () => {
 	const {getByTestId, queryByTestId} = render(
-		<ConnectController>
-			<Text>Hello Test</Text>
-		</ConnectController>
+		<ConnectController>{() => <Text>Hello Test</Text>}</ConnectController>
 	);
 
 	expect(getByTestId('passwordInput')).toBeTruthy();
@@ -83,9 +81,7 @@ test('Wrong password', async () => {
 	mockedRequests.login.mockImplementation(() => makeFail());
 
 	const {getByTestId, queryByTestId} = render(
-		<ConnectController>
-			<Text>Hello Test</Text>
-		</ConnectController>
+		<ConnectController>{() => <Text>Hello Test</Text>}</ConnectController>
 	);
 	const button = getByTestId('submit');
 	fireEvent.press(button);
@@ -102,9 +98,7 @@ test('Wrong password', async () => {
 
 test('Shows a loading indicator before results are fetched', async () => {
 	const {getByTestId, queryByTestId} = render(
-		<ConnectController>
-			<Text>Hello Test</Text>
-		</ConnectController>
+		<ConnectController>{() => <Text>Hello Test</Text>}</ConnectController>
 	);
 
 	const button = getByTestId('submit');
@@ -116,7 +110,7 @@ test('Shows a loading indicator before results are fetched', async () => {
 test('Shows home page after connecting successfully', async () => {
 	const {getByTestId, queryByTestId} = render(
 		<ConnectController>
-			<Text testID='homeScreen'>Hello Test</Text>
+			{() => <Text testID='homeScreen'>Hello Test</Text>}
 		</ConnectController>
 	);
 
