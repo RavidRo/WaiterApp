@@ -10,11 +10,9 @@ const WarningsController = observer((): JSX.Element => {
 	const unavailableOrders = orders.unavailableOrders;
 	const outOfBoundsOrders = orders.outOfBoundsOrders;
 	const erroredOrders = orders.erroredOrders;
-	const outOfBound = myLocation.isCurrentLocationOutOfBound;
 	const currentLocationError = myLocation.currentLocationError;
 
 	const warnings = [
-		...(outOfBound ? ["You're out side of the service area"] : []),
 		...(currentLocationError
 			? [`Could not get your location - ${currentLocationError}`]
 			: []),

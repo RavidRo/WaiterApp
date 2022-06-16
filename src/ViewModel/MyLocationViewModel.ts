@@ -30,9 +30,10 @@ export default class MyLocationViewModel {
 		this.locationService.watchLocation(
 			location => {
 				if (!location) {
-					this.communicate.notifyOnError('Outside of service area');
+					const error = 'Outside of service area';
+					this.communicate.notifyOnError(error);
 					this.locationModel.location = undefined;
-					this.locationModel.locationError = undefined;
+					this.locationModel.locationError = error;
 				} else if (this.isValidLocation(location)) {
 					this.communicate.updateWaiterLocation(location);
 					this.locationModel.location = location;
@@ -81,13 +82,6 @@ export default class MyLocationViewModel {
 
 	get currentLocationError(): string | undefined {
 		return this.locationModel.locationError;
-	}
-
-	get isCurrentLocationOutOfBound(): boolean {
-		return (
-			this.locationModel.location === undefined &&
-			this.locationModel.locationError === undefined
-		);
 	}
 
 	private approve() {
