@@ -17,7 +17,7 @@ type LoginViewProps = {
 };
 
 export default function LoginView(props: LoginViewProps) {
-	if (props.isConnected) {
+	if (props.isConnected && props.loggedIn) {
 		return (
 			<>
 				{props.isReconnecting && (
