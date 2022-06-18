@@ -31,7 +31,7 @@ export default class MyLocationViewModel {
 			location => {
 				if (!location) {
 					const error = 'Outside of service area';
-					this.communicate.notifyOnError(error);
+					this.communicate.locationErrorWaiter(error);
 					this.locationModel.location = undefined;
 					this.locationModel.locationError = error;
 				} else if (this.isValidLocation(location)) {
@@ -40,13 +40,13 @@ export default class MyLocationViewModel {
 					this.locationModel.locationError = undefined;
 				} else {
 					const error = 'Unexpected error, received invalid location';
-					this.communicate.notifyOnError(error);
+					this.communicate.locationErrorWaiter(error);
 					this.locationModel.location = undefined;
 					this.locationModel.locationError = error;
 				}
 			},
 			error => {
-				this.communicate.notifyOnError(error);
+				this.communicate.locationErrorWaiter(error);
 				this.locationModel.location = undefined;
 				this.locationModel.locationError = error;
 			}
@@ -102,7 +102,7 @@ export default class MyLocationViewModel {
 
 		return approvingLocationRequest
 			.catch(() => {
-				this.communicate.notifyOnError(
+				this.communicate.locationErrorWaiter(
 					'Location services are not approved'
 				);
 				return Promise.reject(
@@ -117,7 +117,7 @@ export default class MyLocationViewModel {
 						'Pls enable location permission in Settings -> Apps -> service_everywhere'
 					);
 				} else {
-					this.communicate.notifyOnError(
+					this.communicate.locationErrorWaiter(
 						'Location services are not approved'
 					);
 					return Promise.reject(

@@ -1,7 +1,8 @@
+import {WaiterCommunication} from '../types/api';
 import {Location} from '../types/ido';
 import ConnectionHandler from './ConnectionHandler';
 
-export default class Communicate {
+export default class Communicate implements WaiterCommunication {
 	private connectionHandler: ConnectionHandler;
 	constructor(connectionHandler: ConnectionHandler) {
 		this.connectionHandler = connectionHandler;
@@ -13,7 +14,7 @@ export default class Communicate {
 		});
 	}
 
-	notifyOnError(errorMsg: string): void {
+	locationErrorWaiter(errorMsg: string): void {
 		this.connectionHandler.send('locationErrorWaiter', {errorMsg});
 	}
 }
