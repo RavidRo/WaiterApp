@@ -1,7 +1,8 @@
 import RequestsHandler from './RequestsHandler';
 import {GuestIDO, ItemIDO, MapIDO, OrderIDO} from '../types/ido';
+import {WaiterAPI} from '../types/api';
 
-export default class Requests {
+export default class Requests implements WaiterAPI {
 	private handler: RequestsHandler;
 	constructor() {
 		this.handler = new RequestsHandler();
@@ -19,11 +20,11 @@ export default class Requests {
 		return this.handler.get('getItems');
 	}
 
-	delivered(orderID: string): Promise<void> {
+	orderArrived(orderID: string): Promise<void> {
 		return this.handler.post('orderArrived', {orderID: orderID});
 	}
 
-	onTheWay(orderID: string): Promise<void> {
+	orderOnTheWay(orderID: string): Promise<void> {
 		return this.handler.post('orderOnTheWay', {orderID: orderID});
 	}
 
