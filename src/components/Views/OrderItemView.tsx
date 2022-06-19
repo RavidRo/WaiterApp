@@ -29,8 +29,11 @@ export default observer(function OrderItemView(props: OrderItemViewProps) {
 		: `Order - ${props.order.id.slice(0, 5)}`;
 
 	const warnings = [
-		...(props.unknownLocation ? ["Guest's location is unknown"] : []),
-		...(props.order.errorMsg ? [props.order.errorMsg] : []),
+		...(props.order.errorMsg
+			? [props.order.errorMsg]
+			: props.unknownLocation
+			? ["Guest's location is unknown"]
+			: []),
 		...(props.locationOutOfBounds
 			? ["Guest's location is out of the serving area"]
 			: []),
