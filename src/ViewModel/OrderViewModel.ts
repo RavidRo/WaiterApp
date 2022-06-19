@@ -95,7 +95,11 @@ export default class OrderViewModel {
 	}
 
 	get unavailableOrders(): UIOrder[] {
-		return this.orders.filter(order => order.guestLocation === undefined);
+		return this.orders.filter(
+			order =>
+				order.guestLocation === undefined &&
+				order.errorMsg === undefined
+		);
 	}
 
 	get outOfBoundsOrders(): UIOrder[] {

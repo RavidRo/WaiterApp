@@ -22,7 +22,12 @@ const WarningsController = observer((): JSX.Element => {
 					order.guestName ?? order.id.slice(0, 4)
 				}: Guest's location is unavailable`
 		),
-		...erroredOrders.map(order => order.errorMsg!),
+		...erroredOrders.map(
+			order =>
+				`Order - ${
+					order.guestName ?? order.id.slice(0, 4)
+				}: ${order.errorMsg!}`
+		),
 		...outOfBoundsOrders.map(
 			order =>
 				`Order - ${
