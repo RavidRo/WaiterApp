@@ -1,6 +1,6 @@
 import {makePromise as mockMakePromise} from './PromiseUtils';
 import OrderViewModel, {UIOrder} from '../src/ViewModel/OrderViewModel';
-import {GuestIDO, Location, OrderIDO} from '../src/types/ido';
+import {GuestIDO, Location, MapIDO, OrderIDO} from '../src/types/ido';
 
 const mockListOfOrders: OrderIDO[] = [
 	{
@@ -24,12 +24,12 @@ const mockListOfOrders: OrderIDO[] = [
 const mockGuestLocation1: Location = {
 	x: -5,
 	y: 5,
-	mapID: '',
+	mapID: '1',
 };
 const mockGuestLocation2: Location = {
 	x: 12,
 	y: 34,
-	mapID: '',
+	mapID: '1',
 };
 
 const mockGuestDetails1: GuestIDO = {
@@ -42,6 +42,21 @@ const mockGuestDetails2: GuestIDO = {
 	username: 'string2',
 	phoneNumber: 'string2',
 };
+
+const loc = {latitude: 0, longitude: 0};
+const mockMaps: MapIDO[] = [
+	{
+		corners: {
+			bottomLeftGPS: loc,
+			bottomRightGPS: loc,
+			topLeftGPS: loc,
+			topRightGPS: loc,
+		},
+		id: '1',
+		imageURL: '',
+		name: '',
+	},
+];
 
 const newOrders: UIOrder[] = [
 	{
@@ -87,6 +102,7 @@ jest.mock('../src/networking/Requests', () => {
 			login: () => mockMakePromise('id'),
 			getGuestsDetails: () =>
 				Promise.resolve([mockGuestDetails1, mockGuestDetails2]),
+			getMaps: () => Promise.resolve(mockMaps),
 		};
 	});
 });
@@ -98,12 +114,13 @@ import MapsViewModel from '../src/ViewModel/MapsViewModel';
 const newViewModels = () => {
 	const requests = new Requests();
 	const itemViewModel = new ItemViewModel(requests);
+	const mapsViewModel = new MapsViewModel(requests);
 	const orderViewModel = new OrderViewModel(
 		requests,
 		itemViewModel,
-		new MapsViewModel(requests)
+		mapsViewModel
 	);
-	return {orderVewModel: orderViewModel, itemViewModel};
+	return {orderViewModel, itemViewModel, mapsViewModel};
 };
 
 beforeEach(() => {
@@ -113,28 +130,28 @@ beforeEach(() => {
 
 describe('Constructor', () => {
 	test('The class can be created successfully', async () => {
-		const {orderVewModel, itemViewModel} = newViewModels();
+		const {orderViewModel: orderVewModel, itemViewModel} = newViewModels();
 		await itemViewModel.syncItems();
 		await orderVewModel.synchronizeOrders();
 		expect(orderVewModel).toBeTruthy();
 	});
 
 	test('Looked for orders in the server', async () => {
-		const {orderVewModel, itemViewModel} = newViewModels();
+		const {orderViewModel: orderVewModel, itemViewModel} = newViewModels();
 		await itemViewModel.syncItems();
 		await orderVewModel.synchronizeOrders();
 		expect(mockGetWaiterOrders).toHaveBeenCalled();
 	});
 
 	test('Initializing orders to the orders in the server', async () => {
-		const {orderVewModel, itemViewModel} = newViewModels();
+		const {orderViewModel: orderVewModel, itemViewModel} = newViewModels();
 		await itemViewModel.syncItems();
 		await orderVewModel.synchronizeOrders();
 		expect(orderVewModel.orders).toEqual(newOrders);
 	});
 
 	test('The orders are starting with no location', async () => {
-		const {orderVewModel, itemViewModel} = newViewModels();
+		const {orderViewModel: orderVewModel, itemViewModel} = newViewModels();
 		await itemViewModel.syncItems();
 		await orderVewModel.synchronizeOrders();
 		expect(orderVewModel.availableOrders).toEqual([]);
@@ -143,14 +160,15 @@ describe('Constructor', () => {
 
 describe('UpdateLocation', () => {
 	test('Getting orders with available locations', async () => {
-		const {orderVewModel, itemViewModel} = newViewModels();
+		const {orderViewModel, itemViewModel, mapsViewModel} = newViewModels();
 		await itemViewModel.syncItems();
-		await orderVewModel.synchronizeOrders();
-		orderVewModel.updateGuestLocation(
+		await orderViewModel.synchronizeOrders();
+		await mapsViewModel.syncMaps();
+		orderViewModel.updateGuestLocation(
 			mockListOfOrders[0].guestID,
 			mockGuestLocation1
 		);
-		expect(orderVewModel.availableOrders).toEqual([
+		expect(orderViewModel.availableOrders).toEqual([
 			{
 				...newOrders[0],
 				guestLocation: mockGuestLocation1,
@@ -159,18 +177,19 @@ describe('UpdateLocation', () => {
 		]);
 	});
 	test('Getting the most updated location', async () => {
-		const {orderVewModel, itemViewModel} = newViewModels();
+		const {orderViewModel, itemViewModel, mapsViewModel} = newViewModels();
 		await itemViewModel.syncItems();
-		await orderVewModel.synchronizeOrders();
-		orderVewModel.updateGuestLocation(
+		await orderViewModel.synchronizeOrders();
+		await mapsViewModel.syncMaps();
+		orderViewModel.updateGuestLocation(
 			mockListOfOrders[0].guestID,
 			mockGuestLocation1
 		);
-		orderVewModel.updateGuestLocation(
+		orderViewModel.updateGuestLocation(
 			mockListOfOrders[1].guestID,
 			mockGuestLocation1
 		);
-		orderVewModel.updateGuestLocation(
+		orderViewModel.updateGuestLocation(
 			mockListOfOrders[1].guestID,
 			mockGuestLocation2
 		);
@@ -184,6 +203,6 @@ describe('UpdateLocation', () => {
 				guestLocation: mockGuestLocation2,
 			},
 		];
-		expect(orderVewModel.availableOrders).toEqual(expectedOrders);
+		expect(orderViewModel.availableOrders).toEqual(expectedOrders);
 	});
 });
