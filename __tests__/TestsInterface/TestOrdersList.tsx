@@ -42,8 +42,8 @@ const mockedRequests = {
 	items: jest.spyOn(Requests.prototype, 'getItems'),
 	orders: jest.spyOn(Requests.prototype, 'getWaiterOrders'),
 	name: jest.spyOn(Requests.prototype, 'getWaiterName'),
-	delivered: jest.spyOn(Requests.prototype, 'delivered'),
-	onTheWay: jest.spyOn(Requests.prototype, 'onTheWay'),
+	delivered: jest.spyOn(Requests.prototype, 'orderArrived'),
+	onTheWay: jest.spyOn(Requests.prototype, 'orderOnTheWay'),
 	guests: jest.spyOn(Requests.prototype, 'getGuestsDetails'),
 	maps: jest.spyOn(Requests.prototype, 'getMaps'),
 };
