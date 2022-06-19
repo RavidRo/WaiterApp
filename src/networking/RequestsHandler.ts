@@ -39,8 +39,17 @@ class RequestsHandler {
 				if (error.response) {
 					// The request was made and the server responded with a status code
 					// that falls out of the range of 2xx
+
+					if (error.response.status === 401) {
+						//Unauthorized
+						this.connection.token = undefined;
+					}
+
 					const rawMsg = error?.response?.data;
-					console.warn(`Request<${endPoint}>`, rawMsg ?? error);
+					console.warn(
+						`Request<${endPoint},${error.response.status}>`,
+						rawMsg ?? error
+					);
 					if (!rawMsg) {
 						console.error(error.response.data);
 						console.error(error.response.status);

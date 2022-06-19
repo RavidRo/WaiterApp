@@ -17,7 +17,7 @@ type ConnectViewProps = {
 };
 
 export default function ConnectView(props: ConnectViewProps) {
-	if (props.isConnected) {
+	if (props.isConnected && props.loggedIn) {
 		return (
 			<>
 				{props.isReconnecting && (

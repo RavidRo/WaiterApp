@@ -27,6 +27,7 @@ export default class GuestsModel {
 		const guest = this._guests.get(guestID);
 		if (guest) {
 			guest.location = location;
+			guest.error = undefined;
 		}
 	}
 
@@ -46,6 +47,7 @@ export default class GuestsModel {
 			this._guests.set(guestID, new Guest(guestID));
 		}
 		const guestObject = this._guests.get(guestID)!;
+		guestObject.location = undefined;
 		guestObject.error = errorMsg;
 	}
 }
